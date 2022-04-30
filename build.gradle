@@ -25,8 +25,7 @@ subprojects {
 
     /* 添加通用依赖 */
     dependencies {
-//        implementation 'org.springframework.boot:spring-boot-starter-web'
-        compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
+        // compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
     }
 
     // gradle 父子模块相关

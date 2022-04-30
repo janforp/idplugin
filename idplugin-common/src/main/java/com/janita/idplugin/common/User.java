@@ -9,6 +9,7 @@ package com.janita.idplugin.common;
 public class User {
 
     private int age;
+
     private String name;
 
     public int getAge() {
@@ -25,5 +26,13 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "age=" + age +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
