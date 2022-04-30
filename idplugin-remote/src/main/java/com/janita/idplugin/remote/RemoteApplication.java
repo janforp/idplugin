@@ -11,9 +11,5 @@ import com.janita.idplugin.common.User;
 public class RemoteApplication {
 
     public static void main(String[] args) {
-        User user = new User();
-        user.name = "adffsdf";
-
-        System.out.println(user.name);
     }
 }

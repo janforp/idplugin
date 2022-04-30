@@ -3,6 +3,7 @@ package com.janita.idplugin.woodpecker;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.ui.MessageType;
+import com.janita.idplugin.common.User;
 import com.janita.idplugin.idea.base.NotificationUtils;
 
 /**
@@ -15,6 +16,9 @@ public class TestAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        NotificationUtils.showNotification("你好", MessageType.ERROR);
+        User user = new User();
+        user.setAge(18);
+        user.setName("Jay Chou");
+        NotificationUtils.showNotification(user.toString(), MessageType.ERROR);
     }
 }
