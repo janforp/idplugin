@@ -2,8 +2,8 @@ package com.janita.idplugin.woodpecker.service;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.janita.idplugin.woodpecker.common.constant.PluginConstant;
-import com.janita.idplugin.woodpecker.common.domain.Pair;
+import com.janita.idplugin.common.constant.PluginConstant;
+import com.janita.idplugin.remote.api.Pair;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import com.janita.idplugin.woodpecker.domain.CrDeveloper;
 import com.janita.idplugin.woodpecker.domain.CrDeveloperQueryRequest;

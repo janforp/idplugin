@@ -18,6 +18,7 @@ dependencies {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     version = '2020.1'
+    plugins = ['git4idea']
 }
 patchPluginXml {
     changeNotes = """

@@ -1,9 +1,9 @@
 package com.janita.idplugin.woodpecker.dao.question.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.janita.idplugin.woodpecker.common.domain.ApiResponse;
-import com.janita.idplugin.woodpecker.common.domain.Head;
-import com.janita.idplugin.woodpecker.common.domain.Pair;
+import com.janita.idplugin.remote.api.ApiResponse;
+import com.janita.idplugin.remote.api.Head;
+import com.janita.idplugin.remote.api.Pair;
 import com.janita.idplugin.woodpecker.common.enums.CrRestApiEnum;
 import com.janita.idplugin.woodpecker.common.exception.PluginRuntimeException;
 import com.janita.idplugin.woodpecker.common.rest.RestTemplateFactory;

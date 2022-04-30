@@ -1,6 +1,6 @@
 package com.janita.idplugin.woodpecker.common.progress;
 
-import com.janita.idplugin.woodpecker.common.domain.CurrentProgress;
+import com.janita.idplugin.idea.base.CurrentProgress;
 
 /**
  * ProgressTask

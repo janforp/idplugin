@@ -1,6 +1,6 @@
 package com.janita.idplugin.woodpecker.dao.question;
 
-import com.janita.idplugin.woodpecker.common.domain.Pair;
+import com.janita.idplugin.remote.api.Pair;
 import com.janita.idplugin.woodpecker.domain.CrQuestion;
 import com.janita.idplugin.woodpecker.domain.CrQuestionQueryRequest;
 

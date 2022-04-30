@@ -1,7 +1,7 @@
-package com.janita.idplugin.woodpecker.common.util;
+package com.janita.idplugin.common.util;
 
 import com.alibaba.fastjson.JSONObject;
-import com.janita.idplugin.woodpecker.common.constant.PluginConstant;
+import com.janita.idplugin.common.constant.PluginConstant;
 import lombok.experimental.UtilityClass;
 
 import java.io.BufferedReader;

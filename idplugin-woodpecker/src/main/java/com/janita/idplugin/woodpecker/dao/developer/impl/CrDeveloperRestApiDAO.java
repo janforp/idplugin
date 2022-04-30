@@ -1,7 +1,7 @@
 package com.janita.idplugin.woodpecker.dao.developer.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.janita.idplugin.woodpecker.common.domain.Pair;
+import com.janita.idplugin.remote.api.Pair;
 import com.janita.idplugin.woodpecker.common.enums.CrRestApiEnum;
 import com.janita.idplugin.woodpecker.dao.developer.ICrDeveloperDAO;
 import com.janita.idplugin.woodpecker.dao.question.impl.CrQuestionRestApiDAO;

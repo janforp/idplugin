@@ -2,8 +2,8 @@ package com.janita.idplugin.woodpecker.common.wechat;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import com.janita.idplugin.woodpecker.common.constant.PluginConstant;
-import com.janita.idplugin.woodpecker.common.util.WeChatUtils;
+import com.janita.idplugin.common.constant.PluginConstant;
+import com.janita.idplugin.common.util.WeChatUtils;
 import com.janita.idplugin.woodpecker.common.wechat.domain.MsgColor;
 import com.janita.idplugin.woodpecker.common.wechat.domain.MsgTip;
 import com.janita.idplugin.woodpecker.common.wechat.domain.OperationType;

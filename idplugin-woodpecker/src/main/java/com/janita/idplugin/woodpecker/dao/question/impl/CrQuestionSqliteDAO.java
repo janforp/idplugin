@@ -1,13 +1,13 @@
 package com.janita.idplugin.woodpecker.dao.question.impl;
 
 import com.janita.idplugin.woodpecker.common.constant.DmlConstants;
-import com.janita.idplugin.woodpecker.common.domain.Pair;
+import com.janita.idplugin.remote.api.Pair;
 import com.janita.idplugin.woodpecker.common.enums.CrQuestionState;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import com.janita.idplugin.woodpecker.dao.BaseDAO;
 import com.janita.idplugin.woodpecker.dao.question.ICrQuestionDAO;
 import com.janita.idplugin.woodpecker.dao.question.dataobject.CrSqliteQuestionDO;
-import com.janita.idplugin.woodpecker.db.IDatabaseService;
+import com.janita.idplugin.remote.db.IDatabaseService;
 import com.janita.idplugin.woodpecker.domain.CrQuestion;
 import com.janita.idplugin.woodpecker.domain.CrQuestionQueryRequest;
 import org.apache.commons.collections.CollectionUtils;

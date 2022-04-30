@@ -1,7 +1,7 @@
 package com.janita.idplugin.woodpecker.common.enums;
 
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
-import com.janita.idplugin.woodpecker.db.IDatabaseService;
+import com.janita.idplugin.remote.db.IDatabaseService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

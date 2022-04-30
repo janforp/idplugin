@@ -1,6 +1,6 @@
 package com.janita.idplugin.woodpecker.dao;
 
-import com.janita.idplugin.woodpecker.common.domain.Pair;
+import com.janita.idplugin.remote.api.Pair;
 import org.apache.commons.dbutils.BasicRowProcessor;
 import org.apache.commons.dbutils.BeanProcessor;
 import org.apache.commons.dbutils.GenerousBeanProcessor;

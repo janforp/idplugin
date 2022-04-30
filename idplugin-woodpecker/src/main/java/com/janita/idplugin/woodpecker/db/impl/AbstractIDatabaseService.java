@@ -1,6 +1,6 @@
 package com.janita.idplugin.woodpecker.db.impl;
 
-import com.janita.idplugin.woodpecker.db.IDatabaseService;
+import com.janita.idplugin.remote.db.IDatabaseService;
 import com.mysql.cj.jdbc.ConnectionImpl;
 import org.apache.commons.dbutils.QueryRunner;
 

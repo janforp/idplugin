@@ -15,7 +15,7 @@ import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBTabbedPane;
 import com.intellij.ui.components.JBTextField;
 import com.janita.idplugin.woodpecker.common.constant.DataToInit;
-import com.janita.idplugin.woodpecker.common.constant.PluginConstant;
+import com.janita.idplugin.common.constant.PluginConstant;
 import com.janita.idplugin.woodpecker.common.enums.CrQuestionState;
 import com.janita.idplugin.woodpecker.common.icons.CodeEditorUtil;
 import com.janita.idplugin.woodpecker.common.icons.PluginIcons;

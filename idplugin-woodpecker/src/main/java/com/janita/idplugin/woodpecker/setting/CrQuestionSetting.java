@@ -1,6 +1,6 @@
 package com.janita.idplugin.woodpecker.setting;
 
-import com.janita.idplugin.woodpecker.common.constant.PersistentKeys;
+import com.janita.idplugin.common.constant.PersistentKeys;
 import com.janita.idplugin.woodpecker.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import lombok.Data;

@@ -3,7 +3,7 @@ package com.janita.idplugin.woodpecker.component;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.janita.idplugin.woodpecker.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
-import com.janita.idplugin.woodpecker.db.IDatabaseService;
+import com.janita.idplugin.remote.db.IDatabaseService;
 import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 
 /**

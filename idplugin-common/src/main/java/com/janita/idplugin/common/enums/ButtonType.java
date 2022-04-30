@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.common.enums;
+package com.janita.idplugin.common.enums;
 
 /**
  * ButtonType

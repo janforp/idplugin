@@ -1,6 +1,6 @@
 package com.janita.idplugin.woodpecker.common.util;
 
-import com.janita.idplugin.woodpecker.common.enums.ButtonType;
+import com.janita.idplugin.common.enums.ButtonType;
 import com.janita.idplugin.woodpecker.renderer.CrQuestionTableRenderer;
 import lombok.experimental.UtilityClass;
 

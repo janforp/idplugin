@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.common.domain;
+package com.janita.idplugin.remote.api;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

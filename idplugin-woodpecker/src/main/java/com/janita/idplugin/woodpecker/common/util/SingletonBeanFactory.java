@@ -12,7 +12,7 @@ import com.janita.idplugin.woodpecker.dao.question.ICrQuestionDAO;
 import com.janita.idplugin.woodpecker.dao.question.impl.CrQuestionMySqlDAO;
 import com.janita.idplugin.woodpecker.dao.question.impl.CrQuestionRestApiDAO;
 import com.janita.idplugin.woodpecker.dao.question.impl.CrQuestionSqliteDAO;
-import com.janita.idplugin.woodpecker.db.IDatabaseService;
+import com.janita.idplugin.remote.db.IDatabaseService;
 import com.janita.idplugin.woodpecker.db.impl.MySqlDatabaseServiceImpl;
 import com.janita.idplugin.woodpecker.db.impl.SqliteDatabaseServiceImpl;
 import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;

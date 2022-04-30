@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.common.util;
+package com.janita.idplugin.common.util;
 
 import com.alibaba.fastjson.JSON;
 

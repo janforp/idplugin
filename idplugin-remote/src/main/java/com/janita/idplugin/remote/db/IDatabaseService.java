@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.db;
+package com.janita.idplugin.remote.db;
 
 import java.sql.Connection;
 
