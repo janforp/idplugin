@@ -8,7 +8,7 @@ import com.janita.idplugin.dao.BaseDAO;
 import com.janita.idplugin.dao.crquestion.ICrQuestionDAO;
 import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.common.request.CrQuestionQueryRequest;
-import com.janita.idplugin.remote.db.IDatabaseService;
+import com.janita.idplugin.common.IDatabaseService;
 import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;

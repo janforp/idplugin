@@ -1,6 +1,6 @@
 package com.janita.idplugin.remote.db.factory;
 
-import com.janita.idplugin.remote.db.IDatabaseService;
+import com.janita.idplugin.common.IDatabaseService;
 
 /**
  * DatabaseServiceFactory

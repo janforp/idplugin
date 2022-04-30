@@ -6,7 +6,7 @@ import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import com.janita.idplugin.dao.BaseDAO;
 import com.janita.idplugin.woodpecker.dao.developer.ICrDeveloperDAO;
 import com.janita.idplugin.dao.crquestion.ICrQuestionDAO;
-import com.janita.idplugin.remote.db.IDatabaseService;
+import com.janita.idplugin.common.IDatabaseService;
 import com.janita.idplugin.common.entity.CrDeveloper;
 import com.janita.idplugin.common.request.CrDeveloperQueryRequest;
 import com.janita.idplugin.common.request.CrDeveloperSaveRequest;

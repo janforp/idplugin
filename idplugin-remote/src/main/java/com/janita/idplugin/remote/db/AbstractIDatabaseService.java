@@ -1,5 +1,6 @@
 package com.janita.idplugin.remote.db;
 
+import com.janita.idplugin.common.IDatabaseService;
 import com.mysql.cj.jdbc.ConnectionImpl;
 import org.apache.commons.dbutils.QueryRunner;
 

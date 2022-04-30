@@ -1,4 +1,4 @@
-package com.janita.idplugin.remote.db;
+package com.janita.idplugin.common;
 
 import java.sql.Connection;
 
