@@ -36,7 +36,8 @@ public class CrQuestionApplication implements ApplicationComponent {
         public void run() {
             try {
                 IDatabaseService database = SingletonBeanFactory.getDatabaseService();
-                database.reInitConnect();
+                CrQuestionSetting setting = CrQuestionSetting.getCrQuestionSettingFromCache();
+                database.reInitConnect(setting.getDbUrl(),setting.getDbUsername(),setting.getDbPwd());
             } catch (Exception e) {
                 e.printStackTrace();
             }

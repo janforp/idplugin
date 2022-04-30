@@ -2,6 +2,7 @@ package com.janita.idplugin.woodpecker.common.enums;
 
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import com.janita.idplugin.remote.db.IDatabaseService;
+import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -32,12 +33,14 @@ public enum CrDataStorageEnum {
             if (fromSetting) {
                 new Thread(() -> {
                     IDatabaseService database = SingletonBeanFactory.getSqliteDatabaseServiceImpl();
-                    database.reInitConnect();
+                    CrQuestionSetting setting = CrQuestionSetting.getCrQuestionSettingFromCache();
+                    database.reInitConnect(setting.getDbUrl(),setting.getDbUsername(),setting.getDbPwd());
                 }).start();
                 return true;
             } else {
                 IDatabaseService database = SingletonBeanFactory.getSqliteDatabaseServiceImpl();
-                database.reInitConnect();
+                CrQuestionSetting setting = CrQuestionSetting.getCrQuestionSettingFromCache();
+                database.reInitConnect(setting.getDbUrl(),setting.getDbUsername(),setting.getDbPwd());
                 return database.checkConnectSuccess();
             }
         }
@@ -49,12 +52,14 @@ public enum CrDataStorageEnum {
             if (fromSetting) {
                 new Thread(() -> {
                     IDatabaseService database = SingletonBeanFactory.getMySqlDatabaseServiceImpl();
-                    database.reInitConnect();
+                    CrQuestionSetting setting = CrQuestionSetting.getCrQuestionSettingFromCache();
+                    database.reInitConnect(setting.getDbUrl(),setting.getDbUsername(),setting.getDbPwd());
                 }).start();
                 return true;
             } else {
                 IDatabaseService database = SingletonBeanFactory.getMySqlDatabaseServiceImpl();
-                database.reInitConnect();
+                CrQuestionSetting setting = CrQuestionSetting.getCrQuestionSettingFromCache();
+                database.reInitConnect(setting.getDbUrl(),setting.getDbUsername(),setting.getDbPwd());
                 return database.checkConnectSuccess();
             }
         }

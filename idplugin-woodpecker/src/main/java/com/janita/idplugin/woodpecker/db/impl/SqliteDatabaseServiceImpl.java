@@ -22,7 +22,7 @@ public class SqliteDatabaseServiceImpl extends AbstractIDatabaseService {
     }
 
     @Override
-    protected BasicDataSource initDataSource() {
+    protected BasicDataSource initDataSource(String url, String username, String pwd) {
         //创建了DBCP的数据库连接池
         BasicDataSource source = new BasicDataSource();
         try {

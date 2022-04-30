@@ -12,6 +12,7 @@ import com.janita.idplugin.woodpecker.domain.CrDeveloperQueryRequest;
 import com.janita.idplugin.woodpecker.domain.CrDeveloperSaveRequest;
 import com.janita.idplugin.woodpecker.domain.CrQuestion;
 import com.janita.idplugin.woodpecker.domain.CrQuestionQueryRequest;
+import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
@@ -33,7 +34,8 @@ public class CrDeveloperMysqlDAO extends BaseDAO<CrDeveloper> implements ICrDeve
     @Override
     public boolean save(CrDeveloperSaveRequest request) {
         IDatabaseService databaseService = SingletonBeanFactory.getMySqlDatabaseServiceImpl();
-        Connection connection = databaseService.getConnection();
+        CrQuestionSetting cache = CrQuestionSetting.getCrQuestionSettingFromCache();
+        Connection connection = databaseService.getConnection(cache.getDbUrl(),cache.getDbUsername(),cache.getDbPwd());
 
         String name = request.getName();
         String email = request.getEmail();

@@ -26,16 +26,16 @@ public abstract class AbstractIDatabaseService implements IDatabaseService {
     }
 
     @Override
-    public void reInitConnect() {
+    public void reInitConnect(String url, String username, String pwd) {
         this.closeResource();
-        this.source = initDataSource();
-        this.connection = getConnection();
+        this.source = initDataSource(url, username, pwd);
+        this.connection = getConnection(url, username, pwd);
         // 如果不存在,创建DB文件
         createFileAndDir();
         if (this.connection == INVALID_CONNECT) {
             return;
         }
-        this.initTable();
+        this.initTable(url, username, pwd);
     }
 
     @Override
@@ -54,9 +54,9 @@ public abstract class AbstractIDatabaseService implements IDatabaseService {
     }
 
     @Override
-    public Connection getConnection() {
+    public Connection getConnection(String url, String username, String pwd) {
         if (source == null) {
-            source = initDataSource();
+            source = initDataSource(url, username, pwd);
         }
         if (connection == null || connection == INVALID_CONNECT) {
             try {
@@ -84,13 +84,13 @@ public abstract class AbstractIDatabaseService implements IDatabaseService {
         return connection;
     }
 
-    private void initTable() {
+    private void initTable(String url, String username, String pwd) {
         String createQuestionSQL = getQuestionTableSql();
         String developerTableSql = getDeveloperTableSql();
         try {
             QueryRunner queryRunner = new QueryRunner(source);
-            queryRunner.update(getConnection(), createQuestionSQL);
-            queryRunner.update(getConnection(), developerTableSql);
+            queryRunner.update(getConnection(url, username, pwd), createQuestionSQL);
+            queryRunner.update(getConnection(url, username, pwd), developerTableSql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -118,7 +118,7 @@ public abstract class AbstractIDatabaseService implements IDatabaseService {
      *
      * @return 数据源初始化
      */
-    protected abstract DataSource initDataSource();
+    protected abstract DataSource initDataSource(String url, String username, String pwd);
 
     /**
      * 创建表

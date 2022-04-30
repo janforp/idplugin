@@ -9,6 +9,7 @@ import com.janita.idplugin.woodpecker.dao.question.ICrQuestionDAO;
 import com.janita.idplugin.woodpecker.domain.CrQuestion;
 import com.janita.idplugin.woodpecker.domain.CrQuestionQueryRequest;
 import com.janita.idplugin.remote.db.IDatabaseService;
+import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 
@@ -36,7 +37,8 @@ public class CrQuestionMySqlDAO extends BaseDAO<CrQuestion> implements ICrQuesti
 
     public boolean insert(CrQuestion question) {
         IDatabaseService database = SingletonBeanFactory.getMySqlDatabaseServiceImpl();
-        Connection connection = database.getConnection();
+        CrQuestionSetting cache = CrQuestionSetting.getCrQuestionSettingFromCache();
+        Connection connection = database.getConnection(cache.getDbUrl(),cache.getDbUsername(),cache.getDbPwd());
 
         boolean success = update(connection, DmlConstants.INSERT_QUESTION_IN_SQLITE,
                 null,
@@ -91,7 +93,8 @@ public class CrQuestionMySqlDAO extends BaseDAO<CrQuestion> implements ICrQuesti
     public boolean update(CrQuestion question) {
         Long id = question.getId();
         IDatabaseService databaseService = SingletonBeanFactory.getSqliteDatabaseServiceImpl();
-        Connection connection = databaseService.getConnection();
+        CrQuestionSetting cache = CrQuestionSetting.getCrQuestionSettingFromCache();
+        Connection connection = databaseService.getConnection(cache.getDbUrl(),cache.getDbUsername(),cache.getDbPwd());
         CrQuestion oldQuestion = getBean(connection, DmlConstants.QUERY_BY_ID, id);
         if (oldQuestion == null) {
             return true;
@@ -138,7 +141,8 @@ public class CrQuestionMySqlDAO extends BaseDAO<CrQuestion> implements ICrQuesti
     public Pair<Boolean, List<CrQuestion>> queryQuestion(CrQuestionQueryRequest request) {
         Set<String> stateSet = request.getStateSet();
         IDatabaseService database = SingletonBeanFactory.getDatabaseService();
-        Connection connection = database.getConnection();
+        CrQuestionSetting cache = CrQuestionSetting.getCrQuestionSettingFromCache();
+        Connection connection = database.getConnection(cache.getDbUrl(),cache.getDbUsername(),cache.getDbPwd());
         try {
             List<CrQuestion> questionList = queryList(connection, DmlConstants.QUERY_SQL, new ArrayList<>(request.getProjectNameSet()).get(0));
             if (CollectionUtils.isEmpty(questionList)) {

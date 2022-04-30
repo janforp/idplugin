@@ -12,6 +12,7 @@ import com.janita.idplugin.woodpecker.domain.CrDeveloperQueryRequest;
 import com.janita.idplugin.woodpecker.domain.CrDeveloperSaveRequest;
 import com.janita.idplugin.woodpecker.domain.CrQuestion;
 import com.janita.idplugin.woodpecker.domain.CrQuestionQueryRequest;
+import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -35,7 +36,8 @@ public class CrDeveloperSqliteDAO extends BaseDAO<CrDeveloper> implements ICrDev
     @Override
     public boolean save(CrDeveloperSaveRequest request) {
         IDatabaseService databaseService = SingletonBeanFactory.getSqliteDatabaseServiceImpl();
-        Connection connection = databaseService.getConnection();
+        CrQuestionSetting cache = CrQuestionSetting.getCrQuestionSettingFromCache();
+        Connection connection = databaseService.getConnection(cache.getDbUrl(),cache.getDbUsername(),cache.getDbPwd());
 
         String name = request.getName();
         String email = request.getEmail();
@@ -70,7 +72,8 @@ public class CrDeveloperSqliteDAO extends BaseDAO<CrDeveloper> implements ICrDev
         }
 
         IDatabaseService databaseService = SingletonBeanFactory.getSqliteDatabaseServiceImpl();
-        Connection connection = databaseService.getConnection();
+        CrQuestionSetting cache = CrQuestionSetting.getCrQuestionSettingFromCache();
+        Connection connection = databaseService.getConnection(cache.getDbUrl(),cache.getDbUsername(),cache.getDbPwd());
 
         Set<String> collect = questionList.stream().map(CrQuestion::getAssignTo).collect(Collectors.toSet());
         String[] names = collect.toArray(new String[0]);

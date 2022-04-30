@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies {
+    implementation project(':idplugin-common') /* 子模块之间的依赖 */
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     implementation group: 'commons-io', name: 'commons-io', version: '2.4'

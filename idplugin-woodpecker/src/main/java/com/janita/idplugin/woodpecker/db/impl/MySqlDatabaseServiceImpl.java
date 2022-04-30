@@ -19,10 +19,10 @@ public class MySqlDatabaseServiceImpl extends AbstractIDatabaseService {
     }
 
     @Override
-    protected DataSource initDataSource() {
+    protected DataSource initDataSource(String url, String username, String pwd) {
         CrQuestionSetting setting = CrQuestionSetting.getCrQuestionSettingFromCache();
         try {
-            source = DruidDbUtils.getDataSource(setting.getDbUrl(), setting.getDbUsername(), setting.getDbPwd());
+            source = DruidDbUtils.getDataSource(url, username, pwd);
         } catch (Exception e) {
             e.printStackTrace();
         }

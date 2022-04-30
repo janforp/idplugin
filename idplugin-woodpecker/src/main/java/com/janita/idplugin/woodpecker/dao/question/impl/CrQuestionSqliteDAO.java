@@ -10,6 +10,7 @@ import com.janita.idplugin.woodpecker.dao.question.dataobject.CrSqliteQuestionDO
 import com.janita.idplugin.remote.db.IDatabaseService;
 import com.janita.idplugin.woodpecker.domain.CrQuestion;
 import com.janita.idplugin.woodpecker.domain.CrQuestionQueryRequest;
+import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.BeanUtils;
@@ -37,7 +38,8 @@ public class CrQuestionSqliteDAO extends BaseDAO<CrSqliteQuestionDO> implements 
     @Override
     public boolean insert(CrQuestion question) {
         IDatabaseService databaseService = SingletonBeanFactory.getSqliteDatabaseServiceImpl();
-        Connection connection = databaseService.getConnection();
+        CrQuestionSetting cache = CrQuestionSetting.getCrQuestionSettingFromCache();
+        Connection connection = databaseService.getConnection(cache.getDbUrl(),cache.getDbUsername(),cache.getDbPwd());
         Pair<Boolean, Integer> pair = getValue(connection, DmlConstants.GET_MAX_ID_NOW);
         if (!pair.getLeft()) {
             return false;
@@ -85,7 +87,8 @@ public class CrQuestionSqliteDAO extends BaseDAO<CrSqliteQuestionDO> implements 
     public boolean update(CrQuestion question) {
         Long id = question.getId();
         IDatabaseService databaseService = SingletonBeanFactory.getSqliteDatabaseServiceImpl();
-        Connection connection = databaseService.getConnection();
+        CrQuestionSetting cache = CrQuestionSetting.getCrQuestionSettingFromCache();
+        Connection connection = databaseService.getConnection(cache.getDbUrl(),cache.getDbUsername(),cache.getDbPwd());
         CrSqliteQuestionDO oldQuestion = getBean(connection, DmlConstants.QUERY_BY_ID, id);
         if (oldQuestion == null) {
             return true;
@@ -132,7 +135,8 @@ public class CrQuestionSqliteDAO extends BaseDAO<CrSqliteQuestionDO> implements 
     public Pair<Boolean, List<CrQuestion>> queryQuestion(CrQuestionQueryRequest request) {
         Set<String> stateSet = request.getStateSet();
         IDatabaseService database = SingletonBeanFactory.getSqliteDatabaseServiceImpl();
-        Connection connection = database.getConnection();
+        CrQuestionSetting cache = CrQuestionSetting.getCrQuestionSettingFromCache();
+        Connection connection = database.getConnection(cache.getDbUrl(),cache.getDbUsername(),cache.getDbPwd());
         try {
             List<CrSqliteQuestionDO> questionDoList = queryList(connection, DmlConstants.QUERY_SQL, new ArrayList<>(request.getProjectNameSet()).get(0));
             List<CrQuestion> questionList = toCrQuestionList(questionDoList);
