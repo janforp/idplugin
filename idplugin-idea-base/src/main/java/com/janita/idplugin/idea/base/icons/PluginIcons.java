@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.common.icons;
+package com.janita.idplugin.idea.base.icons;
 
 import com.intellij.openapi.util.IconLoader;
 

@@ -1,6 +1,9 @@
 package com.janita.idplugin.service.crdeveloper.impl;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.janita.idplugin.common.Pair;
+import com.janita.idplugin.common.constant.PluginConstant;
 import com.janita.idplugin.common.domain.DbConfig;
 import com.janita.idplugin.common.entity.CrDeveloper;
 import com.janita.idplugin.common.enums.CrDataStorageEnum;
@@ -9,6 +12,8 @@ import com.janita.idplugin.common.request.CrDeveloperSaveRequest;
 import com.janita.idplugin.dao.crdeveloper.ICrDeveloperDAO;
 import com.janita.idplugin.dao.crdeveloper.factory.CrDeveloperDaoFactory;
 import com.janita.idplugin.service.crdeveloper.ICrDeveloperService;
+import com.janita.idplugin.service.crdeveloper.factory.CrDeveloperServiceFactory;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.List;
 
@@ -40,5 +45,18 @@ public class CrDeveloperServiceImpl implements ICrDeveloperService {
         ICrDeveloperDAO crDeveloperDAO = CrDeveloperDaoFactory.getCrDeveloperDAO(storageEnum);
         Pair<Boolean, List<CrDeveloper>> booleanListPair = crDeveloperDAO.queryDeveloper(storageEnum, dbConfig, request);
         return booleanListPair.getRight();
+    }
+
+    @Override
+    public Pair<Boolean, List<CrDeveloper>> queryAssignName(CrDataStorageEnum storageEnum, DbConfig config, String projectName) {
+        CrDeveloperQueryRequest request = new CrDeveloperQueryRequest();
+        request.setProjectNameSet(Sets.newHashSet(projectName));
+
+        ICrDeveloperService developerService = CrDeveloperServiceFactory.getICrDeveloperService(storageEnum);
+        List<CrDeveloper> developerList = developerService.query(storageEnum, config, request);
+        if (CollectionUtils.isNotEmpty(developerList)) {
+            return Pair.of(true, developerList);
+        }
+        return Pair.of(true, Lists.newArrayList(new CrDeveloper(PluginConstant.PLEASE_MANUAL_ASSIGN)));
     }
 }

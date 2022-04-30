@@ -1,4 +1,4 @@
-package com.janita.idplugin.idea.base;
+package com.janita.idplugin.idea.base.domain;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.janita.idplugin.idea.base.progress;
 
-import com.janita.idplugin.idea.base.CurrentProgress;
+import com.janita.idplugin.idea.base.domain.CurrentProgress;
 
 /**
  * ProgressTask

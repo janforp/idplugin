@@ -11,7 +11,7 @@ import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.ui.EditorTextField;
 import com.intellij.ui.components.JBLabel;
-import com.janita.idplugin.idea.base.NotificationUtils;
+import com.janita.idplugin.idea.base.util.NotificationUtils;
 
 import javax.swing.*;
 

@@ -18,9 +18,10 @@ import com.janita.idplugin.idea.base.util.CommonUtils;
 import com.janita.idplugin.idea.base.util.CompatibleUtils;
 import com.janita.idplugin.common.util.DateUtils;
 import com.janita.idplugin.idea.base.util.JSwingUtils;
+import com.janita.idplugin.service.crdeveloper.ICrDeveloperService;
+import com.janita.idplugin.service.crdeveloper.factory.CrDeveloperServiceFactory;
 import com.janita.idplugin.service.crquestion.ICrQuestionService;
 import com.janita.idplugin.service.crquestion.factory.CrQuestionFactory;
-import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import com.janita.idplugin.woodpecker.dialog.CrQuestionEditDialog;
 import com.janita.idplugin.common.entity.CrDeveloper;
 import com.janita.idplugin.common.entity.CrQuestion;
@@ -29,7 +30,7 @@ import com.janita.idplugin.woodpecker.export.MDFreeMarkProcessor;
 import com.janita.idplugin.woodpecker.export.vo.CrQuestionExportVO;
 import com.janita.idplugin.woodpecker.renderer.CrQuestionTableRenderer;
 import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
-import com.janita.idplugin.woodpecker.common.util.CrQuestionUtils;
+import com.janita.idplugin.woodpecker.export.CrQuestionUtils;
 import com.janita.idplugin.woodpecker.window.table.CrQuestionTable;
 import org.apache.commons.lang3.StringUtils;
 
@@ -235,7 +236,9 @@ public class CrQuestionListWindow extends JDialog {
 
     private void showQuestionDetailDialog(int row) {
         CrQuestion question = CrQuestionTable.getCrQuestionList().get(row);
-        Pair<Boolean, List<CrDeveloper>> pair = SingletonBeanFactory.getCrQuestionService().queryAssignName(question.getProjectName());
+        CrDataStorageEnum storageEnum = CrQuestionSetting.getStorageWayFromCache();
+        ICrDeveloperService developerService = CrDeveloperServiceFactory.getICrDeveloperService(storageEnum);
+        Pair<Boolean, List<CrDeveloper>> pair = developerService.queryAssignName(storageEnum, CrQuestionSetting.getDbConfig(), question.getProjectName());
         CrQuestionEditDialog crQuestionEditDialog = new CrQuestionEditDialog(project, question, pair.getRight(), false, row);
         crQuestionEditDialog.open();
     }

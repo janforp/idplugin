@@ -7,7 +7,7 @@ import com.janita.idplugin.common.IDatabaseService;
 import com.janita.idplugin.remote.db.factory.DatabaseServiceFactory;
 import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.service.health.factory.HealthServiceFactory;
-import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
+import com.janita.idplugin.idea.base.util.SingletonBeanFactory;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

@@ -6,17 +6,20 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.common.enums.CrQuestionState;
-import com.janita.idplugin.idea.base.SelectFileInfo;
+import com.janita.idplugin.idea.base.domain.SelectFileInfo;
 import com.janita.idplugin.idea.base.util.CompatibleUtils;
 import com.janita.idplugin.idea.base.util.GitUtils;
 import com.janita.idplugin.common.Pair;
 import com.janita.idplugin.idea.base.util.CommonUtils;
-import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
+import com.janita.idplugin.service.crdeveloper.ICrDeveloperService;
+import com.janita.idplugin.service.crdeveloper.factory.CrDeveloperServiceFactory;
 import com.janita.idplugin.woodpecker.dialog.CrQuestionEditDialog;
 import com.janita.idplugin.woodpecker.dialog.CrQuestionSettingDialog;
 import com.janita.idplugin.common.entity.CrDeveloper;
 import com.janita.idplugin.common.entity.CrQuestion;
+import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -36,7 +39,9 @@ public class CrCreateCrQuestionAction extends AnAction {
         }
         Project project = e.getRequiredData(CommonDataKeys.PROJECT);
         CrQuestion question = newQuestion(e);
-        Pair<Boolean, List<CrDeveloper>> pair = SingletonBeanFactory.getCrQuestionService().queryAssignName(question.getProjectName());
+        CrDataStorageEnum storageEnum = CrQuestionSetting.getStorageWayFromCache();
+        ICrDeveloperService developerService = CrDeveloperServiceFactory.getICrDeveloperService(storageEnum);
+        Pair<Boolean, List<CrDeveloper>> pair = developerService.queryAssignName(storageEnum, CrQuestionSetting.getDbConfig(), question.getProjectName());
         if (!pair.getLeft()) {
             CommonUtils.showNotification("CRHelper数据库配置不正确", MessageType.ERROR);
             return;

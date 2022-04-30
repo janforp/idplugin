@@ -1,4 +1,4 @@
-package com.janita.idplugin.idea.base;
+package com.janita.idplugin.idea.base.util;
 
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationDisplayType;

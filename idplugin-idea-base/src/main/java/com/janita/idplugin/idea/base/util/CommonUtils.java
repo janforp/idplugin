@@ -24,7 +24,7 @@ import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.janita.idplugin.idea.base.SelectFileInfo;
+import com.janita.idplugin.idea.base.domain.SelectFileInfo;
 import lombok.experimental.UtilityClass;
 
 import javax.swing.*;

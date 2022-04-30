@@ -31,7 +31,6 @@
         <applicationService serviceImplementation="com.janita.idplugin.remote.db.impl.SqliteDatabaseServiceImpl"/>
         <!-- mysql 数据库-->
         <applicationService serviceImplementation="com.janita.idplugin.remote.db.impl.MySqlDatabaseServiceImpl"/>
-        <applicationService serviceImplementation="com.janita.idplugin.woodpecker.service.CrQuestionService"/>
         <applicationService serviceImplementation="com.janita.idplugin.dao.crdeveloper.impl.CrDeveloperRestApiDAO"/>
         <applicationService serviceImplementation="com.janita.idplugin.dao.crdeveloper.impl.CrDeveloperSqliteDAO"/>
         <applicationService serviceImplementation="com.janita.idplugin.dao.crdeveloper.impl.CrDeveloperMysqlDAO"/>
