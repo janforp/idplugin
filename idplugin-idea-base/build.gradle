@@ -12,9 +12,6 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-    implementation project(':idplugin-remote') /* 子模块之间的依赖 */
-    implementation project(':idplugin-common') /* 子模块之间的依赖 */
-    implementation project(':idplugin-idea-base') /* 子模块之间的依赖 */
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
@@ -31,9 +28,7 @@ test {
 }
 
 /* 添加子模块添加的配置 start */
-/* 子模块项目名，jar名 */
-archivesBaseName = 'idplugin-woodpecker'
+archivesBaseName = 'idplugin-idea-base'
 jar.enabled = true
-/* 需要org.springframework.boot插件 不需要打包成可执行的jar*/
-//bootJar.enabled = false
+//bootJar.enabled = true
 /* 添加子模块添加的配置 over */
