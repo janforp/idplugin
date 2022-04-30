@@ -1,0 +1,8 @@
+/* 多模块构建 */
+/* 父模块名称 */
+rootProject.name = 'idplugin'
+
+/* 引入子模块 */
+include 'idplugin-common'
+include 'idplugin-remote'
+include 'idplugin-woodpecker'

@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
+}
+
+/* 添加子模块添加的配置 start */
+archivesBaseName = 'idplugin-remote'
+jar.enabled = true
+//bootJar.enabled = true
+/* 添加子模块添加的配置 over */
+
+
+dependencies {
+    implementation project(':idplugin-common') /* 子模块之间的依赖 */
+}

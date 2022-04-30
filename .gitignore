@@ -1,0 +1,8 @@
+# Project exclude paths
+/.gradle/
+/idplugin-common/build/
+/idplugin-common/build/classes/java/main/
+/idplugin-remote/build/
+/idplugin-remote/build/classes/java/main/
+/idplugin-woodpecker/build/
+/idplugin-woodpecker/build/classes/java/main/
