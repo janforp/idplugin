@@ -29,8 +29,8 @@ import com.janita.idplugin.common.entity.CrDeveloper;
 import com.janita.idplugin.common.request.CrDeveloperSaveRequest;
 import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
-import com.janita.idplugin.woodpecker.util.CrQuestionUtils;
-import com.janita.idplugin.woodpecker.window.table.CrQuestionHouse;
+import com.janita.idplugin.woodpecker.common.util.CrQuestionUtils;
+import com.janita.idplugin.woodpecker.window.table.CrQuestionTable;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -174,13 +174,13 @@ public class CrQuestionEditDialog extends DialogWrapper {
 
         if (add) {
             questionService.save(storageEnum, CrQuestionSetting.getDbConfig(), new CrQuestionCreate(editIndex, sendWeChatMsg, phoneList, question));
-            CrQuestionHouse.add(question, sendWeChatMsg, phoneList);
+            CrQuestionTable.add(question, sendWeChatMsg, phoneList);
         } else {
             // TODO 修改有BUG
             boolean changed = CrQuestionUtils.isChanged(rawQuestion, question);
             if (changed) {
                 questionService.save(storageEnum, CrQuestionSetting.getDbConfig(), new CrQuestionCreate(editIndex, sendWeChatMsg, phoneList, question));
-                CrQuestionHouse.update(editIndex, question, sendWeChatMsg, phoneList);
+                CrQuestionTable.update(editIndex, question, sendWeChatMsg, phoneList);
             }
         }
         super.doOKAction();

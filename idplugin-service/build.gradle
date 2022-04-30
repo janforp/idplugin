@@ -12,6 +12,7 @@ dependencies {
     implementation project(':idplugin-dao') /* 子模块之间的依赖 */
     implementation project(':idplugin-common') /* 子模块之间的依赖 */
     implementation project(':idplugin-idea-base') /* 子模块之间的依赖 */
+    implementation project(':idplugin-remote') /* 子模块之间的依赖 */
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'

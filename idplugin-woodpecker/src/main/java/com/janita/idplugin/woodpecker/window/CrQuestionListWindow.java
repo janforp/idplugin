@@ -29,8 +29,7 @@ import com.janita.idplugin.woodpecker.export.MDFreeMarkProcessor;
 import com.janita.idplugin.woodpecker.export.vo.CrQuestionExportVO;
 import com.janita.idplugin.woodpecker.renderer.CrQuestionTableRenderer;
 import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
-import com.janita.idplugin.woodpecker.util.CrQuestionUtils;
-import com.janita.idplugin.woodpecker.window.table.CrQuestionHouse;
+import com.janita.idplugin.woodpecker.common.util.CrQuestionUtils;
 import com.janita.idplugin.woodpecker.window.table.CrQuestionTable;
 import org.apache.commons.lang3.StringUtils;
 
@@ -181,7 +180,7 @@ public class CrQuestionListWindow extends JDialog {
             public void doProcess() {
                 try {
                     List<CrQuestion> questionList = questionService.query(storageEnum, CrQuestionSetting.getDbConfig(), request);
-                    CrQuestionHouse.rerenderTable(questionList);
+                    CrQuestionTable.rerenderTable(questionList);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

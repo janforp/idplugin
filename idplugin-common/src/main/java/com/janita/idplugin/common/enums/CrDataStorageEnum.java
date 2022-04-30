@@ -1,5 +1,6 @@
 package com.janita.idplugin.common.enums;
 
+import com.janita.idplugin.common.IHealthService;
 import com.janita.idplugin.common.domain.DbConfig;
 import com.janita.idplugin.common.IDatabaseService;
 import lombok.AllArgsConstructor;
@@ -21,22 +22,21 @@ public enum CrDataStorageEnum {
 
     REST_API(true, false, "REST接口") {
         @Override
-        public boolean onChange(boolean fromSetting, DbConfig dbConfig, IDatabaseService database) {
-            //return SingletonBeanFactory.getCrQuestionRestApiDAO().checkHealth();
-            return true;
+        public boolean onChange(boolean fromSetting, DbConfig dbConfig, IDatabaseService database, IHealthService healthService) {
+            return healthService.checkHealth(REST_API, dbConfig);
         }
     },
 
     SQLITE_DB(true, true, "本地缓存") {
         @Override
-        public boolean onChange(boolean fromSetting, DbConfig dbConfig, IDatabaseService database) {
+        public boolean onChange(boolean fromSetting, DbConfig dbConfig, IDatabaseService database, IHealthService healthService) {
             return CrDataStorageEnum.doOnChange(fromSetting, dbConfig, database);
         }
     },
 
     MYSQL_DB(true, false, "MYSQL数据库") {
         @Override
-        public boolean onChange(boolean fromSetting, DbConfig dbConfig, IDatabaseService database) {
+        public boolean onChange(boolean fromSetting, DbConfig dbConfig, IDatabaseService database, IHealthService healthService) {
             return CrDataStorageEnum.doOnChange(fromSetting, dbConfig, database);
         }
     },
@@ -77,7 +77,7 @@ public enum CrDataStorageEnum {
      * @param fromSetting 从哪里设置
      * @return 成功失败
      */
-    public abstract boolean onChange(boolean fromSetting, DbConfig dbConfig, IDatabaseService database);
+    public abstract boolean onChange(boolean fromSetting, DbConfig dbConfig, IDatabaseService service, IHealthService healthService);
 
     /**
      * 检查这种方式当前是否可用

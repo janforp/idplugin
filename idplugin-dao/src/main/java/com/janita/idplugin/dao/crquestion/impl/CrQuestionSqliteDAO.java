@@ -42,8 +42,8 @@ public class CrQuestionSqliteDAO extends BaseDAO<CrSqliteQuestionDO> implements 
 
     @Override
     public boolean checkHealth(CrDataStorageEnum storageEnum,DbConfig config) {
-        return true;
-    }
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
+        return databaseService.checkConnectSuccess();    }
 
     @Override
     public boolean insert(CrDataStorageEnum storageEnum,DbConfig config, CrQuestion question) {

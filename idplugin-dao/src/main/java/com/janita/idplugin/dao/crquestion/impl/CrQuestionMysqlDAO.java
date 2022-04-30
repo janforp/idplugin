@@ -4,18 +4,23 @@ import com.janita.idplugin.common.IDatabaseService;
 import com.janita.idplugin.common.domain.DbConfig;
 import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.common.enums.CrDataStorageEnum;
+import com.janita.idplugin.common.enums.CrQuestionState;
 import com.janita.idplugin.common.request.CrQuestionQueryRequest;
 import com.janita.idplugin.dao.BaseDAO;
 import com.janita.idplugin.dao.crquestion.ICrQuestionDAO;
 import com.janita.idplugin.common.Pair;
 import com.janita.idplugin.remote.constant.DmlConstants;
 import com.janita.idplugin.remote.db.factory.DatabaseServiceFactory;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * CrQuestionMyslDAO
@@ -35,7 +40,8 @@ public class CrQuestionMysqlDAO extends BaseDAO<CrQuestion> implements ICrQuesti
 
     @Override
     public boolean checkHealth(CrDataStorageEnum storageEnum,DbConfig config) {
-        return false;
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
+        return databaseService.checkConnectSuccess();
     }
 
     @Override
@@ -93,11 +99,69 @@ public class CrQuestionMysqlDAO extends BaseDAO<CrQuestion> implements ICrQuesti
 
     @Override
     public boolean update(CrDataStorageEnum storageEnum,DbConfig config,CrQuestion question) {
-        return false;
+        Long id = question.getId();
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
+        Connection connection = databaseService.getConnectionByConfig(config);
+        CrQuestion oldQuestion = getBean(connection, DmlConstants.QUERY_BY_ID, id);
+        if (oldQuestion == null) {
+            return true;
+        }
+        String oldState = oldQuestion.getState();
+        String newState = question.getState();
+        boolean solved = false;
+        if (CrQuestionState.SOLVED.getDesc().equals(newState) && !CrQuestionState.SOLVED.getDesc().equals(oldState)) {
+            solved = true;
+            // 之前不是已解决，则本次修改就是解决问题
+            oldQuestion.setSolveGitBranchName(question.getSolveGitBranchName());
+        }
+        oldQuestion.setType(question.getType());
+        oldQuestion.setLevel(question.getLevel());
+        oldQuestion.setState(newState);
+        oldQuestion.setAssignTo(question.getAssignTo());
+        oldQuestion.setSuggestCode(question.getSuggestCode());
+        oldQuestion.setDescription(question.getDescription());
+        if (!solved) {
+            return update(connection, DmlConstants.UPDATE_NOT_SOLVED,
+                    oldQuestion.getType(),
+                    oldQuestion.getLevel(),
+                    oldQuestion.getState(),
+                    oldQuestion.getAssignTo(),
+                    oldQuestion.getSuggestCode(),
+                    oldQuestion.getDescription(),
+                    LocalDateTime.now(),
+                    id);
+        }
+        return update(connection, DmlConstants.UPDATE_SOLVED,
+                oldQuestion.getType(),
+                oldQuestion.getLevel(),
+                oldQuestion.getState(),
+                oldQuestion.getAssignTo(),
+                oldQuestion.getSuggestCode(),
+                oldQuestion.getDescription(),
+                LocalDateTime.now(),
+                oldQuestion.getSolveGitBranchName(),
+                LocalDateTime.now(),
+                id);
     }
 
     @Override
     public Pair<Boolean, List<CrQuestion>> queryQuestion(CrDataStorageEnum storageEnum,DbConfig config,CrQuestionQueryRequest request) {
-        return null;
-    }
+        Set<String> stateSet = request.getStateSet();
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
+        Connection connection = databaseService.getConnectionByConfig(config);
+        try {
+            List<CrQuestion> questionList = queryList(connection, DmlConstants.QUERY_SQL, new ArrayList<>(request.getProjectNameSet()).get(0));
+            if (CollectionUtils.isEmpty(questionList)) {
+                return Pair.of(true, new ArrayList<>(0));
+            }
+            if (CollectionUtils.isEmpty(stateSet)) {
+                return Pair.of(true, questionList);
+
+            }
+            List<CrQuestion> list = questionList.stream().filter(item -> stateSet.contains(item.getState())).collect(Collectors.toList());
+            return Pair.of(true, list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Pair.of(false, new ArrayList<>(0));
+        }    }
 }

@@ -1,10 +1,12 @@
 package com.janita.idplugin.woodpecker.setting;
 
+import com.janita.idplugin.common.IHealthService;
 import com.janita.idplugin.common.constant.PersistentKeys;
 import com.janita.idplugin.common.domain.DbConfig;
 import com.janita.idplugin.common.IDatabaseService;
 import com.janita.idplugin.remote.db.factory.DatabaseServiceFactory;
 import com.janita.idplugin.common.enums.CrDataStorageEnum;
+import com.janita.idplugin.service.health.factory.HealthServiceFactory;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -54,8 +56,8 @@ public class CrQuestionSetting {
         }
 
         IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(input.storageWay);
-
-        return input.getStorageWay().onChange(fromSetting, new DbConfig(cache.getDbUrl(), cache.getDbUsername(), cache.getDbPwd(),cache.restApiDomain), databaseService);
+        IHealthService iHealthService = HealthServiceFactory.getIHealthService();
+        return input.getStorageWay().onChange(fromSetting, new DbConfig(cache.getDbUrl(), cache.getDbUsername(), cache.getDbPwd(), cache.restApiDomain), databaseService, iHealthService);
     }
 
     public static CrQuestionSetting getCrQuestionSettingFromCache() {
