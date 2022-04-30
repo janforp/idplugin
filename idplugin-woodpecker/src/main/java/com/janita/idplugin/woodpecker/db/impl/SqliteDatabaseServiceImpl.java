@@ -1,6 +1,7 @@
 package com.janita.idplugin.woodpecker.db.impl;
 
 import com.janita.idplugin.common.constant.PluginConstant;
+import com.janita.idplugin.remote.db.AbstractIDatabaseService;
 import org.apache.commons.dbcp.BasicDataSource;
 
 import java.io.IOException;

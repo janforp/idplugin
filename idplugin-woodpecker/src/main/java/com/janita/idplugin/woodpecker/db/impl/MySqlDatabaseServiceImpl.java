@@ -1,5 +1,6 @@
 package com.janita.idplugin.woodpecker.db.impl;
 
+import com.janita.idplugin.remote.db.AbstractIDatabaseService;
 import com.janita.idplugin.woodpecker.common.util.DruidDbUtils;
 import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 
