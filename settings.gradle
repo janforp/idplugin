@@ -7,4 +7,5 @@ include 'idplugin-common'
 include 'idplugin-remote'
 include 'idplugin-woodpecker'
 include 'idplugin-idea-base'
+include 'idplugin-demo'
 
