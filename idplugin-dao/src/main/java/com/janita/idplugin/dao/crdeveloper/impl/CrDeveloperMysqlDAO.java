@@ -1,10 +1,13 @@
-package com.janita.idplugin.woodpecker.dao.developer.impl;
+package com.janita.idplugin.dao.crdeveloper.impl;
 
+import com.janita.idplugin.common.domain.DbConfig;
+import com.janita.idplugin.common.enums.CrDataStorageEnum;
+import com.janita.idplugin.dao.crquestion.factory.CrQuestionDaoFactory;
 import com.janita.idplugin.remote.constant.DmlConstants;
-import com.janita.idplugin.remote.api.Pair;
-import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
+import com.janita.idplugin.common.Pair;
+import com.janita.idplugin.remote.db.factory.DatabaseServiceFactory;
 import com.janita.idplugin.dao.BaseDAO;
-import com.janita.idplugin.woodpecker.dao.developer.ICrDeveloperDAO;
+import com.janita.idplugin.dao.crdeveloper.ICrDeveloperDAO;
 import com.janita.idplugin.dao.crquestion.ICrQuestionDAO;
 import com.janita.idplugin.common.IDatabaseService;
 import com.janita.idplugin.common.entity.CrDeveloper;
@@ -12,7 +15,6 @@ import com.janita.idplugin.common.request.CrDeveloperQueryRequest;
 import com.janita.idplugin.common.request.CrDeveloperSaveRequest;
 import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.common.request.CrQuestionQueryRequest;
-import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
@@ -28,14 +30,19 @@ import java.util.stream.Collectors;
  */
 public class CrDeveloperMysqlDAO extends BaseDAO<CrDeveloper> implements ICrDeveloperDAO {
 
+    private static final ICrDeveloperDAO INSTANCE = new CrDeveloperMysqlDAO();
+
+    public static ICrDeveloperDAO getINSTANCE() {
+        return INSTANCE;
+    }
+
     private CrDeveloperMysqlDAO() {
     }
 
     @Override
-    public boolean save(CrDeveloperSaveRequest request) {
-        IDatabaseService databaseService = SingletonBeanFactory.getMySqlDatabaseServiceImpl();
-        CrQuestionSetting cache = CrQuestionSetting.getCrQuestionSettingFromCache();
-        Connection connection = databaseService.getConnection(cache.getDbUrl(),cache.getDbUsername(),cache.getDbPwd());
+    public boolean save(CrDataStorageEnum storageEnum,DbConfig config, CrDeveloperSaveRequest request) {
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
+        Connection connection = databaseService.getConnectionByConfig(config);
 
         String name = request.getName();
         String email = request.getEmail();
@@ -54,12 +61,12 @@ public class CrDeveloperMysqlDAO extends BaseDAO<CrDeveloper> implements ICrDeve
     }
 
     @Override
-    public Pair<Boolean, List<CrDeveloper>> queryDeveloper(CrDeveloperQueryRequest request) {
+    public Pair<Boolean, List<CrDeveloper>> queryDeveloper(CrDataStorageEnum storageEnum,DbConfig config, CrDeveloperQueryRequest request) {
         Set<String> projectNameSet = request.getProjectNameSet();
         CrQuestionQueryRequest questionQueryRequest = new CrQuestionQueryRequest();
         questionQueryRequest.setProjectNameSet(projectNameSet);
-        ICrQuestionDAO crQuestionMySqlDAO = SingletonBeanFactory.getCrQuestionMySqlDAO();
-        Pair<Boolean, List<CrQuestion>> questionPair = crQuestionMySqlDAO.queryQuestion(questionQueryRequest);
+        ICrQuestionDAO crQuestionMySqlDAO = CrQuestionDaoFactory.getCrQuestionDAO(storageEnum);
+        Pair<Boolean, List<CrQuestion>> questionPair = crQuestionMySqlDAO.queryQuestion(storageEnum,config, questionQueryRequest);
         if (!questionPair.getLeft()) {
             return Pair.of(false, null);
         }

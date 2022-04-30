@@ -16,7 +16,7 @@
 
     <application-components>
         <component>
-            <implementation-class>com.janita.idplugin.woodpecker.component.CrQuestionApplication</implementation-class>
+            <implementation-class>com.janita.idplugin.woodpecker.component.InitDataBaseApplication</implementation-class>
         </component>
     </application-components>
 
@@ -32,12 +32,9 @@
         <!-- mysql 数据库-->
         <applicationService serviceImplementation="com.janita.idplugin.remote.db.impl.MySqlDatabaseServiceImpl"/>
         <applicationService serviceImplementation="com.janita.idplugin.woodpecker.service.CrQuestionService"/>
-        <applicationService serviceImplementation="com.janita.idplugin.woodpecker.dao.question.impl.CrQuestionSqliteDAO"/>
-        <applicationService serviceImplementation="com.janita.idplugin.woodpecker.dao.question.impl.CrQuestionMySqlDAO"/>
-        <applicationService serviceImplementation="com.janita.idplugin.woodpecker.dao.question.impl.CrQuestionRestApiDAO"/>
-        <applicationService serviceImplementation="com.janita.idplugin.woodpecker.dao.developer.impl.CrDeveloperRestApiDAO"/>
-        <applicationService serviceImplementation="com.janita.idplugin.woodpecker.dao.developer.impl.CrDeveloperSqliteDAO"/>
-        <applicationService serviceImplementation="com.janita.idplugin.woodpecker.dao.developer.impl.CrDeveloperMysqlDAO"/>
+        <applicationService serviceImplementation="com.janita.idplugin.dao.crdeveloper.impl.CrDeveloperRestApiDAO"/>
+        <applicationService serviceImplementation="com.janita.idplugin.dao.crdeveloper.impl.CrDeveloperSqliteDAO"/>
+        <applicationService serviceImplementation="com.janita.idplugin.dao.crdeveloper.impl.CrDeveloperMysqlDAO"/>
     </extensions>
 
     <actions>

@@ -1,8 +1,8 @@
 package com.janita.idplugin.woodpecker.component;
 
 import com.intellij.openapi.components.ApplicationComponent;
-import com.janita.idplugin.woodpecker.common.enums.CrDataStorageEnum;
-import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
+import com.janita.idplugin.remote.db.factory.DatabaseServiceFactory;
+import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.common.IDatabaseService;
 import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 
@@ -13,7 +13,7 @@ import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
  * @since 20220324
  */
 @SuppressWarnings("all")
-public class CrQuestionApplication implements ApplicationComponent {
+public class InitDataBaseApplication implements ApplicationComponent {
 
     @Override
     public void initComponent() {
@@ -26,7 +26,9 @@ public class CrQuestionApplication implements ApplicationComponent {
 
     @Override
     public void disposeComponent() {
-        SingletonBeanFactory.getDatabaseService().closeResource();
+        CrDataStorageEnum storageEnum = CrQuestionSetting.getStorageWayFromCache();
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
+        databaseService.closeResource();
         ApplicationComponent.super.disposeComponent();
     }
 
@@ -35,9 +37,10 @@ public class CrQuestionApplication implements ApplicationComponent {
         @Override
         public void run() {
             try {
-                IDatabaseService database = SingletonBeanFactory.getDatabaseService();
+                CrDataStorageEnum storageEnum = CrQuestionSetting.getStorageWayFromCache();
+                IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
                 CrQuestionSetting setting = CrQuestionSetting.getCrQuestionSettingFromCache();
-                database.reInitConnect(setting.getDbUrl(),setting.getDbUsername(),setting.getDbPwd());
+                databaseService.reInitConnect(setting.getDbUrl(),setting.getDbUsername(),setting.getDbPwd());
             } catch (Exception e) {
                 e.printStackTrace();
             }

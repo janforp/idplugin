@@ -4,7 +4,7 @@ import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBPasswordField;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBTextField;
-import com.janita.idplugin.woodpecker.common.enums.CrDataStorageEnum;
+import com.janita.idplugin.common.enums.CrDataStorageEnum;
 
 import javax.swing.*;
 import java.awt.*;

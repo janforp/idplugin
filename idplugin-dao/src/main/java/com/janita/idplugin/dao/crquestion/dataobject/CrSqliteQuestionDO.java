@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.dao.question.dataobject;
+package com.janita.idplugin.dao.crquestion.dataobject;
 
 import com.janita.idplugin.common.enums.CrQuestionState;
 ;

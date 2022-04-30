@@ -3,7 +3,8 @@ package com.janita.idplugin.woodpecker.setting;
 import com.janita.idplugin.common.constant.PersistentKeys;
 import com.janita.idplugin.common.domain.DbConfig;
 import com.janita.idplugin.common.IDatabaseService;
-import com.janita.idplugin.woodpecker.common.enums.CrDataStorageEnum;
+import com.janita.idplugin.remote.db.factory.DatabaseServiceFactory;
+import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,6 +31,11 @@ public class CrQuestionSetting {
 
     private String restApiDomain;
 
+    public static DbConfig getDbConfig() {
+        CrQuestionSetting setting = getCrQuestionSettingFromCache();
+        return new DbConfig(setting.getDbUrl(), setting.getDbUsername(), setting.getDbPwd(), setting.restApiDomain);
+    }
+
     public static boolean saveFromInput(boolean fromSetting, CrQuestionDataStorageSettingComponent component) {
         CrQuestionSetting input = getCrQuestionSettingFromInput(component);
         CrQuestionSetting cache = getCrQuestionSettingFromCache();
@@ -47,9 +53,9 @@ public class CrQuestionSetting {
             SingletonBeanFactory.getPropertiesComponent().setValue(PersistentKeys.CrDataStorageConfig.REST_API_DOMAIN, input.getRestApiDomain());
         }
 
-        IDatabaseService database = SingletonBeanFactory.getDatabaseService();
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(input.storageWay);
 
-        return input.getStorageWay().onChange(fromSetting, new DbConfig(cache.getDbUrl(), cache.getDbUsername(), cache.getDbPwd()), database);
+        return input.getStorageWay().onChange(fromSetting, new DbConfig(cache.getDbUrl(), cache.getDbUsername(), cache.getDbPwd(),cache.restApiDomain), databaseService);
     }
 
     public static CrQuestionSetting getCrQuestionSettingFromCache() {

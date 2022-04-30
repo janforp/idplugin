@@ -1,7 +1,9 @@
 package com.janita.idplugin.dao.crquestion;
 
-import com.janita.idplugin.remote.api.Pair;
+import com.janita.idplugin.common.domain.DbConfig;
+import com.janita.idplugin.common.Pair;
 import com.janita.idplugin.common.entity.CrQuestion;
+import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.common.request.CrQuestionQueryRequest;
 
 import java.util.List;
@@ -19,7 +21,7 @@ public interface ICrQuestionDAO {
      *
      * @return 是否健康
      */
-    boolean checkHealth();
+    boolean checkHealth(CrDataStorageEnum storageEnum,DbConfig config);
 
     /**
      * 添加
@@ -27,7 +29,7 @@ public interface ICrQuestionDAO {
      * @param question 问题
      * @return 成功/失败
      */
-    boolean insert(CrQuestion question);
+    boolean insert(CrDataStorageEnum storageEnum,DbConfig config, CrQuestion question);
 
     /**
      * 修改
@@ -35,8 +37,7 @@ public interface ICrQuestionDAO {
      * @param question 问题
      * @return 成功/失败
      */
-    boolean update(CrQuestion question);
-
+    boolean update(CrDataStorageEnum storageEnum,DbConfig config,CrQuestion question);
 
     /**
      * 查询
@@ -44,5 +45,5 @@ public interface ICrQuestionDAO {
      * @param request 参数
      * @return 成功/失败
      */
-    Pair<Boolean, List<CrQuestion>> queryQuestion(CrQuestionQueryRequest request);
+    Pair<Boolean, List<CrQuestion>> queryQuestion(CrDataStorageEnum storageEnum,DbConfig config,CrQuestionQueryRequest request);
 }

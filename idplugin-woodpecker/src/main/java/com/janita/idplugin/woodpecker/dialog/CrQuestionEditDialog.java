@@ -17,13 +17,18 @@ import com.intellij.ui.components.JBTextField;
 import com.janita.idplugin.common.constant.DataToInit;
 import com.janita.idplugin.common.constant.PluginConstant;
 import com.janita.idplugin.common.enums.CrQuestionState;
-import com.janita.idplugin.woodpecker.common.icons.CodeEditorUtil;
+import com.janita.idplugin.idea.base.util.CodeEditorUtil;
+import com.janita.idplugin.service.crdeveloper.ICrDeveloperService;
+import com.janita.idplugin.service.crdeveloper.factory.CrDeveloperServiceFactory;
+import com.janita.idplugin.service.crquestion.ICrQuestionService;
+import com.janita.idplugin.service.crquestion.domain.CrQuestionCreate;
+import com.janita.idplugin.service.crquestion.factory.CrQuestionFactory;
+import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.woodpecker.common.icons.PluginIcons;
-import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
-import com.janita.idplugin.woodpecker.dao.developer.ICrDeveloperDAO;
 import com.janita.idplugin.common.entity.CrDeveloper;
 import com.janita.idplugin.common.request.CrDeveloperSaveRequest;
 import com.janita.idplugin.common.entity.CrQuestion;
+import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 import com.janita.idplugin.woodpecker.util.CrQuestionUtils;
 import com.janita.idplugin.woodpecker.window.table.CrQuestionHouse;
 import org.apache.commons.lang3.StringUtils;
@@ -153,26 +158,28 @@ public class CrQuestionEditDialog extends DialogWrapper {
 
     @Override
     protected void doOKAction() {
+        CrDataStorageEnum storageEnum = CrQuestionSetting.getStorageWayFromCache();
+        ICrQuestionService questionService = CrQuestionFactory.getCrQuestionService(storageEnum);
+        ICrDeveloperService developerService = CrDeveloperServiceFactory.getICrDeveloperService(storageEnum);
+
         boolean sendWeChatMsg = sendWeChatBox.isSelected();
         List<String> phoneList = getPhoneList();
-        Pair<String, String> phoneAndNameOfAssignTo = getAssignerToNameAndPhone();
+
         // 保存开发人员
         {
+            Pair<String, String> phoneAndNameOfAssignTo = getAssignerToNameAndPhone();
             CrDeveloperSaveRequest request = new CrDeveloperSaveRequest(phoneAndNameOfAssignTo.first, null, phoneAndNameOfAssignTo.second);
-            ICrDeveloperDAO developerDAO = SingletonBeanFactory.getCrDeveloperDAO();
-            try {
-                developerDAO.save(request);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            developerService.save(storageEnum, CrQuestionSetting.getDbConfig(), request);
         }
 
         if (add) {
+            questionService.save(storageEnum, CrQuestionSetting.getDbConfig(), new CrQuestionCreate(editIndex, sendWeChatMsg, phoneList, question));
             CrQuestionHouse.add(question, sendWeChatMsg, phoneList);
         } else {
             // TODO 修改有BUG
             boolean changed = CrQuestionUtils.isChanged(rawQuestion, question);
             if (changed) {
+                questionService.save(storageEnum, CrQuestionSetting.getDbConfig(), new CrQuestionCreate(editIndex, sendWeChatMsg, phoneList, question));
                 CrQuestionHouse.update(editIndex, question, sendWeChatMsg, phoneList);
             }
         }

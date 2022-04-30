@@ -18,4 +18,6 @@ public class DbConfig {
     private String username;
 
     private String pwd;
+
+    private String domain;
 }

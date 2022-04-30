@@ -1,19 +1,21 @@
-package com.janita.idplugin.woodpecker.dao.question.impl;
+package com.janita.idplugin.dao.crquestion.impl;
 
-import com.janita.idplugin.remote.constant.DmlConstants;
-import com.janita.idplugin.remote.api.Pair;
+import com.janita.idplugin.common.IDatabaseService;
+import com.janita.idplugin.common.domain.DbConfig;
+import com.janita.idplugin.common.entity.CrQuestion;
+import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.common.enums.CrQuestionState;
-import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
+import com.janita.idplugin.common.request.CrQuestionQueryRequest;
 import com.janita.idplugin.dao.BaseDAO;
 import com.janita.idplugin.dao.crquestion.ICrQuestionDAO;
-import com.janita.idplugin.common.entity.CrQuestion;
-import com.janita.idplugin.common.request.CrQuestionQueryRequest;
-import com.janita.idplugin.common.IDatabaseService;
-import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
+import com.janita.idplugin.common.Pair;
+import com.janita.idplugin.remote.constant.DmlConstants;
+import com.janita.idplugin.dao.crquestion.dataobject.CrSqliteQuestionDO;
+import com.janita.idplugin.remote.db.factory.DatabaseServiceFactory;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.beans.BeanUtils;
 
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,26 +24,45 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * CrQuestionDAO
+ * CrQuestionMySqlDAO
  *
  * @author zhucj
  * @since 20220324
  */
-@SuppressWarnings("unused")
-public class CrQuestionMySqlDAO extends BaseDAO<CrQuestion> implements ICrQuestionDAO {
+public class CrQuestionSqliteDAO extends BaseDAO<CrSqliteQuestionDO> implements ICrQuestionDAO {
 
-    @Override
-    public boolean checkHealth() {
-        return SingletonBeanFactory.getMySqlDatabaseServiceImpl().checkConnectSuccess();
+    private static final ICrQuestionDAO INSTANCE = new CrQuestionSqliteDAO();
+
+    public static ICrQuestionDAO getINSTANCE() {
+        return INSTANCE;
     }
 
-    public boolean insert(CrQuestion question) {
-        IDatabaseService database = SingletonBeanFactory.getMySqlDatabaseServiceImpl();
-        CrQuestionSetting cache = CrQuestionSetting.getCrQuestionSettingFromCache();
-        Connection connection = database.getConnection(cache.getDbUrl(),cache.getDbUsername(),cache.getDbPwd());
+    private CrQuestionSqliteDAO() {
+    }
+
+    @Override
+    public boolean checkHealth(CrDataStorageEnum storageEnum,DbConfig config) {
+        return true;
+    }
+
+    @Override
+    public boolean insert(CrDataStorageEnum storageEnum,DbConfig config, CrQuestion question) {
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
+        Connection connection = databaseService.getConnectionByConfig(config);
+        Pair<Boolean, Integer> pair = getValue(connection, DmlConstants.GET_MAX_ID_NOW);
+        if (!pair.getLeft()) {
+            return false;
+        }
+        Integer right = pair.getRight();
+        if (right == null) {
+            right = 0;
+        }
+        Long maxId = Long.valueOf(right);
+        maxId = ObjectUtils.defaultIfNull(maxId, 0L);
+        Long nextId = maxId + 1;
 
         boolean success = update(connection, DmlConstants.INSERT_QUESTION_IN_SQLITE,
-                null,
+                nextId,
                 question.getProjectName(),
                 question.getFilePath(),
                 question.getFileName(),
@@ -67,35 +88,16 @@ public class CrQuestionMySqlDAO extends BaseDAO<CrQuestion> implements ICrQuesti
         if (!success) {
             return false;
         }
-
-        Pair<Boolean, Long> pair = getLastInsertId(connection);
-        if (BooleanUtils.isNotTrue(pair.getLeft())) {
-            return false;
-        }
-        question.setId(pair.getRight());
+        question.setId(nextId);
         return true;
     }
 
-    private Pair<Boolean, Long> getLastInsertId(Connection connection) {
-        Pair<Boolean, Object> pair = getValue(connection, DmlConstants.LAST_INSERT_ROW_ID_OF_MYSQL);
-        if (BooleanUtils.isNotTrue(pair.getLeft())) {
-            return Pair.of(false, null);
-        }
-        Object right = pair.getRight();
-        if (right instanceof BigInteger) {
-            BigInteger id = (BigInteger) right;
-            return Pair.of(true, id.longValue());
-        }
-        return Pair.of(true, (Long) right);
-    }
-
     @Override
-    public boolean update(CrQuestion question) {
+    public boolean update(CrDataStorageEnum storageEnum,DbConfig config, CrQuestion question) {
         Long id = question.getId();
-        IDatabaseService databaseService = SingletonBeanFactory.getSqliteDatabaseServiceImpl();
-        CrQuestionSetting cache = CrQuestionSetting.getCrQuestionSettingFromCache();
-        Connection connection = databaseService.getConnection(cache.getDbUrl(),cache.getDbUsername(),cache.getDbPwd());
-        CrQuestion oldQuestion = getBean(connection, DmlConstants.QUERY_BY_ID, id);
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
+        Connection connection = databaseService.getConnectionByConfig(config);
+        CrSqliteQuestionDO oldQuestion = getBean(connection, DmlConstants.QUERY_BY_ID, id);
         if (oldQuestion == null) {
             return true;
         }
@@ -138,13 +140,13 @@ public class CrQuestionMySqlDAO extends BaseDAO<CrQuestion> implements ICrQuesti
     }
 
     @Override
-    public Pair<Boolean, List<CrQuestion>> queryQuestion(CrQuestionQueryRequest request) {
+    public Pair<Boolean, List<CrQuestion>> queryQuestion(CrDataStorageEnum storageEnum,DbConfig config, CrQuestionQueryRequest request) {
         Set<String> stateSet = request.getStateSet();
-        IDatabaseService database = SingletonBeanFactory.getDatabaseService();
-        CrQuestionSetting cache = CrQuestionSetting.getCrQuestionSettingFromCache();
-        Connection connection = database.getConnection(cache.getDbUrl(),cache.getDbUsername(),cache.getDbPwd());
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
+        Connection connection = databaseService.getConnectionByConfig(config);
         try {
-            List<CrQuestion> questionList = queryList(connection, DmlConstants.QUERY_SQL, new ArrayList<>(request.getProjectNameSet()).get(0));
+            List<CrSqliteQuestionDO> questionDoList = queryList(connection, DmlConstants.QUERY_SQL, new ArrayList<>(request.getProjectNameSet()).get(0));
+            List<CrQuestion> questionList = toCrQuestionList(questionDoList);
             if (CollectionUtils.isEmpty(questionList)) {
                 return Pair.of(true, new ArrayList<>(0));
             }
@@ -158,5 +160,27 @@ public class CrQuestionMySqlDAO extends BaseDAO<CrQuestion> implements ICrQuesti
             e.printStackTrace();
             return Pair.of(false, new ArrayList<>(0));
         }
+    }
+
+    private static CrQuestion toCrQuestion(CrSqliteQuestionDO questionDO) {
+        if (questionDO == null) {
+            return null;
+        }
+        CrQuestion question = new CrQuestion();
+        BeanUtils.copyProperties(questionDO, question);
+        // 类型不同无法拷贝
+        question.setId(Long.valueOf(questionDO.getId()));
+        return question;
+    }
+
+    private static List<CrQuestion> toCrQuestionList(List<CrSqliteQuestionDO> doList) {
+        List<CrQuestion> questionList = new ArrayList<>();
+        if (doList == null) {
+            return new ArrayList<>(0);
+        }
+        for (CrSqliteQuestionDO questionDO : doList) {
+            questionList.add(toCrQuestion(questionDO));
+        }
+        return questionList;
     }
 }

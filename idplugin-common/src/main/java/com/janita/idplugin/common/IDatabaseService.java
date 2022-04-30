@@ -1,5 +1,7 @@
 package com.janita.idplugin.common;
 
+import com.janita.idplugin.common.domain.DbConfig;
+
 import java.sql.Connection;
 
 /**
@@ -40,4 +42,6 @@ public interface IDatabaseService {
      * 释放资源
      */
     void closeResource();
+
+    Connection getConnectionByConfig(DbConfig config);
 }

@@ -8,7 +8,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
-import com.janita.idplugin.remote.api.Pair;
+import com.janita.idplugin.common.Pair;
+import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.idea.base.enums.ButtonType;
 import com.janita.idplugin.common.enums.CrQuestionState;
 import com.janita.idplugin.idea.base.progress.AbstractProgressTask;
@@ -17,6 +18,8 @@ import com.janita.idplugin.idea.base.util.CommonUtils;
 import com.janita.idplugin.idea.base.util.CompatibleUtils;
 import com.janita.idplugin.common.util.DateUtils;
 import com.janita.idplugin.idea.base.util.JSwingUtils;
+import com.janita.idplugin.service.crquestion.ICrQuestionService;
+import com.janita.idplugin.service.crquestion.factory.CrQuestionFactory;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import com.janita.idplugin.woodpecker.dialog.CrQuestionEditDialog;
 import com.janita.idplugin.common.entity.CrDeveloper;
@@ -25,6 +28,7 @@ import com.janita.idplugin.common.request.CrQuestionQueryRequest;
 import com.janita.idplugin.woodpecker.export.MDFreeMarkProcessor;
 import com.janita.idplugin.woodpecker.export.vo.CrQuestionExportVO;
 import com.janita.idplugin.woodpecker.renderer.CrQuestionTableRenderer;
+import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 import com.janita.idplugin.woodpecker.util.CrQuestionUtils;
 import com.janita.idplugin.woodpecker.window.table.CrQuestionHouse;
 import com.janita.idplugin.woodpecker.window.table.CrQuestionTable;
@@ -169,11 +173,15 @@ public class CrQuestionListWindow extends JDialog {
         String projectName = (String) projectBox.getSelectedItem();
         Set<String> stateSet = getStateByUserSelect();
         CrQuestionQueryRequest request = new CrQuestionQueryRequest(Sets.newHashSet(projectName), stateSet);
+        CrDataStorageEnum storageEnum = CrQuestionSetting.getStorageWayFromCache();
+        ICrQuestionService questionService = CrQuestionFactory.getCrQuestionService(storageEnum);
+
         ProgressUtils.showProgress(project, "Querying", new AbstractProgressTask() {
             @Override
             public void doProcess() {
                 try {
-                    CrQuestionHouse.rerenderTable(request);
+                    List<CrQuestion> questionList = questionService.query(storageEnum, CrQuestionSetting.getDbConfig(), request);
+                    CrQuestionHouse.rerenderTable(questionList);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

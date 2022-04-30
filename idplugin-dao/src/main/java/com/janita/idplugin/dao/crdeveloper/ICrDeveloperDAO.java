@@ -1,7 +1,9 @@
-package com.janita.idplugin.woodpecker.dao.developer;
+package com.janita.idplugin.dao.crdeveloper;
 
-import com.janita.idplugin.remote.api.Pair;
+import com.janita.idplugin.common.domain.DbConfig;
+import com.janita.idplugin.common.Pair;
 import com.janita.idplugin.common.entity.CrDeveloper;
+import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.common.request.CrDeveloperQueryRequest;
 import com.janita.idplugin.common.request.CrDeveloperSaveRequest;
 
@@ -21,7 +23,7 @@ public interface ICrDeveloperDAO {
      * @param request 参数
      * @return 结果
      */
-    boolean save(CrDeveloperSaveRequest request);
+    boolean save(CrDataStorageEnum storageEnum,DbConfig config, CrDeveloperSaveRequest request);
 
     /**
      * 查询
@@ -29,5 +31,5 @@ public interface ICrDeveloperDAO {
      * @param request 参数
      * @return 成功/失败
      */
-    Pair<Boolean, List<CrDeveloper>> queryDeveloper(CrDeveloperQueryRequest request);
+    Pair<Boolean, List<CrDeveloper>> queryDeveloper(CrDataStorageEnum storageEnum,DbConfig config, CrDeveloperQueryRequest request);
 }

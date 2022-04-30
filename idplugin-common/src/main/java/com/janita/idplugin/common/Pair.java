@@ -1,4 +1,4 @@
-package com.janita.idplugin.remote.api;
+package com.janita.idplugin.common;
 
 /**
  * Pair

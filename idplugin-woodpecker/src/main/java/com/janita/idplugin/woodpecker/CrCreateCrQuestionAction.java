@@ -10,7 +10,7 @@ import com.janita.idplugin.common.enums.CrQuestionState;
 import com.janita.idplugin.idea.base.SelectFileInfo;
 import com.janita.idplugin.idea.base.util.CompatibleUtils;
 import com.janita.idplugin.idea.base.util.GitUtils;
-import com.janita.idplugin.remote.api.Pair;
+import com.janita.idplugin.common.Pair;
 import com.janita.idplugin.idea.base.util.CommonUtils;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import com.janita.idplugin.woodpecker.dialog.CrQuestionEditDialog;

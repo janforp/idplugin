@@ -1,12 +1,9 @@
 package com.janita.idplugin.woodpecker.window.table;
 
-import com.janita.idplugin.remote.api.Pair;
 import com.janita.idplugin.idea.base.util.CommonUtils;
-import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import com.janita.idplugin.woodpecker.common.wechat.WeChatService;
 import com.janita.idplugin.woodpecker.common.wechat.domain.OperationType;
 import com.janita.idplugin.common.entity.CrQuestion;
-import com.janita.idplugin.common.request.CrQuestionQueryRequest;
 
 import java.util.List;
 
@@ -19,10 +16,6 @@ import java.util.List;
 public class CrQuestionHouse {
 
     public static void add(CrQuestion question, boolean sendWeChatMsg, List<String> phoneList) {
-        boolean success = SingletonBeanFactory.getCrQuestionDAO().insert(question);
-        if (!success) {
-            return;
-        }
         CrQuestionTable.getCrQuestionList().add(question);
         String[] raw = CrQuestionTable.convertToRaw(question);
         CrQuestionTable.TABLE_MODEL.addRow(raw);
@@ -32,10 +25,6 @@ public class CrQuestionHouse {
     }
 
     public static void update(Integer editIndex, CrQuestion question, boolean sendWeChatMsg, List<String> phoneList) {
-        boolean update = SingletonBeanFactory.getCrQuestionDAO().update(question);
-        if (!update) {
-            return;
-        }
         CrQuestionTable.getCrQuestionList().set(editIndex, question);
         CrQuestionTable.TABLE_MODEL.removeRow(editIndex);
         String[] raw = CrQuestionTable.convertToRaw(question);
@@ -45,12 +34,7 @@ public class CrQuestionHouse {
         }
     }
 
-    public static void rerenderTable(CrQuestionQueryRequest request) {
-        Pair<Boolean, List<CrQuestion>> pair = SingletonBeanFactory.getCrQuestionDAO().queryQuestion(request);
-        if (!pair.getLeft()) {
-            return;
-        }
-        List<CrQuestion> questionList = pair.getRight();
+    public static void rerenderTable(List<CrQuestion> questionList) {
         CrQuestionTable.getCrQuestionList().clear();
         CommonUtils.clearDefaultTableModel(CrQuestionTable.TABLE_MODEL);
         if (questionList == null || questionList.size() == 0) {
