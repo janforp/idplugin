@@ -4,11 +4,14 @@ import com.janita.idplugin.common.Pair;
 import com.janita.idplugin.common.domain.DbConfig;
 import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.common.enums.CrDataStorageEnum;
+import com.janita.idplugin.common.enums.OperationType;
 import com.janita.idplugin.common.request.CrQuestionQueryRequest;
 import com.janita.idplugin.dao.crquestion.ICrQuestionDAO;
 import com.janita.idplugin.dao.crquestion.factory.CrQuestionDaoFactory;
 import com.janita.idplugin.service.crquestion.ICrQuestionService;
-import com.janita.idplugin.service.crquestion.domain.CrQuestionCreate;
+import com.janita.idplugin.service.crquestion.domain.CrQuestionSaveRequest;
+import com.janita.idplugin.service.wechat.IWeChatService;
+import com.janita.idplugin.service.wechat.factory.WeChatServiceFactory;
 
 import java.util.List;
 
@@ -30,7 +33,7 @@ public class CrQuestionServiceImpl implements ICrQuestionService {
     }
 
     @Override
-    public void save(CrDataStorageEnum storageEnum, DbConfig config, CrQuestionCreate create) {
+    public void save(CrDataStorageEnum storageEnum, DbConfig config, CrQuestionSaveRequest create) {
         CrQuestion question = create.getQuestion();
         boolean isAdd = question.getId() == null;
         ICrQuestionDAO crQuestionDAO = CrQuestionDaoFactory.getCrQuestionDAO(storageEnum);
@@ -43,6 +46,11 @@ public class CrQuestionServiceImpl implements ICrQuestionService {
         if (!success) {
             return;
         }
+        if (!create.isSendMsg()) {
+            return;
+        }
+        IWeChatService weChatService = WeChatServiceFactory.getWeChatService();
+        weChatService.sendByMarkDown(question, create.getPhoneList(), isAdd ? OperationType.add : OperationType.update);
     }
 
     @Override

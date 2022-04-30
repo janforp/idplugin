@@ -4,7 +4,7 @@ import com.janita.idplugin.common.domain.DbConfig;
 import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.common.request.CrQuestionQueryRequest;
-import com.janita.idplugin.service.crquestion.domain.CrQuestionCreate;
+import com.janita.idplugin.service.crquestion.domain.CrQuestionSaveRequest;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface ICrQuestionService {
 
-    void save(CrDataStorageEnum storageEnum, DbConfig config, CrQuestionCreate create);
+    void save(CrDataStorageEnum storageEnum, DbConfig config, CrQuestionSaveRequest create);
 
     List<CrQuestion> query(CrDataStorageEnum storageEnum, DbConfig dbConfig, CrQuestionQueryRequest request);
 }

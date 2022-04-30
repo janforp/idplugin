@@ -10,11 +10,11 @@ import java.util.List;
  * CrQuestionCreate
  *
  * @author zhucj
- * @since 20220324
+ * @since 202203242
  */
 @Data
 @AllArgsConstructor
-public class CrQuestionCreate {
+public class CrQuestionSaveRequest {
 
     private Integer editIndex;
 

@@ -1,31 +1,39 @@
-package com.janita.idplugin.woodpecker.common.wechat;
+package com.janita.idplugin.service.wechat.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.janita.idplugin.common.constant.PluginConstant;
-import com.janita.idplugin.common.util.WeChatUtils;
-import com.janita.idplugin.woodpecker.common.wechat.domain.MsgColor;
-import com.janita.idplugin.woodpecker.common.wechat.domain.MsgTip;
-import com.janita.idplugin.woodpecker.common.wechat.domain.OperationType;
-import com.janita.idplugin.woodpecker.common.wechat.msg.MarkdownMsg;
-import com.janita.idplugin.woodpecker.common.wechat.msg.TextMsg;
-import com.janita.idplugin.common.entity.CrDeveloper;
+import com.janita.idplugin.common.domain.MsgColor;
 import com.janita.idplugin.common.entity.CrQuestion;
+import com.janita.idplugin.common.entity.MsgTip;
+import com.janita.idplugin.common.enums.OperationType;
+import com.janita.idplugin.common.util.WeChatUtils;
+import com.janita.idplugin.service.wechat.IWeChatService;
+import com.janita.idplugin.service.wechat.msg.MarkdownMsg;
+import com.janita.idplugin.service.wechat.msg.TextMsg;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.List;
-import java.util.Map;
 
 /**
- * WeChatService
+ * WeChatServiceImpl
  *
  * @author zhucj
  * @since 20220324
  */
-@SuppressWarnings("all")
-public class WeChatService {
+public class WeChatServiceImpl implements IWeChatService {
 
-    public static void sendByMarkDown(CrQuestion question, List<String> phoneList, OperationType operationType) {
+    private static final IWeChatService INSTANCE = new WeChatServiceImpl();
+
+    public static IWeChatService getINSTANCE() {
+        return INSTANCE;
+    }
+
+    private WeChatServiceImpl() {
+    }
+
+    @Override
+    public void sendByMarkDown(CrQuestion question, List<String> phoneList, OperationType operationType) {
         MarkdownMsg markdownMsg = new MarkdownMsg();
         MarkdownMsg.MarkDown markDown = new MarkdownMsg.MarkDown();
         markDown.setMentionedList(Lists.newArrayList(""));
@@ -46,17 +54,6 @@ public class WeChatService {
             return;
         }
         sendByText(operationType.getDesc(), null, phoneList);
-    }
-
-    private static String getPhoneOfAssignTo(String assignTo, Map<String, CrDeveloper> developerMap) {
-        if (developerMap == null || developerMap.isEmpty()) {
-            return null;
-        }
-        CrDeveloper developer = developerMap.get(assignTo);
-        if (developer == null) {
-            return null;
-        }
-        return developer.getPhone();
     }
 
     private static void sendByText(String content, List<String> mentionedList, List<String> mentionedMobileList) {

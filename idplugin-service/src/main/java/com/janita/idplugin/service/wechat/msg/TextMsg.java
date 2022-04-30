@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.common.wechat.msg;
+package com.janita.idplugin.service.wechat.msg;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
@@ -13,18 +13,18 @@ import java.util.List;
  * @author zhucj
  * @since 20220324
  */
-public class MarkdownMsg {
+public class TextMsg {
 
     @JSONField(name = "msgtype")
     @Getter
-    private final String msgType = "markdown";
+    private final String msgType = "text";
 
     @Setter
     @Getter
-    private MarkDown markdown;
+    private Text text;
 
     @Data
-    public static class MarkDown {
+    public static class Text {
 
         private String content;
 

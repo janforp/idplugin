@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.common.wechat.domain;
+package com.janita.idplugin.common.domain;
 
 /**
  * MsgColor

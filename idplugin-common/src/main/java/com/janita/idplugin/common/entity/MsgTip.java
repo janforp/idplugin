@@ -1,5 +1,6 @@
-package com.janita.idplugin.woodpecker.common.wechat.domain;
+package com.janita.idplugin.common.entity;
 
+import com.janita.idplugin.common.domain.MsgColor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

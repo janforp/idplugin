@@ -21,7 +21,7 @@ import com.janita.idplugin.idea.base.util.CodeEditorUtil;
 import com.janita.idplugin.service.crdeveloper.ICrDeveloperService;
 import com.janita.idplugin.service.crdeveloper.factory.CrDeveloperServiceFactory;
 import com.janita.idplugin.service.crquestion.ICrQuestionService;
-import com.janita.idplugin.service.crquestion.domain.CrQuestionCreate;
+import com.janita.idplugin.service.crquestion.domain.CrQuestionSaveRequest;
 import com.janita.idplugin.service.crquestion.factory.CrQuestionFactory;
 import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.woodpecker.common.icons.PluginIcons;
@@ -173,14 +173,14 @@ public class CrQuestionEditDialog extends DialogWrapper {
         }
 
         if (add) {
-            questionService.save(storageEnum, CrQuestionSetting.getDbConfig(), new CrQuestionCreate(editIndex, sendWeChatMsg, phoneList, question));
-            CrQuestionTable.add(question, sendWeChatMsg, phoneList);
+            questionService.save(storageEnum, CrQuestionSetting.getDbConfig(), new CrQuestionSaveRequest(editIndex, sendWeChatMsg, phoneList, question));
+            CrQuestionTable.add(question);
         } else {
             // TODO 修改有BUG
             boolean changed = CrQuestionUtils.isChanged(rawQuestion, question);
             if (changed) {
-                questionService.save(storageEnum, CrQuestionSetting.getDbConfig(), new CrQuestionCreate(editIndex, sendWeChatMsg, phoneList, question));
-                CrQuestionTable.update(editIndex, question, sendWeChatMsg, phoneList);
+                questionService.save(storageEnum, CrQuestionSetting.getDbConfig(), new CrQuestionSaveRequest(editIndex, sendWeChatMsg, phoneList, question));
+                CrQuestionTable.update(editIndex, question);
             }
         }
         super.doOKAction();
@@ -232,7 +232,7 @@ public class CrQuestionEditDialog extends DialogWrapper {
     @Override
     public @Nullable
     JComponent getPreferredFocusedComponent() {
-        return betterCodeEditor.getComponent();
+        return descCodeEditor.getComponent();
     }
 
     @NotNull
