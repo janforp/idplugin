@@ -17,6 +17,7 @@ import com.intellij.openapi.fileTypes.PlainSyntaxHighlighter;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.tree.IElementType;
+import com.janita.idplugin.idea.base.util.CustomHighlighterFactory;
 import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.HashMap;

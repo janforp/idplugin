@@ -1,7 +1,7 @@
 package com.janita.idplugin.woodpecker.renderer;
 
 import com.intellij.ui.JBColor;
-import com.janita.idplugin.woodpecker.common.enums.CrQuestionState;
+import com.janita.idplugin.common.enums.CrQuestionState;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;

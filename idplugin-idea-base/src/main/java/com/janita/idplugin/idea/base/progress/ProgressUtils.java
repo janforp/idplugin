@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.common.progress;
+package com.janita.idplugin.idea.base.progress;
 
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;

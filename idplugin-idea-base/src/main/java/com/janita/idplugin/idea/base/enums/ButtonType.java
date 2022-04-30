@@ -1,4 +1,4 @@
-package com.janita.idplugin.common.enums;
+package com.janita.idplugin.idea.base.enums;
 
 /**
  * ButtonType

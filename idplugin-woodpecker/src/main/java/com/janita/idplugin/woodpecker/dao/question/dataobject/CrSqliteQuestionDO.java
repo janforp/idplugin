@@ -1,6 +1,6 @@
 package com.janita.idplugin.woodpecker.dao.question.dataobject;
 
-import com.janita.idplugin.woodpecker.common.enums.CrQuestionState;
+import com.janita.idplugin.common.enums.CrQuestionState;
 ;
 import lombok.Data;
 import lombok.ToString;

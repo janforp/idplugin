@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.common.icons;
+package com.janita.idplugin.idea.base.util;
 
 import com.intellij.ide.highlighter.custom.CustomFileHighlighter;
 import com.intellij.ide.highlighter.custom.SyntaxTable;

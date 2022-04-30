@@ -1,8 +1,8 @@
 package com.janita.idplugin.woodpecker.dao.question.impl;
 
-import com.janita.idplugin.woodpecker.common.constant.DmlConstants;
+import com.janita.idplugin.remote.constant.DmlConstants;
 import com.janita.idplugin.remote.api.Pair;
-import com.janita.idplugin.woodpecker.common.enums.CrQuestionState;
+import com.janita.idplugin.common.enums.CrQuestionState;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import com.janita.idplugin.woodpecker.dao.BaseDAO;
 import com.janita.idplugin.woodpecker.dao.question.ICrQuestionDAO;

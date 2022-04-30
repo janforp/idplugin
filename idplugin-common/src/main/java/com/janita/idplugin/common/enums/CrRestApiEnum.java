@@ -1,6 +1,5 @@
-package com.janita.idplugin.woodpecker.common.enums;
+package com.janita.idplugin.common.enums;
 
-import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 import lombok.AllArgsConstructor;
 
 /**
@@ -26,8 +25,7 @@ public enum CrRestApiEnum {
 
     private final String url;
 
-    public String getUrl() {
-        String restApiDomain = CrQuestionSetting.getCrQuestionSettingFromCache().getRestApiDomain();
-        return restApiDomain + url;
+    public String getUrl(String domain) {
+        return domain + url;
     }
 }

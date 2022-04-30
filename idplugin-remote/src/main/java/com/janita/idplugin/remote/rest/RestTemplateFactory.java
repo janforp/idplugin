@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.common.rest;
+package com.janita.idplugin.remote.rest;
 
 import org.springframework.web.client.RestTemplate;
 

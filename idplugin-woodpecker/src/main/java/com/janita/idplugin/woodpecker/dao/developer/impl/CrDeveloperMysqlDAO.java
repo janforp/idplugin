@@ -1,6 +1,6 @@
 package com.janita.idplugin.woodpecker.dao.developer.impl;
 
-import com.janita.idplugin.woodpecker.common.constant.DmlConstants;
+import com.janita.idplugin.remote.constant.DmlConstants;
 import com.janita.idplugin.remote.api.Pair;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import com.janita.idplugin.woodpecker.dao.BaseDAO;

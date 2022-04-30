@@ -1,11 +1,9 @@
-package com.janita.idplugin.woodpecker.common.util;
+package com.janita.idplugin.idea.base.util;
 
-import com.janita.idplugin.common.enums.ButtonType;
-import com.janita.idplugin.woodpecker.renderer.CrQuestionTableRenderer;
+import com.janita.idplugin.idea.base.enums.ButtonType;
 import lombok.experimental.UtilityClass;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.event.MouseEvent;
 
 /**
@@ -19,19 +17,6 @@ public class JSwingUtils {
 
     public void showErrorDialog(String title, String errorMsg) {
         JOptionPane.showMessageDialog(null, errorMsg, title, JOptionPane.ERROR_MESSAGE);
-    }
-
-    /**
-     * 列表内容局中
-     *
-     * @param table 列表
-     */
-    public void setTableType(JTable table) {
-        // 设置表格行宽
-        table.setRowHeight(30);
-        DefaultTableCellRenderer renderer = new CrQuestionTableRenderer();
-        renderer.setHorizontalAlignment(JLabel.CENTER);
-        table.setDefaultRenderer(Object.class, renderer);
     }
 
     public ButtonType getMouseButtonType(MouseEvent mouseEvent) {

@@ -4,12 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.janita.idplugin.remote.api.ApiResponse;
 import com.janita.idplugin.remote.api.Head;
 import com.janita.idplugin.remote.api.Pair;
-import com.janita.idplugin.woodpecker.common.enums.CrRestApiEnum;
+import com.janita.idplugin.common.enums.CrRestApiEnum;
 import com.janita.idplugin.common.exception.PluginRuntimeException;
-import com.janita.idplugin.woodpecker.common.rest.RestTemplateFactory;
+import com.janita.idplugin.remote.rest.RestTemplateFactory;
 import com.janita.idplugin.woodpecker.dao.question.ICrQuestionDAO;
 import com.janita.idplugin.woodpecker.domain.CrQuestion;
 import com.janita.idplugin.woodpecker.domain.CrQuestionQueryRequest;
+import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,7 +71,8 @@ public class CrQuestionRestApiDAO implements ICrQuestionDAO {
     }
 
     public static <T> T get(CrRestApiEnum apiEnum) {
-        ResponseEntity<ApiResponse> responseEntity = RestTemplateFactory.getRestTemplate().getForEntity(apiEnum.getUrl(), ApiResponse.class);
+        String restApiDomain = CrQuestionSetting.getCrQuestionSettingFromCache().getRestApiDomain();
+        ResponseEntity<ApiResponse> responseEntity = RestTemplateFactory.getRestTemplate().getForEntity(apiEnum.getUrl(restApiDomain), ApiResponse.class);
         return (T) checkAndReturnEntity(responseEntity);
     }
 
@@ -87,7 +89,8 @@ public class CrQuestionRestApiDAO implements ICrQuestionDAO {
     }
 
     public static <T> T post(CrRestApiEnum apiEnum, Object requestBody) {
-        ResponseEntity<ApiResponse> postForEntity = RestTemplateFactory.getRestTemplate().postForEntity(apiEnum.getUrl(), requestBody, ApiResponse.class);
+        String restApiDomain = CrQuestionSetting.getCrQuestionSettingFromCache().getRestApiDomain();
+        ResponseEntity<ApiResponse> postForEntity = RestTemplateFactory.getRestTemplate().postForEntity(apiEnum.getUrl(restApiDomain), requestBody, ApiResponse.class);
         return (T) checkAndReturnEntity(postForEntity);
     }
 

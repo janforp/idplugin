@@ -5,7 +5,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.janita.idplugin.idea.base.SelectFileInfo;
-import com.janita.idplugin.woodpecker.common.enums.CrQuestionState;
+import com.janita.idplugin.common.enums.CrQuestionState;
 import com.janita.idplugin.idea.base.util.CommonUtils;
 import com.janita.idplugin.idea.base.util.CompatibleUtils;
 import com.janita.idplugin.idea.base.util.GitUtils;

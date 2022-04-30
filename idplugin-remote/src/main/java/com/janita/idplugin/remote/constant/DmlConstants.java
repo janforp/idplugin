@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.common.constant;
+package com.janita.idplugin.remote.constant;
 
 import lombok.experimental.UtilityClass;
 

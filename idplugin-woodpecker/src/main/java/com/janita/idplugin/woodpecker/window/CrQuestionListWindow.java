@@ -9,14 +9,14 @@ import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
 import com.janita.idplugin.remote.api.Pair;
-import com.janita.idplugin.common.enums.ButtonType;
-import com.janita.idplugin.woodpecker.common.enums.CrQuestionState;
-import com.janita.idplugin.woodpecker.common.progress.AbstractProgressTask;
-import com.janita.idplugin.woodpecker.common.progress.ProgressUtils;
+import com.janita.idplugin.idea.base.enums.ButtonType;
+import com.janita.idplugin.common.enums.CrQuestionState;
+import com.janita.idplugin.idea.base.progress.AbstractProgressTask;
+import com.janita.idplugin.idea.base.progress.ProgressUtils;
 import com.janita.idplugin.idea.base.util.CommonUtils;
 import com.janita.idplugin.idea.base.util.CompatibleUtils;
 import com.janita.idplugin.common.util.DateUtils;
-import com.janita.idplugin.woodpecker.common.util.JSwingUtils;
+import com.janita.idplugin.idea.base.util.JSwingUtils;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import com.janita.idplugin.woodpecker.dialog.CrQuestionEditDialog;
 import com.janita.idplugin.woodpecker.domain.CrDeveloper;
@@ -24,12 +24,14 @@ import com.janita.idplugin.woodpecker.domain.CrQuestion;
 import com.janita.idplugin.woodpecker.domain.CrQuestionQueryRequest;
 import com.janita.idplugin.woodpecker.export.MDFreeMarkProcessor;
 import com.janita.idplugin.woodpecker.export.vo.CrQuestionExportVO;
+import com.janita.idplugin.woodpecker.renderer.CrQuestionTableRenderer;
 import com.janita.idplugin.woodpecker.util.CrQuestionUtils;
 import com.janita.idplugin.woodpecker.window.table.CrQuestionHouse;
 import com.janita.idplugin.woodpecker.window.table.CrQuestionTable;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -100,7 +102,7 @@ public class CrQuestionListWindow extends JDialog {
     public CrQuestionListWindow(Project project, ToolWindow toolWindow) {
         this.project = project;
         this.projectNameList = Lists.newArrayList(CompatibleUtils.getAllProjectNameFromGitFirstThenLocal(project));
-        JSwingUtils.setTableType(questionTable);
+        setTableType(questionTable);
         initCrQuestionList();
         setContentPane(contentPane);
         getRootPane().setDefaultButton(closeCancel);
@@ -112,6 +114,19 @@ public class CrQuestionListWindow extends JDialog {
             }
         });
         addListener(toolWindow);
+    }
+
+    /**
+     * 列表内容局中
+     *
+     * @param table 列表
+     */
+    public void setTableType(JTable table) {
+        // 设置表格行宽
+        table.setRowHeight(30);
+        DefaultTableCellRenderer renderer = new CrQuestionTableRenderer();
+        renderer.setHorizontalAlignment(JLabel.CENTER);
+        table.setDefaultRenderer(Object.class, renderer);
     }
 
     private void addListener(ToolWindow toolWindow) {
