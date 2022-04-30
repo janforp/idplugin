@@ -13,6 +13,23 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.4'
+    implementation group: 'freemarker', name: 'freemarker', version: '2.3.3'
+    implementation group: 'org.springframework', name: 'spring-web', version: '4.2.5.RELEASE'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.8.7'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.7'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
+    implementation group: 'com.alibaba', name: 'fastjson', version: '1.2.78'
+
+    implementation group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
+    implementation group: 'commons-dbutils', name: 'commons-dbutils', version: '1.7'
+    implementation group: 'commons-pool', name: 'commons-pool', version: '1.6'
+    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.34.0'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.27'
+    implementation group: 'com.alibaba', name: 'druid', version: '1.2.8'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    implementation group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
+    implementation group: 'com.google.guava', name: 'guava', version: '25.1-jre'
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/

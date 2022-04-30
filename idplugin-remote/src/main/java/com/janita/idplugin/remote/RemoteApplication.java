@@ -10,6 +10,5 @@ import com.janita.idplugin.common.User;
  */
 public class RemoteApplication {
 
-    public static void main(String[] args) {
-    }
+
 }
