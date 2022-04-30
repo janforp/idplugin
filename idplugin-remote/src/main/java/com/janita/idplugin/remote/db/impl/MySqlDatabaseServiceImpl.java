@@ -1,6 +1,6 @@
 package com.janita.idplugin.remote.db.impl;
 
-import com.janita.idplugin.remote.DruidDbUtils;
+import com.janita.idplugin.remote.util.DruidDbUtils;
 import com.janita.idplugin.remote.db.AbstractIDatabaseService;
 
 import javax.sql.DataSource;

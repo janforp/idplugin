@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.dao;
+package com.janita.idplugin.dao;
 
 import com.janita.idplugin.remote.api.Pair;
 import org.apache.commons.dbutils.BasicRowProcessor;

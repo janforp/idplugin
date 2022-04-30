@@ -5,13 +5,18 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.janita.idplugin.common.enums.CrQuestionState;
+import com.janita.idplugin.idea.base.SelectFileInfo;
+import com.janita.idplugin.idea.base.util.CompatibleUtils;
+import com.janita.idplugin.idea.base.util.GitUtils;
 import com.janita.idplugin.remote.api.Pair;
 import com.janita.idplugin.idea.base.util.CommonUtils;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import com.janita.idplugin.woodpecker.dialog.CrQuestionEditDialog;
 import com.janita.idplugin.woodpecker.dialog.CrQuestionSettingDialog;
-import com.janita.idplugin.woodpecker.domain.CrDeveloper;
-import com.janita.idplugin.woodpecker.domain.CrQuestion;
+import com.janita.idplugin.common.entity.CrDeveloper;
+import com.janita.idplugin.common.entity.CrQuestion;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -30,7 +35,7 @@ public class CrCreateCrQuestionAction extends AnAction {
             return;
         }
         Project project = e.getRequiredData(CommonDataKeys.PROJECT);
-        CrQuestion question = CrQuestion.newQuestion(e);
+        CrQuestion question = newQuestion(e);
         Pair<Boolean, List<CrDeveloper>> pair = SingletonBeanFactory.getCrQuestionService().queryAssignName(question.getProjectName());
         if (!pair.getLeft()) {
             CommonUtils.showNotification("CRHelper数据库配置不正确", MessageType.ERROR);
@@ -53,5 +58,26 @@ public class CrCreateCrQuestionAction extends AnAction {
         // e.getPresentation().setEnabledAndVisible(selection);
         // 用来设置该Action是否可用
         e.getPresentation().setEnabled(selection);
+    }
+
+    private static CrQuestion newQuestion(AnActionEvent e) {
+        Project project = e.getRequiredData(CommonDataKeys.PROJECT);
+        VirtualFile virtualFile = e.getRequiredData(CommonDataKeys.VIRTUAL_FILE);
+        SelectFileInfo holder = CommonUtils.getSelectFileInfo(e);
+
+        CrQuestion question = new CrQuestion();
+        question.setProjectName(CompatibleUtils.getProjectNameFromGitFirstThenFromLocal(project, virtualFile));
+        question.setFilePath(holder.getFilePath());
+        question.setFileName(holder.getFileName());
+        question.setLanguage(holder.getLanguage());
+        question.setState(CrQuestionState.UNSOLVED.getDesc());
+        question.setAssignFrom(GitUtils.getGitUserName(project));
+        question.setQuestionCode(holder.getSelectedText());
+        question.setSuggestCode(holder.getSelectedText());
+        question.setCreateGitBranchName(CompatibleUtils.getBranchNameFromGitFirstThenFromLocal(project, virtualFile));
+
+        question.setOffsetStart(holder.getOffsetStart());
+        question.setOffsetEnd(holder.getOffsetEnd());
+        return question;
     }
 }

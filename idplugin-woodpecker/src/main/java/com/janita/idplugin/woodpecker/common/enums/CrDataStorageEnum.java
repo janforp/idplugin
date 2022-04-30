@@ -1,5 +1,6 @@
 package com.janita.idplugin.woodpecker.common.enums;
 
+import com.janita.idplugin.common.domain.DbConfig;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import com.janita.idplugin.remote.db.IDatabaseService;
 import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
@@ -22,19 +23,18 @@ public enum CrDataStorageEnum {
 
     REST_API(true, false, "REST接口") {
         @Override
-        public boolean onChange(boolean fromSetting) {
+        public boolean onChange(boolean fromSetting,DbConfig dbConfig) {
             return SingletonBeanFactory.getCrQuestionRestApiDAO().checkHealth();
         }
     },
 
     SQLITE_DB(true, true, "本地缓存") {
         @Override
-        public boolean onChange(boolean fromSetting) {
+        public boolean onChange(boolean fromSetting,DbConfig dbConfig) {
             if (fromSetting) {
                 new Thread(() -> {
                     IDatabaseService database = SingletonBeanFactory.getSqliteDatabaseServiceImpl();
-                    CrQuestionSetting setting = CrQuestionSetting.getCrQuestionSettingFromCache();
-                    database.reInitConnect(setting.getDbUrl(),setting.getDbUsername(),setting.getDbPwd());
+                    database.reInitConnect(dbConfig.getUrl(),dbConfig.getUsername(),dbConfig.getPwd());
                 }).start();
                 return true;
             } else {
@@ -48,12 +48,11 @@ public enum CrDataStorageEnum {
 
     MYSQL_DB(true, false, "MYSQL数据库") {
         @Override
-        public boolean onChange(boolean fromSetting) {
+        public boolean onChange(boolean fromSetting,DbConfig dbConfig) {
             if (fromSetting) {
                 new Thread(() -> {
                     IDatabaseService database = SingletonBeanFactory.getMySqlDatabaseServiceImpl();
-                    CrQuestionSetting setting = CrQuestionSetting.getCrQuestionSettingFromCache();
-                    database.reInitConnect(setting.getDbUrl(),setting.getDbUsername(),setting.getDbPwd());
+                    database.reInitConnect(dbConfig.getUrl(),dbConfig.getUsername(),dbConfig.getPwd());
                 }).start();
                 return true;
             } else {
@@ -91,7 +90,7 @@ public enum CrDataStorageEnum {
      * @param fromSetting 从哪里设置
      * @return 成功失败
      */
-    public abstract boolean onChange(boolean fromSetting);
+    public abstract boolean onChange(boolean fromSetting, DbConfig dbConfig);
 
     /**
      * 检查这种方式当前是否可用

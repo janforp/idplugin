@@ -9,8 +9,8 @@ import com.janita.idplugin.woodpecker.common.wechat.domain.MsgTip;
 import com.janita.idplugin.woodpecker.common.wechat.domain.OperationType;
 import com.janita.idplugin.woodpecker.common.wechat.msg.MarkdownMsg;
 import com.janita.idplugin.woodpecker.common.wechat.msg.TextMsg;
-import com.janita.idplugin.woodpecker.domain.CrDeveloper;
-import com.janita.idplugin.woodpecker.domain.CrQuestion;
+import com.janita.idplugin.common.entity.CrDeveloper;
+import com.janita.idplugin.common.entity.CrQuestion;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.List;

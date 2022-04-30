@@ -9,7 +9,7 @@ import com.janita.idplugin.woodpecker.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.woodpecker.dao.developer.impl.CrDeveloperMysqlDAO;
 import com.janita.idplugin.woodpecker.dao.developer.impl.CrDeveloperRestApiDAO;
 import com.janita.idplugin.woodpecker.dao.developer.impl.CrDeveloperSqliteDAO;
-import com.janita.idplugin.woodpecker.dao.question.ICrQuestionDAO;
+import com.janita.idplugin.dao.crquestion.ICrQuestionDAO;
 import com.janita.idplugin.woodpecker.dao.question.impl.CrQuestionMySqlDAO;
 import com.janita.idplugin.woodpecker.dao.question.impl.CrQuestionRestApiDAO;
 import com.janita.idplugin.woodpecker.dao.question.impl.CrQuestionSqliteDAO;

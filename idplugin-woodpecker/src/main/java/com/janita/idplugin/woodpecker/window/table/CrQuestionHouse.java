@@ -5,8 +5,8 @@ import com.janita.idplugin.idea.base.util.CommonUtils;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import com.janita.idplugin.woodpecker.common.wechat.WeChatService;
 import com.janita.idplugin.woodpecker.common.wechat.domain.OperationType;
-import com.janita.idplugin.woodpecker.domain.CrQuestion;
-import com.janita.idplugin.woodpecker.domain.CrQuestionQueryRequest;
+import com.janita.idplugin.common.entity.CrQuestion;
+import com.janita.idplugin.common.request.CrQuestionQueryRequest;
 
 import java.util.List;
 

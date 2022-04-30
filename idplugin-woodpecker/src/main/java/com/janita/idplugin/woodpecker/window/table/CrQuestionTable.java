@@ -1,6 +1,6 @@
 package com.janita.idplugin.woodpecker.window.table;
 
-import com.janita.idplugin.woodpecker.domain.CrQuestion;
+import com.janita.idplugin.common.entity.CrQuestion;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;

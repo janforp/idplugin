@@ -1,6 +1,7 @@
 package com.janita.idplugin.woodpecker.setting;
 
 import com.janita.idplugin.common.constant.PersistentKeys;
+import com.janita.idplugin.common.domain.DbConfig;
 import com.janita.idplugin.woodpecker.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import lombok.Data;
@@ -44,7 +45,7 @@ public class CrQuestionSetting {
             SingletonBeanFactory.getPropertiesComponent().setValue(PersistentKeys.CrDataStorageConfig.MYSQL_PWD, input.getDbPwd());
             SingletonBeanFactory.getPropertiesComponent().setValue(PersistentKeys.CrDataStorageConfig.REST_API_DOMAIN, input.getRestApiDomain());
         }
-        return input.getStorageWay().onChange(fromSetting);
+        return input.getStorageWay().onChange(fromSetting, new DbConfig(cache.getDbUrl(), cache.getDbUsername(), cache.getDbPwd()));
     }
 
     public static CrQuestionSetting getCrQuestionSettingFromCache() {

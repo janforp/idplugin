@@ -1,9 +1,9 @@
 package com.janita.idplugin.woodpecker.dao.developer;
 
 import com.janita.idplugin.remote.api.Pair;
-import com.janita.idplugin.woodpecker.domain.CrDeveloper;
-import com.janita.idplugin.woodpecker.domain.CrDeveloperQueryRequest;
-import com.janita.idplugin.woodpecker.domain.CrDeveloperSaveRequest;
+import com.janita.idplugin.common.entity.CrDeveloper;
+import com.janita.idplugin.common.request.CrDeveloperQueryRequest;
+import com.janita.idplugin.common.request.CrDeveloperSaveRequest;
 
 import java.util.List;
 

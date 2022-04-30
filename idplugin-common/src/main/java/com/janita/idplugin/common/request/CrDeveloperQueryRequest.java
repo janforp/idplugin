@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.domain;
+package com.janita.idplugin.common.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

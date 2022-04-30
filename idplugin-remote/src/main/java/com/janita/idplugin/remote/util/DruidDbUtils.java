@@ -1,4 +1,4 @@
-package com.janita.idplugin.remote;
+package com.janita.idplugin.remote.util;
 
 import com.alibaba.druid.pool.DruidDataSource;
 

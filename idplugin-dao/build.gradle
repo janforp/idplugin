@@ -9,6 +9,7 @@ repositories {
 }
 
 dependencies {
+    implementation project(':idplugin-common') /* 子模块之间的依赖 */
     implementation project(':idplugin-remote') /* 子模块之间的依赖 */
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'

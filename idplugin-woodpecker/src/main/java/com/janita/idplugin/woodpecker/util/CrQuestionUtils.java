@@ -1,6 +1,6 @@
 package com.janita.idplugin.woodpecker.util;
 
-import com.janita.idplugin.woodpecker.domain.CrQuestion;
+import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.woodpecker.export.vo.CrQuestionExportVO;
 import org.apache.commons.lang3.StringUtils;
 

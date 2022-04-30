@@ -5,8 +5,8 @@ import com.google.common.collect.Sets;
 import com.janita.idplugin.common.constant.PluginConstant;
 import com.janita.idplugin.remote.api.Pair;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
-import com.janita.idplugin.woodpecker.domain.CrDeveloper;
-import com.janita.idplugin.woodpecker.domain.CrDeveloperQueryRequest;
+import com.janita.idplugin.common.entity.CrDeveloper;
+import com.janita.idplugin.common.request.CrDeveloperQueryRequest;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.List;

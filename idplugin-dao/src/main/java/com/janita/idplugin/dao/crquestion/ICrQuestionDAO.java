@@ -1,8 +1,8 @@
-package com.janita.idplugin.woodpecker.dao.question;
+package com.janita.idplugin.dao.crquestion;
 
 import com.janita.idplugin.remote.api.Pair;
-import com.janita.idplugin.woodpecker.domain.CrQuestion;
-import com.janita.idplugin.woodpecker.domain.CrQuestionQueryRequest;
+import com.janita.idplugin.common.entity.CrQuestion;
+import com.janita.idplugin.common.request.CrQuestionQueryRequest;
 
 import java.util.List;
 
