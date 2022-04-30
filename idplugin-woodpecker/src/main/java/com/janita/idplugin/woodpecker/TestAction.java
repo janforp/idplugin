@@ -20,8 +20,6 @@ public class TestAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        // TODO: insert action logic here
-        RemoteApplication application = new RemoteApplication();
 
         RemoteApplication.main(null);
 
