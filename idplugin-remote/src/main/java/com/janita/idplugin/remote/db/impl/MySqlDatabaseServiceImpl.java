@@ -1,8 +1,7 @@
-package com.janita.idplugin.woodpecker.db.impl;
+package com.janita.idplugin.remote.db.impl;
 
+import com.janita.idplugin.remote.DruidDbUtils;
 import com.janita.idplugin.remote.db.AbstractIDatabaseService;
-import com.janita.idplugin.woodpecker.common.util.DruidDbUtils;
-import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 
 import javax.sql.DataSource;
 
@@ -20,7 +19,6 @@ public class MySqlDatabaseServiceImpl extends AbstractIDatabaseService {
 
     @Override
     protected DataSource initDataSource(String url, String username, String pwd) {
-        CrQuestionSetting setting = CrQuestionSetting.getCrQuestionSettingFromCache();
         try {
             source = DruidDbUtils.getDataSource(url, username, pwd);
         } catch (Exception e) {

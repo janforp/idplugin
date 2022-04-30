@@ -1,7 +1,7 @@
 package com.janita.idplugin.woodpecker.window.table;
 
 import com.janita.idplugin.remote.api.Pair;
-import com.janita.idplugin.woodpecker.common.util.CommonUtils;
+import com.janita.idplugin.idea.base.util.CommonUtils;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import com.janita.idplugin.woodpecker.common.wechat.WeChatService;
 import com.janita.idplugin.woodpecker.common.wechat.domain.OperationType;

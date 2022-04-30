@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.common.util;
+package com.janita.idplugin.idea.base.util;
 
 import com.intellij.dvcs.repo.Repository;
 import com.intellij.dvcs.repo.VcsRepositoryManager;
@@ -8,7 +8,6 @@ import com.intellij.openapi.vcs.VcsException;
 import com.intellij.openapi.vcs.VcsRoot;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.vcs.log.VcsUser;
-import com.janita.idplugin.woodpecker.common.exception.PluginException;
 import git4idea.GitUserRegistry;
 import git4idea.GitUtil;
 import git4idea.branch.GitBranchUtil;
@@ -28,10 +27,10 @@ import java.util.Set;
 @SuppressWarnings("unused")
 public class GitUtils {
 
-    public static String getBranchNameOrThrow(Project project, VirtualFile file) throws PluginException {
+    public static String getBranchNameOrThrow(Project project, VirtualFile file) {
         GitRepository currentRepository = GitBranchUtil.getRepositoryOrGuess(project, file);
         if (currentRepository == null || currentRepository.getCurrentBranch() == null) {
-            throw new PluginException("Can not get git branch name");
+            throw new RuntimeException("Can not get git branch name");
         }
         return currentRepository.getCurrentBranch().getName();
     }
@@ -81,12 +80,12 @@ public class GitUtils {
         return GitUserRegistry.getInstance(project);
     }
 
-    public static String getProjectNameInGitOrThrow(Project project, VirtualFile file) throws PluginException {
+    public static String getProjectNameInGitOrThrow(Project project, VirtualFile file) throws RuntimeException {
         String projectName;
         try {
             projectName = GitUtil.getRepositoryForFile(project, file).getRoot().getName();
         } catch (VcsException e) {
-            throw new PluginException("Can not get git project name");
+            throw new RuntimeException("Can not get git project name");
         }
         return projectName;
     }

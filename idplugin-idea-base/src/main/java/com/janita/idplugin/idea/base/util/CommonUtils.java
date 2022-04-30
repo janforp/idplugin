@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.common.util;
+package com.janita.idplugin.idea.base.util;
 
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationDisplayType;
@@ -24,7 +24,7 @@ import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.janita.idplugin.common.entity.SelectFileInfo;
+import com.janita.idplugin.idea.base.SelectFileInfo;
 import lombok.experimental.UtilityClass;
 
 import javax.swing.*;

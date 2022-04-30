@@ -28,7 +28,7 @@
                                  id="com.janita.idplugin.woodpecker.setting.CrSettingConfigurable"/>
 
         <!-- sqlit 数据库-->
-        <applicationService serviceImplementation="com.janita.idplugin.woodpecker.db.impl.SqliteDatabaseServiceImpl"/>
+        <applicationService serviceImplementation="com.janita.idplugin.remote.db.impl.SqliteDatabaseServiceImpl"/>
         <!-- mysql 数据库-->
         <applicationService serviceImplementation="com.janita.idplugin.remote.db.impl.MySqlDatabaseServiceImpl"/>
         <applicationService serviceImplementation="com.janita.idplugin.woodpecker.service.CrQuestionService"/>

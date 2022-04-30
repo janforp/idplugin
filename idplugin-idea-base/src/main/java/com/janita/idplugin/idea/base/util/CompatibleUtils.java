@@ -1,8 +1,7 @@
-package com.janita.idplugin.woodpecker.common.util;
+package com.janita.idplugin.idea.base.util;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.janita.idplugin.woodpecker.common.exception.PluginException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -30,7 +29,7 @@ public class CompatibleUtils {
         String branchName = "";
         try {
             branchName = GitUtils.getBranchNameOrThrow(project, file);
-        } catch (PluginException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         if (StringUtils.isBlank(branchName)) {

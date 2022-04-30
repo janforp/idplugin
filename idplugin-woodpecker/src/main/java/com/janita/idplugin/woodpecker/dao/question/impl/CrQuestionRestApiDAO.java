@@ -5,7 +5,7 @@ import com.janita.idplugin.remote.api.ApiResponse;
 import com.janita.idplugin.remote.api.Head;
 import com.janita.idplugin.remote.api.Pair;
 import com.janita.idplugin.woodpecker.common.enums.CrRestApiEnum;
-import com.janita.idplugin.woodpecker.common.exception.PluginRuntimeException;
+import com.janita.idplugin.common.exception.PluginRuntimeException;
 import com.janita.idplugin.woodpecker.common.rest.RestTemplateFactory;
 import com.janita.idplugin.woodpecker.dao.question.ICrQuestionDAO;
 import com.janita.idplugin.woodpecker.domain.CrQuestion;

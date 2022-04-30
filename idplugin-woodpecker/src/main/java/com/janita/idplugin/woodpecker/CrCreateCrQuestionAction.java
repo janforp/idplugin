@@ -6,7 +6,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import com.janita.idplugin.remote.api.Pair;
-import com.janita.idplugin.woodpecker.common.util.CommonUtils;
+import com.janita.idplugin.idea.base.util.CommonUtils;
 import com.janita.idplugin.woodpecker.common.util.SingletonBeanFactory;
 import com.janita.idplugin.woodpecker.dialog.CrQuestionEditDialog;
 import com.janita.idplugin.woodpecker.dialog.CrQuestionSettingDialog;

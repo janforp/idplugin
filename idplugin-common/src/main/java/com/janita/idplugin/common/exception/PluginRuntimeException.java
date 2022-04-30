@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.common.exception;
+package com.janita.idplugin.common.exception;
 
 public class PluginRuntimeException extends RuntimeException {
 

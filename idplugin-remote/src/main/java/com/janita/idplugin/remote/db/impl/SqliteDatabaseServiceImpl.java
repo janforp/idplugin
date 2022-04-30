@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.db.impl;
+package com.janita.idplugin.remote.db.impl;
 
 import com.janita.idplugin.common.constant.PluginConstant;
 import com.janita.idplugin.remote.db.AbstractIDatabaseService;
