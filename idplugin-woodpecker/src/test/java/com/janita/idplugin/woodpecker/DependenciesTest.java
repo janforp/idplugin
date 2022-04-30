@@ -9,7 +9,7 @@ import org.junit.Test;
  * @author zhucj
  * @since 20220324
  */
-public class DepenceTest {
+public class DependenciesTest {
 
     @Test
     public void testDependencies() {
