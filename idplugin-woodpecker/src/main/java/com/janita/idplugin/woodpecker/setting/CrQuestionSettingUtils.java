@@ -42,7 +42,7 @@ public class CrQuestionSettingUtils {
             databaseService = DatabaseServiceFactory.getDatabaseService(input.getStorageWay());
         }
         IHealthService iHealthService = HealthServiceFactory.getHealthService();
-        return input.getStorageWay().onChange(fromSetting, cache, databaseService, iHealthService);
+        return input.getStorageWay().onChange(fromSetting, input, databaseService, iHealthService);
     }
 
     public static CrQuestionSetting getCrQuestionSettingFromCache() {
