@@ -32,16 +32,15 @@ public interface IDatabaseService {
     void reInitConnect(String url, String username, String pwd);
 
     /**
-     * 获取链接
-     *
-     * @return 数据库链接
-     */
-    Connection getConnection(String url, String username, String pwd);
-
-    /**
      * 释放资源
      */
     void closeResource();
 
+    /**
+     * 获取连接
+     *
+     * @param setting 配置
+     * @return 连接
+     */
     Connection getConnectionByConfig(CrQuestionSetting setting);
 }

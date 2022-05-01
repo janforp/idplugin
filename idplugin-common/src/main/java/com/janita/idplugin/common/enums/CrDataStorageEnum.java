@@ -63,10 +63,10 @@ public enum CrDataStorageEnum {
 
     private static boolean doOnChange(boolean fromSetting, CrQuestionSetting setting, IDatabaseService database) {
         if (fromSetting) {
-            new Thread(() -> database.reInitConnect(setting.getDbUrl(), setting.getDbUsername(), setting.getDbUsername())).start();
+            new Thread(() -> database.reInitConnect(setting.getDbUrl(), setting.getDbUsername(), setting.getDbPwd())).start();
             return true;
         } else {
-            database.reInitConnect(setting.getDbUrl(), setting.getDbUsername(), setting.getDbUsername());
+            database.reInitConnect(setting.getDbUrl(), setting.getDbUsername(), setting.getDbPwd());
             return database.checkConnectSuccess();
         }
     }

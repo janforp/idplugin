@@ -57,11 +57,14 @@ public abstract class AbstractIDatabaseService implements IDatabaseService {
 
     @Override
     public Connection getConnectionByConfig(CrQuestionSetting setting) {
-        return getConnection(setting.getDbUrl(), setting.getDbUsername(), setting.getDbUsername());
+        Connection connection = getConnection(setting.getDbUrl(), setting.getDbUsername(), setting.getDbPwd());
+        if (connection == INVALID_CONNECT) {
+            System.out.println("连接无效");
+        }
+        return connection;
     }
 
-    @Override
-    public Connection getConnection(String url, String username, String pwd) {
+    private Connection getConnection(String url, String username, String pwd) {
         if (source == null) {
             source = initDataSource(url, username, pwd);
         }
