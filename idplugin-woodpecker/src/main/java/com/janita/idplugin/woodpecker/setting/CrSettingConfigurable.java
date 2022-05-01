@@ -27,7 +27,7 @@ public class CrSettingConfigurable implements Configurable {
     @Override
     @Nullable
     public JComponent createComponent() {
-        CrQuestionDataStorageSettingComponent settingComponent = CrSettingBuilder.createSettingComponent();
+        CrQuestionDataStorageSettingComponent settingComponent = CrSettingDialogComponentBuilder.createSettingComponent();
         settingComponent.getDbUrlField().setMaximumSize(new Dimension(500, 35));
         settingComponent.getDbUsernameField().setMaximumSize(new Dimension(500, 35));
         settingComponent.getDbPwdField().setMaximumSize(new Dimension(500, 35));

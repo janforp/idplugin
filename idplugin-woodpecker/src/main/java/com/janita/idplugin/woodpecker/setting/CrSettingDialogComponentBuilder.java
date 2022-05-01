@@ -16,7 +16,7 @@ import java.awt.*;
  * @author zhucj
  * @since 20220324
  */
-public class CrSettingBuilder {
+public class CrSettingDialogComponentBuilder {
 
     public static CrQuestionDataStorageSettingComponent createSettingComponent() {
         CrQuestionDataStorageSettingComponent.CrQuestionDataStorageSettingComponentBuilder builder = CrQuestionDataStorageSettingComponent.builder();
@@ -25,11 +25,11 @@ public class CrSettingBuilder {
         Box topBox = Box.createHorizontalBox();
         JBRadioButton localRb = new JBRadioButton(CrDataStorageEnum.SQLITE_DB.getDesc());
         localRb.setEnabled(CrDataStorageEnum.SQLITE_DB.isSupport());
-        localRb.setToolTipText("使用本地Sqlite数据库");
+        localRb.setToolTipText("使用本地缓存，数据无法共享");
 
         JBRadioButton mysqlRb = new JBRadioButton(CrDataStorageEnum.MYSQL_DB.getDesc());
         mysqlRb.setEnabled(CrDataStorageEnum.MYSQL_DB.isSupport());
-        mysqlRb.setToolTipText("使用Mysql数据,相同数据库的数据可以共享");
+        mysqlRb.setToolTipText("使用Mysql数据库,相同数据库数据可以共享");
 
         JBRadioButton restRb = new JBRadioButton(CrDataStorageEnum.REST_API.getDesc());
         restRb.setEnabled(CrDataStorageEnum.REST_API.isSupport());

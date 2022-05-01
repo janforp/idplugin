@@ -4,7 +4,7 @@ import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.ValidationInfo;
 import com.janita.idplugin.woodpecker.setting.CrQuestionDataStorageSettingComponent;
 import com.janita.idplugin.woodpecker.setting.CrQuestionSettingUtils;
-import com.janita.idplugin.woodpecker.setting.CrSettingBuilder;
+import com.janita.idplugin.woodpecker.setting.CrSettingDialogComponentBuilder;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -27,7 +27,7 @@ public class CrQuestionSettingDialog extends DialogWrapper {
     @Override
     @Nullable
     protected JComponent createCenterPanel() {
-        CrQuestionDataStorageSettingComponent component = CrSettingBuilder.createSettingComponent();
+        CrQuestionDataStorageSettingComponent component = CrSettingDialogComponentBuilder.createSettingComponent();
         this.component = component;
         return component.getTotalContent();
     }
