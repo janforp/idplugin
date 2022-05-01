@@ -42,7 +42,8 @@ public class CrQuestionSqliteDAO extends BaseDAO<CrSqliteQuestionDO> implements 
     @Override
     public boolean checkHealth(CrQuestionSetting setting) {
         IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(setting.getStorageWay());
-        return databaseService.checkConnectSuccess();    }
+        return databaseService.checkConnectSuccess();
+    }
 
     @Override
     public boolean insert(CrQuestionSetting setting, CrQuestion question) {
