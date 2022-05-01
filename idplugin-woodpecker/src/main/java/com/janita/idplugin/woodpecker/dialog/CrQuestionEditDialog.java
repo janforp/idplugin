@@ -117,6 +117,8 @@ public class CrQuestionEditDialog extends DialogWrapper {
         this.editIndex = editIndex;
         developerMap = developerList.stream().collect(Collectors.toMap(CrDeveloper::getName, Function.identity(), (f, s) -> f));
         assignBox = new ComboBox<>(developerMap.keySet().toArray(new String[0]), COMBO_BOX_WITH);
+        // 可以编辑
+        assignBox.setEditable(true);
         this.project = project;
         questionCodeEditor = CodeEditorUtil.createCodeEditor(project);
         betterCodeEditor = CodeEditorUtil.createCodeEditor(project);
@@ -232,7 +234,7 @@ public class CrQuestionEditDialog extends DialogWrapper {
     @Override
     public @Nullable
     JComponent getPreferredFocusedComponent() {
-        return descCodeEditor.getComponent();
+        return assignBox;
     }
 
     @NotNull
