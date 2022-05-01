@@ -3,6 +3,7 @@ package com.janita.idplugin.woodpecker.table;
 import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.idea.base.util.CommonUtils;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +16,52 @@ import java.util.List;
  */
 public class CrQuestionTable {
 
-    private static final List<CrQuestion> CR_QUESTION_LIST = new ArrayList<>();
-
     public static String[] HEAD = { "id", "项目", "文件", "类型", "级别", "迭代", "指派给", "提问者", "状态" };
 
     public static DefaultTableModel TABLE_MODEL = new DefaultTableModel(null, HEAD);
 
+    private static final List<CrQuestion> CR_QUESTION_LIST = new ArrayList<>();
+
     public static List<CrQuestion> getCrQuestionList() {
         return CR_QUESTION_LIST;
+    }
+
+    /**
+     * 表与数据模型绑定
+     *
+     * @param table 表
+     */
+    public static void bindModelWithTable(JTable table) {
+        if (table == null) {
+            return;
+        }
+        table.setModel(TABLE_MODEL);
+    }
+
+    public static void add(CrQuestion question) {
+        getCrQuestionList().add(question);
+        String[] raw = CrQuestionTable.convertToRaw(question);
+        CrQuestionTable.TABLE_MODEL.addRow(raw);
+    }
+
+    public static void update(Integer editIndex, CrQuestion question) {
+        getCrQuestionList().set(editIndex, question);
+        CrQuestionTable.TABLE_MODEL.removeRow(editIndex);
+        String[] raw = CrQuestionTable.convertToRaw(question);
+        CrQuestionTable.TABLE_MODEL.insertRow(editIndex, raw);
+    }
+
+    public static void rerenderTable(List<CrQuestion> questionList) {
+        getCrQuestionList().clear();
+        CommonUtils.clearDefaultTableModel(CrQuestionTable.TABLE_MODEL);
+        if (questionList == null || questionList.size() == 0) {
+            return;
+        }
+        for (CrQuestion question : questionList) {
+            getCrQuestionList().add(question);
+            String[] raw = CrQuestionTable.convertToRaw(question);
+            CrQuestionTable.TABLE_MODEL.addRow(raw);
+        }
     }
 
     private static String[] convertToRaw(CrQuestion question) {
@@ -37,31 +76,5 @@ public class CrQuestionTable {
         raw[7] = question.getAssignFrom();
         raw[8] = question.getState();
         return raw;
-    }
-
-    public static void add(CrQuestion question) {
-        CrQuestionTable.getCrQuestionList().add(question);
-        String[] raw = CrQuestionTable.convertToRaw(question);
-        CrQuestionTable.TABLE_MODEL.addRow(raw);
-    }
-
-    public static void update(Integer editIndex, CrQuestion question) {
-        CrQuestionTable.getCrQuestionList().set(editIndex, question);
-        CrQuestionTable.TABLE_MODEL.removeRow(editIndex);
-        String[] raw = CrQuestionTable.convertToRaw(question);
-        CrQuestionTable.TABLE_MODEL.insertRow(editIndex, raw);
-    }
-
-    public static void rerenderTable(List<CrQuestion> questionList) {
-        CrQuestionTable.getCrQuestionList().clear();
-        CommonUtils.clearDefaultTableModel(CrQuestionTable.TABLE_MODEL);
-        if (questionList == null || questionList.size() == 0) {
-            return;
-        }
-        for (CrQuestion question : questionList) {
-            CrQuestionTable.getCrQuestionList().add(question);
-            String[] raw = CrQuestionTable.convertToRaw(question);
-            CrQuestionTable.TABLE_MODEL.addRow(raw);
-        }
     }
 }

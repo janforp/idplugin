@@ -3,13 +3,13 @@ package com.janita.idplugin.service.crquestion.impl;
 import com.janita.idplugin.common.domain.CrQuestionSetting;
 import com.janita.idplugin.common.domain.Pair;
 import com.janita.idplugin.common.entity.CrQuestion;
-import com.janita.idplugin.common.enums.OperationType;
 import com.janita.idplugin.common.request.CrQuestionQueryRequest;
 import com.janita.idplugin.dao.crquestion.ICrQuestionDAO;
 import com.janita.idplugin.dao.crquestion.factory.CrQuestionDaoFactory;
 import com.janita.idplugin.service.crquestion.ICrQuestionService;
 import com.janita.idplugin.service.crquestion.domain.CrQuestionSaveRequest;
 import com.janita.idplugin.service.wechat.IWeChatService;
+import com.janita.idplugin.service.wechat.enums.OperationType;
 import com.janita.idplugin.service.wechat.factory.WeChatServiceFactory;
 
 import java.util.List;

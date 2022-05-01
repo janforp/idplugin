@@ -222,7 +222,7 @@ public class CrQuestionListWindow extends JDialog {
     }
 
     private void initCrQuestionList() {
-        questionTable.setModel(CrQuestionTable.TABLE_MODEL);
+        CrQuestionTable.bindModelWithTable(questionTable);
         questionTable.setEnabled(false);
         stateBox.addItem(CrQuestionState.TOTAL);
         for (CrQuestionState state : CrQuestionState.values()) {

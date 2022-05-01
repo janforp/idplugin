@@ -1,4 +1,4 @@
-package com.janita.idplugin.common.domain;
+package com.janita.idplugin.service.wechat.msg;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
