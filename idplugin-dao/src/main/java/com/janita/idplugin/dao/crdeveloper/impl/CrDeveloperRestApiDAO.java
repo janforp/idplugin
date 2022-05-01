@@ -1,15 +1,14 @@
 package com.janita.idplugin.dao.crdeveloper.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.janita.idplugin.common.domain.DbConfig;
-import com.janita.idplugin.common.enums.CrDataStorageEnum;
-import com.janita.idplugin.dao.crquestion.impl.CrQuestionRestApiDAO;
 import com.janita.idplugin.common.Pair;
-import com.janita.idplugin.common.enums.CrRestApiEnum;
-import com.janita.idplugin.dao.crdeveloper.ICrDeveloperDAO;
+import com.janita.idplugin.common.domain.CrQuestionSetting;
 import com.janita.idplugin.common.entity.CrDeveloper;
+import com.janita.idplugin.common.enums.CrRestApiEnum;
 import com.janita.idplugin.common.request.CrDeveloperQueryRequest;
 import com.janita.idplugin.common.request.CrDeveloperSaveRequest;
+import com.janita.idplugin.dao.crdeveloper.ICrDeveloperDAO;
+import com.janita.idplugin.remote.rest.HttpUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 
@@ -33,14 +32,14 @@ public class CrDeveloperRestApiDAO implements ICrDeveloperDAO {
     }
 
     @Override
-    public boolean save(CrDataStorageEnum storageEnum,DbConfig config, CrDeveloperSaveRequest request) {
-        Boolean success = CrQuestionRestApiDAO.post(config, CrRestApiEnum.DEVELOPER_SAVE, request);
+    public boolean save(CrQuestionSetting setting,CrDeveloperSaveRequest request) {
+        Boolean success = HttpUtils.post(setting, CrRestApiEnum.DEVELOPER_SAVE, request);
         return BooleanUtils.isTrue(success);
     }
 
     @Override
-    public Pair<Boolean, List<CrDeveloper>> queryDeveloper(CrDataStorageEnum storageEnum,DbConfig config, CrDeveloperQueryRequest request) {
-        List list = CrQuestionRestApiDAO.post(config, CrRestApiEnum.DEVELOPER_QUERY, request);
+    public Pair<Boolean, List<CrDeveloper>> queryDeveloper(CrQuestionSetting setting,CrDeveloperQueryRequest request) {
+        List list = HttpUtils.post(setting, CrRestApiEnum.DEVELOPER_QUERY, request);
         if (CollectionUtils.isEmpty(list)) {
             return Pair.of(true, new ArrayList<>(0));
         }

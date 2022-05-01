@@ -1,8 +1,7 @@
 package com.janita.idplugin.service.health.impl;
 
-import com.janita.idplugin.common.domain.DbConfig;
-import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.common.IHealthService;
+import com.janita.idplugin.common.domain.CrQuestionSetting;
 import com.janita.idplugin.dao.crquestion.ICrQuestionDAO;
 import com.janita.idplugin.dao.crquestion.factory.CrQuestionDaoFactory;
 
@@ -24,8 +23,8 @@ public class HealthServiceImpl implements IHealthService {
     }
 
     @Override
-    public boolean checkHealth(CrDataStorageEnum storageEnum, DbConfig config) {
-        ICrQuestionDAO crQuestionDAO = CrQuestionDaoFactory.getCrQuestionDAO(storageEnum);
-        return crQuestionDAO.checkHealth(storageEnum, config);
+    public boolean checkHealth(CrQuestionSetting setting) {
+        ICrQuestionDAO crQuestionDAO = CrQuestionDaoFactory.getCrQuestionDAO(setting.getStorageWay());
+        return crQuestionDAO.checkHealth(setting);
     }
 }

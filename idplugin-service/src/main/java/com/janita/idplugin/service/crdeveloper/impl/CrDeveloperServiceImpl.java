@@ -4,9 +4,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.janita.idplugin.common.Pair;
 import com.janita.idplugin.common.constant.PluginConstant;
-import com.janita.idplugin.common.domain.DbConfig;
+import com.janita.idplugin.common.domain.CrQuestionSetting;
 import com.janita.idplugin.common.entity.CrDeveloper;
-import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.common.request.CrDeveloperQueryRequest;
 import com.janita.idplugin.common.request.CrDeveloperSaveRequest;
 import com.janita.idplugin.dao.crdeveloper.ICrDeveloperDAO;
@@ -35,25 +34,25 @@ public class CrDeveloperServiceImpl implements ICrDeveloperService {
     }
 
     @Override
-    public void save(CrDataStorageEnum storageEnum, DbConfig config, CrDeveloperSaveRequest request) {
-        ICrDeveloperDAO crDeveloperDAO = CrDeveloperDaoFactory.getCrDeveloperDAO(storageEnum);
-        crDeveloperDAO.save(storageEnum, config, request);
+    public void save(CrQuestionSetting setting, CrDeveloperSaveRequest request) {
+        ICrDeveloperDAO crDeveloperDAO = CrDeveloperDaoFactory.getCrDeveloperDAO(setting.getStorageWay());
+        crDeveloperDAO.save(setting, request);
     }
 
     @Override
-    public List<CrDeveloper> query(CrDataStorageEnum storageEnum, DbConfig dbConfig, CrDeveloperQueryRequest request) {
-        ICrDeveloperDAO crDeveloperDAO = CrDeveloperDaoFactory.getCrDeveloperDAO(storageEnum);
-        Pair<Boolean, List<CrDeveloper>> booleanListPair = crDeveloperDAO.queryDeveloper(storageEnum, dbConfig, request);
+    public List<CrDeveloper> query(CrQuestionSetting setting, CrDeveloperQueryRequest request) {
+        ICrDeveloperDAO crDeveloperDAO = CrDeveloperDaoFactory.getCrDeveloperDAO(setting.getStorageWay());
+        Pair<Boolean, List<CrDeveloper>> booleanListPair = crDeveloperDAO.queryDeveloper(setting, request);
         return booleanListPair.getRight();
     }
 
     @Override
-    public Pair<Boolean, List<CrDeveloper>> queryAssignName(CrDataStorageEnum storageEnum, DbConfig config, String projectName) {
+    public Pair<Boolean, List<CrDeveloper>> queryAssignName(CrQuestionSetting setting,String projectName) {
         CrDeveloperQueryRequest request = new CrDeveloperQueryRequest();
         request.setProjectNameSet(Sets.newHashSet(projectName));
 
-        ICrDeveloperService developerService = CrDeveloperServiceFactory.getICrDeveloperService(storageEnum);
-        List<CrDeveloper> developerList = developerService.query(storageEnum, config, request);
+        ICrDeveloperService developerService = CrDeveloperServiceFactory.getICrDeveloperService(setting.getStorageWay());
+        List<CrDeveloper> developerList = developerService.query(setting, request);
         if (CollectionUtils.isNotEmpty(developerList)) {
             return Pair.of(true, developerList);
         }

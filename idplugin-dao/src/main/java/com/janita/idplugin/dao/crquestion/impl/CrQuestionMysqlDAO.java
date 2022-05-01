@@ -1,14 +1,13 @@
 package com.janita.idplugin.dao.crquestion.impl;
 
 import com.janita.idplugin.common.IDatabaseService;
-import com.janita.idplugin.common.domain.DbConfig;
+import com.janita.idplugin.common.Pair;
+import com.janita.idplugin.common.domain.CrQuestionSetting;
 import com.janita.idplugin.common.entity.CrQuestion;
-import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.common.enums.CrQuestionState;
 import com.janita.idplugin.common.request.CrQuestionQueryRequest;
 import com.janita.idplugin.dao.BaseDAO;
 import com.janita.idplugin.dao.crquestion.ICrQuestionDAO;
-import com.janita.idplugin.common.Pair;
 import com.janita.idplugin.remote.constant.DmlConstants;
 import com.janita.idplugin.remote.db.factory.DatabaseServiceFactory;
 import org.apache.commons.collections.CollectionUtils;
@@ -39,15 +38,15 @@ public class CrQuestionMysqlDAO extends BaseDAO<CrQuestion> implements ICrQuesti
     private CrQuestionMysqlDAO(){}
 
     @Override
-    public boolean checkHealth(CrDataStorageEnum storageEnum,DbConfig config) {
-        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
+    public boolean checkHealth(CrQuestionSetting setting) {
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(setting.getStorageWay());
         return databaseService.checkConnectSuccess();
     }
 
     @Override
-    public boolean insert(CrDataStorageEnum storageEnum,DbConfig config, CrQuestion question) {
-        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
-        Connection connection = databaseService.getConnectionByConfig(config);
+    public boolean insert(CrQuestionSetting setting, CrQuestion question) {
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(setting.getStorageWay());
+        Connection connection = databaseService.getConnectionByConfig(setting);
         boolean success = update(connection, DmlConstants.INSERT_QUESTION_IN_SQLITE,
                 null,
                 question.getProjectName(),
@@ -98,10 +97,10 @@ public class CrQuestionMysqlDAO extends BaseDAO<CrQuestion> implements ICrQuesti
     }
 
     @Override
-    public boolean update(CrDataStorageEnum storageEnum,DbConfig config,CrQuestion question) {
+    public boolean update(CrQuestionSetting setting,CrQuestion question) {
         Long id = question.getId();
-        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
-        Connection connection = databaseService.getConnectionByConfig(config);
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(setting.getStorageWay());
+        Connection connection = databaseService.getConnectionByConfig(setting);
         CrQuestion oldQuestion = getBean(connection, DmlConstants.QUERY_BY_ID, id);
         if (oldQuestion == null) {
             return true;
@@ -145,10 +144,10 @@ public class CrQuestionMysqlDAO extends BaseDAO<CrQuestion> implements ICrQuesti
     }
 
     @Override
-    public Pair<Boolean, List<CrQuestion>> queryQuestion(CrDataStorageEnum storageEnum,DbConfig config,CrQuestionQueryRequest request) {
+    public Pair<Boolean, List<CrQuestion>> queryQuestion(CrQuestionSetting setting,CrQuestionQueryRequest request) {
         Set<String> stateSet = request.getStateSet();
-        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
-        Connection connection = databaseService.getConnectionByConfig(config);
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(setting.getStorageWay());
+        Connection connection = databaseService.getConnectionByConfig(setting);
         try {
             List<CrQuestion> questionList = queryList(connection, DmlConstants.QUERY_SQL, new ArrayList<>(request.getProjectNameSet()).get(0));
             if (CollectionUtils.isEmpty(questionList)) {

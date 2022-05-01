@@ -1,7 +1,7 @@
 package com.janita.idplugin.remote.db;
 
 import com.janita.idplugin.common.IDatabaseService;
-import com.janita.idplugin.common.domain.DbConfig;
+import com.janita.idplugin.common.domain.CrQuestionSetting;
 import com.mysql.cj.jdbc.ConnectionImpl;
 import org.apache.commons.dbutils.QueryRunner;
 
@@ -56,8 +56,8 @@ public abstract class AbstractIDatabaseService implements IDatabaseService {
     }
 
     @Override
-    public Connection getConnectionByConfig(DbConfig config) {
-        return getConnection(config.getUrl(), config.getUsername(), config.getPwd());
+    public Connection getConnectionByConfig(CrQuestionSetting setting) {
+        return getConnection(setting.getDbUrl(), setting.getDbUsername(), setting.getDbUsername());
     }
 
     @Override

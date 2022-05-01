@@ -100,7 +100,14 @@ public class CommonUtils {
     }
 
     public static void clearDefaultTableModel(DefaultTableModel model) {
-        for (int i = model.getRowCount() - 1; i >= 0; i--) {
+        if (model == null) {
+            return;
+        }
+        int rowCount = model.getRowCount();
+        if (rowCount <= 0) {
+            return;
+        }
+        for (int i = rowCount - 1; i >= 0; i--) {
             model.removeRow(i);
         }
     }

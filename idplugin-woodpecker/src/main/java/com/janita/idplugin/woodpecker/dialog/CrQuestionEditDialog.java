@@ -16,20 +16,20 @@ import com.intellij.ui.components.JBTabbedPane;
 import com.intellij.ui.components.JBTextField;
 import com.janita.idplugin.common.constant.DataToInit;
 import com.janita.idplugin.common.constant.PluginConstant;
+import com.janita.idplugin.common.entity.CrDeveloper;
+import com.janita.idplugin.common.entity.CrQuestion;
+import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.common.enums.CrQuestionState;
+import com.janita.idplugin.common.request.CrDeveloperSaveRequest;
+import com.janita.idplugin.idea.base.icons.PluginIcons;
 import com.janita.idplugin.idea.base.util.CodeEditorUtil;
 import com.janita.idplugin.service.crdeveloper.ICrDeveloperService;
 import com.janita.idplugin.service.crdeveloper.factory.CrDeveloperServiceFactory;
 import com.janita.idplugin.service.crquestion.ICrQuestionService;
 import com.janita.idplugin.service.crquestion.domain.CrQuestionSaveRequest;
 import com.janita.idplugin.service.crquestion.factory.CrQuestionFactory;
-import com.janita.idplugin.common.enums.CrDataStorageEnum;
-import com.janita.idplugin.idea.base.icons.PluginIcons;
-import com.janita.idplugin.common.entity.CrDeveloper;
-import com.janita.idplugin.common.request.CrDeveloperSaveRequest;
-import com.janita.idplugin.common.entity.CrQuestion;
-import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
 import com.janita.idplugin.woodpecker.export.CrQuestionUtils;
+import com.janita.idplugin.woodpecker.setting.CrQuestionSettingUtils;
 import com.janita.idplugin.woodpecker.window.table.CrQuestionTable;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -158,7 +158,7 @@ public class CrQuestionEditDialog extends DialogWrapper {
 
     @Override
     protected void doOKAction() {
-        CrDataStorageEnum storageEnum = CrQuestionSetting.getStorageWayFromCache();
+        CrDataStorageEnum storageEnum = CrQuestionSettingUtils.getStorageWayFromCache();
         ICrQuestionService questionService = CrQuestionFactory.getCrQuestionService(storageEnum);
         ICrDeveloperService developerService = CrDeveloperServiceFactory.getICrDeveloperService(storageEnum);
 
@@ -169,17 +169,17 @@ public class CrQuestionEditDialog extends DialogWrapper {
         {
             Pair<String, String> phoneAndNameOfAssignTo = getAssignerToNameAndPhone();
             CrDeveloperSaveRequest request = new CrDeveloperSaveRequest(phoneAndNameOfAssignTo.first, null, phoneAndNameOfAssignTo.second);
-            developerService.save(storageEnum, CrQuestionSetting.getDbConfig(), request);
+            developerService.save(CrQuestionSettingUtils.getCrQuestionSettingFromCache(), request);
         }
 
         if (add) {
-            questionService.save(storageEnum, CrQuestionSetting.getDbConfig(), new CrQuestionSaveRequest(editIndex, sendWeChatMsg, phoneList, question));
+            questionService.save( CrQuestionSettingUtils.getCrQuestionSettingFromCache(), new CrQuestionSaveRequest(editIndex, sendWeChatMsg, phoneList, question));
             CrQuestionTable.add(question);
         } else {
             // TODO 修改有BUG
             boolean changed = CrQuestionUtils.isChanged(rawQuestion, question);
             if (changed) {
-                questionService.save(storageEnum, CrQuestionSetting.getDbConfig(), new CrQuestionSaveRequest(editIndex, sendWeChatMsg, phoneList, question));
+                questionService.save(CrQuestionSettingUtils.getCrQuestionSettingFromCache(), new CrQuestionSaveRequest(editIndex, sendWeChatMsg, phoneList, question));
                 CrQuestionTable.update(editIndex, question);
             }
         }

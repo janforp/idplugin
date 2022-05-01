@@ -3,7 +3,7 @@ package com.janita.idplugin.woodpecker.dialog;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.ValidationInfo;
 import com.janita.idplugin.woodpecker.setting.CrQuestionDataStorageSettingComponent;
-import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
+import com.janita.idplugin.woodpecker.setting.CrQuestionSettingUtils;
 import com.janita.idplugin.woodpecker.setting.CrSettingBuilder;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,7 +41,7 @@ public class CrQuestionSettingDialog extends DialogWrapper {
     private void saveWhenPressOk() {
         ValidationInfo validationInfo = doValidate();
         if (validationInfo == null) {
-            CrQuestionSetting.saveFromInput(false, component);
+            CrQuestionSettingUtils.saveFromInput(false, component);
         }
     }
 
@@ -78,7 +78,7 @@ public class CrQuestionSettingDialog extends DialogWrapper {
                 return new ValidationInfo("请输入正确的接口域名");
             }
         }
-        boolean success = CrQuestionSetting.saveFromInput(false, component);
+        boolean success = CrQuestionSettingUtils.saveFromInput(false, component);
         if (!success) {
             return new ValidationInfo("健康检查失败，请确认输入是否正确！");
         }
@@ -86,7 +86,7 @@ public class CrQuestionSettingDialog extends DialogWrapper {
     }
 
     public static boolean checkStorageAndReturnIfClickOk() {
-        boolean valid = CrQuestionSetting.checkValidNow();
+        boolean valid = CrQuestionSettingUtils.checkValidNow();
         if (valid) {
             return true;
         }

@@ -1,16 +1,15 @@
 package com.janita.idplugin.dao.crquestion.impl;
 
 import com.janita.idplugin.common.IDatabaseService;
-import com.janita.idplugin.common.domain.DbConfig;
+import com.janita.idplugin.common.Pair;
+import com.janita.idplugin.common.domain.CrQuestionSetting;
 import com.janita.idplugin.common.entity.CrQuestion;
-import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.common.enums.CrQuestionState;
 import com.janita.idplugin.common.request.CrQuestionQueryRequest;
 import com.janita.idplugin.dao.BaseDAO;
 import com.janita.idplugin.dao.crquestion.ICrQuestionDAO;
-import com.janita.idplugin.common.Pair;
-import com.janita.idplugin.remote.constant.DmlConstants;
 import com.janita.idplugin.dao.crquestion.dataobject.CrSqliteQuestionDO;
+import com.janita.idplugin.remote.constant.DmlConstants;
 import com.janita.idplugin.remote.db.factory.DatabaseServiceFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
@@ -41,14 +40,14 @@ public class CrQuestionSqliteDAO extends BaseDAO<CrSqliteQuestionDO> implements 
     }
 
     @Override
-    public boolean checkHealth(CrDataStorageEnum storageEnum,DbConfig config) {
-        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
+    public boolean checkHealth(CrQuestionSetting setting) {
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(setting.getStorageWay());
         return databaseService.checkConnectSuccess();    }
 
     @Override
-    public boolean insert(CrDataStorageEnum storageEnum,DbConfig config, CrQuestion question) {
-        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
-        Connection connection = databaseService.getConnectionByConfig(config);
+    public boolean insert(CrQuestionSetting setting, CrQuestion question) {
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(setting.getStorageWay());
+        Connection connection = databaseService.getConnectionByConfig(setting);
         Pair<Boolean, Integer> pair = getValue(connection, DmlConstants.GET_MAX_ID_NOW);
         if (!pair.getLeft()) {
             return false;
@@ -93,10 +92,10 @@ public class CrQuestionSqliteDAO extends BaseDAO<CrSqliteQuestionDO> implements 
     }
 
     @Override
-    public boolean update(CrDataStorageEnum storageEnum,DbConfig config, CrQuestion question) {
+    public boolean update(CrQuestionSetting setting, CrQuestion question) {
         Long id = question.getId();
-        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
-        Connection connection = databaseService.getConnectionByConfig(config);
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(setting.getStorageWay());
+        Connection connection = databaseService.getConnectionByConfig(setting);
         CrSqliteQuestionDO oldQuestion = getBean(connection, DmlConstants.QUERY_BY_ID, id);
         if (oldQuestion == null) {
             return true;
@@ -140,10 +139,10 @@ public class CrQuestionSqliteDAO extends BaseDAO<CrSqliteQuestionDO> implements 
     }
 
     @Override
-    public Pair<Boolean, List<CrQuestion>> queryQuestion(CrDataStorageEnum storageEnum,DbConfig config, CrQuestionQueryRequest request) {
+    public Pair<Boolean, List<CrQuestion>> queryQuestion(CrQuestionSetting setting, CrQuestionQueryRequest request) {
         Set<String> stateSet = request.getStateSet();
-        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
-        Connection connection = databaseService.getConnectionByConfig(config);
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(setting.getStorageWay());
+        Connection connection = databaseService.getConnectionByConfig(setting);
         try {
             List<CrSqliteQuestionDO> questionDoList = queryList(connection, DmlConstants.QUERY_SQL, new ArrayList<>(request.getProjectNameSet()).get(0));
             List<CrQuestion> questionList = toCrQuestionList(questionDoList);

@@ -1,20 +1,19 @@
 package com.janita.idplugin.dao.crdeveloper.impl;
 
-import com.janita.idplugin.common.domain.DbConfig;
-import com.janita.idplugin.common.enums.CrDataStorageEnum;
-import com.janita.idplugin.dao.crquestion.factory.CrQuestionDaoFactory;
-import com.janita.idplugin.remote.constant.DmlConstants;
+import com.janita.idplugin.common.IDatabaseService;
 import com.janita.idplugin.common.Pair;
-import com.janita.idplugin.remote.db.factory.DatabaseServiceFactory;
+import com.janita.idplugin.common.domain.CrQuestionSetting;
+import com.janita.idplugin.common.entity.CrDeveloper;
+import com.janita.idplugin.common.entity.CrQuestion;
+import com.janita.idplugin.common.request.CrDeveloperQueryRequest;
+import com.janita.idplugin.common.request.CrDeveloperSaveRequest;
+import com.janita.idplugin.common.request.CrQuestionQueryRequest;
 import com.janita.idplugin.dao.BaseDAO;
 import com.janita.idplugin.dao.crdeveloper.ICrDeveloperDAO;
 import com.janita.idplugin.dao.crquestion.ICrQuestionDAO;
-import com.janita.idplugin.common.IDatabaseService;
-import com.janita.idplugin.common.entity.CrDeveloper;
-import com.janita.idplugin.common.request.CrDeveloperQueryRequest;
-import com.janita.idplugin.common.request.CrDeveloperSaveRequest;
-import com.janita.idplugin.common.entity.CrQuestion;
-import com.janita.idplugin.common.request.CrQuestionQueryRequest;
+import com.janita.idplugin.dao.crquestion.factory.CrQuestionDaoFactory;
+import com.janita.idplugin.remote.constant.DmlConstants;
+import com.janita.idplugin.remote.db.factory.DatabaseServiceFactory;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
@@ -40,9 +39,9 @@ public class CrDeveloperMysqlDAO extends BaseDAO<CrDeveloper> implements ICrDeve
     }
 
     @Override
-    public boolean save(CrDataStorageEnum storageEnum,DbConfig config, CrDeveloperSaveRequest request) {
-        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(storageEnum);
-        Connection connection = databaseService.getConnectionByConfig(config);
+    public boolean save(CrQuestionSetting setting, CrDeveloperSaveRequest request) {
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(setting.getStorageWay());
+        Connection connection = databaseService.getConnectionByConfig(setting);
 
         String name = request.getName();
         String email = request.getEmail();
@@ -61,12 +60,12 @@ public class CrDeveloperMysqlDAO extends BaseDAO<CrDeveloper> implements ICrDeve
     }
 
     @Override
-    public Pair<Boolean, List<CrDeveloper>> queryDeveloper(CrDataStorageEnum storageEnum,DbConfig config, CrDeveloperQueryRequest request) {
+    public Pair<Boolean, List<CrDeveloper>> queryDeveloper(CrQuestionSetting setting, CrDeveloperQueryRequest request) {
         Set<String> projectNameSet = request.getProjectNameSet();
         CrQuestionQueryRequest questionQueryRequest = new CrQuestionQueryRequest();
         questionQueryRequest.setProjectNameSet(projectNameSet);
-        ICrQuestionDAO crQuestionMySqlDAO = CrQuestionDaoFactory.getCrQuestionDAO(storageEnum);
-        Pair<Boolean, List<CrQuestion>> questionPair = crQuestionMySqlDAO.queryQuestion(storageEnum,config, questionQueryRequest);
+        ICrQuestionDAO crQuestionMySqlDAO = CrQuestionDaoFactory.getCrQuestionDAO(setting.getStorageWay());
+        Pair<Boolean, List<CrQuestion>> questionPair = crQuestionMySqlDAO.queryQuestion(setting, questionQueryRequest);
         if (!questionPair.getLeft()) {
             return Pair.of(false, null);
         }

@@ -4,6 +4,7 @@ import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBPasswordField;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBTextField;
+import com.janita.idplugin.common.domain.CrQuestionSetting;
 import com.janita.idplugin.common.enums.CrDataStorageEnum;
 
 import javax.swing.*;
@@ -103,7 +104,7 @@ public class CrSettingBuilder {
     }
 
     private static void initFieldText(CrQuestionDataStorageSettingComponent component) {
-        CrQuestionSetting setting = CrQuestionSetting.getCrQuestionSettingFromCache();
+        CrQuestionSetting setting = CrQuestionSettingUtils.getCrQuestionSettingFromCache();
         component.getDbUrlField().setText(setting.getDbUrl());
         component.getDbUsernameField().setText(setting.getDbUsername());
         component.getDbPwdField().setText(setting.getDbPwd());
@@ -111,7 +112,7 @@ public class CrSettingBuilder {
     }
 
     private static void selectRadix(CrQuestionDataStorageSettingComponent component) {
-        CrDataStorageEnum storageEnum = CrQuestionSetting.getStorageWayFromCache();
+        CrDataStorageEnum storageEnum = CrQuestionSettingUtils.getStorageWayFromCache();
         if (storageEnum == null) {
             // 默认
             storageEnum = CrDataStorageEnum.getDefault();

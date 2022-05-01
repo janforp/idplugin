@@ -1,6 +1,7 @@
 package com.janita.idplugin.woodpecker.setting;
 
 import com.intellij.openapi.options.Configurable;
+import com.janita.idplugin.common.domain.CrQuestionSetting;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,14 +37,14 @@ public class CrSettingConfigurable implements Configurable {
 
     @Override
     public boolean isModified() {
-        CrQuestionSetting settingFromCache = CrQuestionSetting.getCrQuestionSettingFromCache();
-        CrQuestionSetting settingFromInput = CrQuestionSetting.getCrQuestionSettingFromInput(component);
+        CrQuestionSetting settingFromCache = CrQuestionSettingUtils.getCrQuestionSettingFromCache();
+        CrQuestionSetting settingFromInput = CrQuestionSettingUtils.getCrQuestionSettingFromInput(component);
         return !settingFromCache.equals(settingFromInput);
     }
 
     @Override
     public void apply() {
-        CrQuestionSetting.saveFromInput(true, component);
+        CrQuestionSettingUtils.saveFromInput(true, component);
     }
 
     @Override

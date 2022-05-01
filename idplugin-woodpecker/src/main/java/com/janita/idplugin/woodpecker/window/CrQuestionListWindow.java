@@ -9,28 +9,28 @@ import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
 import com.janita.idplugin.common.Pair;
+import com.janita.idplugin.common.entity.CrDeveloper;
+import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.common.enums.CrDataStorageEnum;
-import com.janita.idplugin.idea.base.enums.ButtonType;
 import com.janita.idplugin.common.enums.CrQuestionState;
+import com.janita.idplugin.common.request.CrQuestionQueryRequest;
+import com.janita.idplugin.common.util.DateUtils;
+import com.janita.idplugin.idea.base.enums.ButtonType;
 import com.janita.idplugin.idea.base.progress.AbstractProgressTask;
 import com.janita.idplugin.idea.base.progress.ProgressUtils;
 import com.janita.idplugin.idea.base.util.CommonUtils;
 import com.janita.idplugin.idea.base.util.CompatibleUtils;
-import com.janita.idplugin.common.util.DateUtils;
 import com.janita.idplugin.idea.base.util.JSwingUtils;
 import com.janita.idplugin.service.crdeveloper.ICrDeveloperService;
 import com.janita.idplugin.service.crdeveloper.factory.CrDeveloperServiceFactory;
 import com.janita.idplugin.service.crquestion.ICrQuestionService;
 import com.janita.idplugin.service.crquestion.factory.CrQuestionFactory;
 import com.janita.idplugin.woodpecker.dialog.CrQuestionEditDialog;
-import com.janita.idplugin.common.entity.CrDeveloper;
-import com.janita.idplugin.common.entity.CrQuestion;
-import com.janita.idplugin.common.request.CrQuestionQueryRequest;
+import com.janita.idplugin.woodpecker.export.CrQuestionUtils;
 import com.janita.idplugin.woodpecker.export.MDFreeMarkProcessor;
 import com.janita.idplugin.woodpecker.export.vo.CrQuestionExportVO;
 import com.janita.idplugin.woodpecker.renderer.CrQuestionTableRenderer;
-import com.janita.idplugin.woodpecker.setting.CrQuestionSetting;
-import com.janita.idplugin.woodpecker.export.CrQuestionUtils;
+import com.janita.idplugin.woodpecker.setting.CrQuestionSettingUtils;
 import com.janita.idplugin.woodpecker.window.table.CrQuestionTable;
 import org.apache.commons.lang3.StringUtils;
 
@@ -173,14 +173,14 @@ public class CrQuestionListWindow extends JDialog {
         String projectName = (String) projectBox.getSelectedItem();
         Set<String> stateSet = getStateByUserSelect();
         CrQuestionQueryRequest request = new CrQuestionQueryRequest(Sets.newHashSet(projectName), stateSet);
-        CrDataStorageEnum storageEnum = CrQuestionSetting.getStorageWayFromCache();
+        CrDataStorageEnum storageEnum = CrQuestionSettingUtils.getStorageWayFromCache();
         ICrQuestionService questionService = CrQuestionFactory.getCrQuestionService(storageEnum);
 
         ProgressUtils.showProgress(project, "Querying", new AbstractProgressTask() {
             @Override
             public void doProcess() {
                 try {
-                    List<CrQuestion> questionList = questionService.query(storageEnum, CrQuestionSetting.getDbConfig(), request);
+                    List<CrQuestion> questionList = questionService.query(CrQuestionSettingUtils.getCrQuestionSettingFromCache(), request);
                     CrQuestionTable.rerenderTable(questionList);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -236,9 +236,9 @@ public class CrQuestionListWindow extends JDialog {
 
     private void showQuestionDetailDialog(int row) {
         CrQuestion question = CrQuestionTable.getCrQuestionList().get(row);
-        CrDataStorageEnum storageEnum = CrQuestionSetting.getStorageWayFromCache();
+        CrDataStorageEnum storageEnum = CrQuestionSettingUtils.getStorageWayFromCache();
         ICrDeveloperService developerService = CrDeveloperServiceFactory.getICrDeveloperService(storageEnum);
-        Pair<Boolean, List<CrDeveloper>> pair = developerService.queryAssignName(storageEnum, CrQuestionSetting.getDbConfig(), question.getProjectName());
+        Pair<Boolean, List<CrDeveloper>> pair = developerService.queryAssignName(CrQuestionSettingUtils.getCrQuestionSettingFromCache(), question.getProjectName());
         CrQuestionEditDialog crQuestionEditDialog = new CrQuestionEditDialog(project, question, pair.getRight(), false, row);
         crQuestionEditDialog.open();
     }

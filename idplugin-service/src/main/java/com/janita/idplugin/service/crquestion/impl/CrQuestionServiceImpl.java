@@ -1,9 +1,8 @@
 package com.janita.idplugin.service.crquestion.impl;
 
 import com.janita.idplugin.common.Pair;
-import com.janita.idplugin.common.domain.DbConfig;
+import com.janita.idplugin.common.domain.CrQuestionSetting;
 import com.janita.idplugin.common.entity.CrQuestion;
-import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.common.enums.OperationType;
 import com.janita.idplugin.common.request.CrQuestionQueryRequest;
 import com.janita.idplugin.dao.crquestion.ICrQuestionDAO;
@@ -33,15 +32,15 @@ public class CrQuestionServiceImpl implements ICrQuestionService {
     }
 
     @Override
-    public void save(CrDataStorageEnum storageEnum, DbConfig config, CrQuestionSaveRequest create) {
+    public void save(CrQuestionSetting setting, CrQuestionSaveRequest create) {
         CrQuestion question = create.getQuestion();
         boolean isAdd = question.getId() == null;
-        ICrQuestionDAO crQuestionDAO = CrQuestionDaoFactory.getCrQuestionDAO(storageEnum);
+        ICrQuestionDAO crQuestionDAO = CrQuestionDaoFactory.getCrQuestionDAO(setting.getStorageWay());
         boolean success;
         if (isAdd) {
-            success = crQuestionDAO.insert(storageEnum, config, question);
+            success = crQuestionDAO.insert(setting, question);
         } else {
-            success = crQuestionDAO.update(storageEnum, config, question);
+            success = crQuestionDAO.update(setting, question);
         }
         if (!success) {
             return;
@@ -54,9 +53,9 @@ public class CrQuestionServiceImpl implements ICrQuestionService {
     }
 
     @Override
-    public List<CrQuestion> query(CrDataStorageEnum storageEnum, DbConfig dbConfig, CrQuestionQueryRequest request) {
-        ICrQuestionDAO crQuestionDAO = CrQuestionDaoFactory.getCrQuestionDAO(storageEnum);
-        Pair<Boolean, List<CrQuestion>> booleanListPair = crQuestionDAO.queryQuestion(storageEnum, dbConfig, request);
+    public List<CrQuestion> query(CrQuestionSetting setting, CrQuestionQueryRequest request) {
+        ICrQuestionDAO crQuestionDAO = CrQuestionDaoFactory.getCrQuestionDAO(setting.getStorageWay());
+        Pair<Boolean, List<CrQuestion>> booleanListPair = crQuestionDAO.queryQuestion(setting, request);
         return booleanListPair.getRight();
     }
 }

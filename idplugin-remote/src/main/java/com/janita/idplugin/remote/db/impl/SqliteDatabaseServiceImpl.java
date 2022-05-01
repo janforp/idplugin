@@ -2,13 +2,11 @@ package com.janita.idplugin.remote.db.impl;
 
 import com.janita.idplugin.common.IDatabaseService;
 import com.janita.idplugin.common.constant.PluginConstant;
-import com.janita.idplugin.common.domain.DbConfig;
 import com.janita.idplugin.remote.db.AbstractIDatabaseService;
 import org.apache.commons.dbcp.BasicDataSource;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.sql.Connection;
 
 /**
  * SqliteDatabaseServiceImpl
@@ -19,16 +17,13 @@ import java.sql.Connection;
 public class SqliteDatabaseServiceImpl extends AbstractIDatabaseService {
 
     private static final String DATABASE_URL = "jdbc:sqlite:" + PluginConstant.DB_FILE_PATH;
+
     private static final IDatabaseService INSTANCE = new SqliteDatabaseServiceImpl();
 
     public static IDatabaseService getINSTANCE() {
         return INSTANCE;
     }
 
-    @Override
-    public Connection getConnectionByConfig(DbConfig config) {
-        return super.getConnectionByConfig(config);
-    }
     private SqliteDatabaseServiceImpl() {
 
     }

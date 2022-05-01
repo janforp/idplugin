@@ -1,7 +1,6 @@
 package com.janita.idplugin.common;
 
-import com.janita.idplugin.common.domain.DbConfig;
-import com.janita.idplugin.common.enums.CrDataStorageEnum;
+import com.janita.idplugin.common.domain.CrQuestionSetting;
 
 /**
  * IHealthService
@@ -18,5 +17,5 @@ public interface IHealthService {
      * @param config 配置
      * @return 是否健康
      */
-    boolean checkHealth(CrDataStorageEnum storageEnum, DbConfig config);
+    boolean checkHealth(CrQuestionSetting setting);
 }

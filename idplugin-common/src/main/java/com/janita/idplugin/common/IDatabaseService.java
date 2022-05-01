@@ -1,6 +1,6 @@
 package com.janita.idplugin.common;
 
-import com.janita.idplugin.common.domain.DbConfig;
+import com.janita.idplugin.common.domain.CrQuestionSetting;
 
 import java.sql.Connection;
 
@@ -43,5 +43,5 @@ public interface IDatabaseService {
      */
     void closeResource();
 
-    Connection getConnectionByConfig(DbConfig config);
+    Connection getConnectionByConfig(CrQuestionSetting setting);
 }

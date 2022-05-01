@@ -1,41 +1,28 @@
 package com.janita.idplugin.woodpecker.setting;
 
+import com.janita.idplugin.common.IDatabaseService;
 import com.janita.idplugin.common.IHealthService;
 import com.janita.idplugin.common.constant.PersistentKeys;
+import com.janita.idplugin.common.domain.CrQuestionSetting;
 import com.janita.idplugin.common.domain.DbConfig;
-import com.janita.idplugin.common.IDatabaseService;
-import com.janita.idplugin.remote.db.factory.DatabaseServiceFactory;
 import com.janita.idplugin.common.enums.CrDataStorageEnum;
-import com.janita.idplugin.service.health.factory.HealthServiceFactory;
 import com.janita.idplugin.idea.base.util.SingletonBeanFactory;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.janita.idplugin.remote.db.factory.DatabaseServiceFactory;
+import com.janita.idplugin.service.health.factory.HealthServiceFactory;
 
 import java.util.Set;
 
 /**
- * CrQuestionSetting
+ * CrQuestionSettingUtils
  *
  * @author zhucj
  * @since 20220324
  */
-@Data
-@EqualsAndHashCode
-public class CrQuestionSetting {
-
-    private CrDataStorageEnum storageWay;
-
-    private String dbUrl;
-
-    private String dbUsername;
-
-    private String dbPwd;
-
-    private String restApiDomain;
+public class CrQuestionSettingUtils {
 
     public static DbConfig getDbConfig() {
         CrQuestionSetting setting = getCrQuestionSettingFromCache();
-        return new DbConfig(setting.getDbUrl(), setting.getDbUsername(), setting.getDbPwd(), setting.restApiDomain);
+        return new DbConfig(setting.getDbUrl(), setting.getDbUsername(), setting.getDbPwd(), setting.getDbUsername());
     }
 
     public static boolean saveFromInput(boolean fromSetting, CrQuestionDataStorageSettingComponent component) {
@@ -55,9 +42,9 @@ public class CrQuestionSetting {
             SingletonBeanFactory.getPropertiesComponent().setValue(PersistentKeys.CrDataStorageConfig.REST_API_DOMAIN, input.getRestApiDomain());
         }
 
-        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(input.storageWay);
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(input.getStorageWay());
         IHealthService iHealthService = HealthServiceFactory.getIHealthService();
-        return input.getStorageWay().onChange(fromSetting, new DbConfig(cache.getDbUrl(), cache.getDbUsername(), cache.getDbPwd(), cache.restApiDomain), databaseService, iHealthService);
+        return input.getStorageWay().onChange(fromSetting, cache, databaseService, iHealthService);
     }
 
     public static CrQuestionSetting getCrQuestionSettingFromCache() {

@@ -1,8 +1,8 @@
 package com.janita.idplugin.common.enums;
 
-import com.janita.idplugin.common.IHealthService;
-import com.janita.idplugin.common.domain.DbConfig;
 import com.janita.idplugin.common.IDatabaseService;
+import com.janita.idplugin.common.IHealthService;
+import com.janita.idplugin.common.domain.CrQuestionSetting;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -22,22 +22,22 @@ public enum CrDataStorageEnum {
 
     REST_API(true, false, "REST接口") {
         @Override
-        public boolean onChange(boolean fromSetting, DbConfig dbConfig, IDatabaseService database, IHealthService healthService) {
-            return healthService.checkHealth(REST_API, dbConfig);
+        public boolean onChange(boolean fromSetting, CrQuestionSetting setting, IDatabaseService database, IHealthService healthService) {
+            return healthService.checkHealth(setting);
         }
     },
 
     SQLITE_DB(true, true, "本地缓存") {
         @Override
-        public boolean onChange(boolean fromSetting, DbConfig dbConfig, IDatabaseService database, IHealthService healthService) {
-            return CrDataStorageEnum.doOnChange(fromSetting, dbConfig, database);
+        public boolean onChange(boolean fromSetting, CrQuestionSetting setting, IDatabaseService database, IHealthService healthService) {
+            return CrDataStorageEnum.doOnChange(fromSetting, setting, database);
         }
     },
 
     MYSQL_DB(true, false, "MYSQL数据库") {
         @Override
-        public boolean onChange(boolean fromSetting, DbConfig dbConfig, IDatabaseService database, IHealthService healthService) {
-            return CrDataStorageEnum.doOnChange(fromSetting, dbConfig, database);
+        public boolean onChange(boolean fromSetting, CrQuestionSetting setting, IDatabaseService database, IHealthService healthService) {
+            return CrDataStorageEnum.doOnChange(fromSetting, setting, database);
         }
     },
     ;
@@ -61,12 +61,12 @@ public enum CrDataStorageEnum {
         return null;
     }
 
-    private static boolean doOnChange(boolean fromSetting, DbConfig dbConfig, IDatabaseService database) {
+    private static boolean doOnChange(boolean fromSetting, CrQuestionSetting setting, IDatabaseService database) {
         if (fromSetting) {
-            new Thread(() -> database.reInitConnect(dbConfig.getUrl(), dbConfig.getUsername(), dbConfig.getPwd())).start();
+            new Thread(() -> database.reInitConnect(setting.getDbUrl(), setting.getDbUsername(), setting.getDbUsername())).start();
             return true;
         } else {
-            database.reInitConnect(dbConfig.getUrl(), dbConfig.getUsername(), dbConfig.getPwd());
+            database.reInitConnect(setting.getDbUrl(), setting.getDbUsername(), setting.getDbUsername());
             return database.checkConnectSuccess();
         }
     }
@@ -77,7 +77,7 @@ public enum CrDataStorageEnum {
      * @param fromSetting 从哪里设置
      * @return 成功失败
      */
-    public abstract boolean onChange(boolean fromSetting, DbConfig dbConfig, IDatabaseService service, IHealthService healthService);
+    public abstract boolean onChange(boolean fromSetting, CrQuestionSetting setting, IDatabaseService service, IHealthService healthService);
 
     /**
      * 检查这种方式当前是否可用

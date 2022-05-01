@@ -1,9 +1,9 @@
 package com.janita.idplugin.remote.db.impl;
 
 import com.janita.idplugin.common.IDatabaseService;
-import com.janita.idplugin.common.domain.DbConfig;
-import com.janita.idplugin.remote.util.DruidDbUtils;
+import com.janita.idplugin.common.domain.CrQuestionSetting;
 import com.janita.idplugin.remote.db.AbstractIDatabaseService;
+import com.janita.idplugin.remote.util.DruidDbUtils;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -23,8 +23,8 @@ public class MySqlDatabaseServiceImpl extends AbstractIDatabaseService {
     }
 
     @Override
-    public Connection getConnectionByConfig(DbConfig config) {
-        return super.getConnectionByConfig(config);
+    public Connection getConnectionByConfig(CrQuestionSetting setting) {
+        return super.getConnectionByConfig(setting);
     }
 
     private MySqlDatabaseServiceImpl() {
