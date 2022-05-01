@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>com.janita.idplugin.woodpeckerHelper</id>
-    <name>CRHelper</name>
+    <name>Woodpecker</name>
     <vendor email="janforp@163.com" url="janforp@163.com">janita</vendor>
     <idea-version since-build="171.0"/>
     <description><![CDATA[

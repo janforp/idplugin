@@ -1,11 +1,13 @@
 <idea-plugin>
     <id>idplugin-idea-base</id>
-    <name>Plugin display name here</name>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <name>IdPluginIdeaBase</name>
+    <vendor email="janforp@163.com" url="janforp@163.com">janita</vendor>
+    <idea-version since-build="171.0"/>
 
-    <description><![CDATA[
-        Enter short description for your plugin here.<br>
-        <em>most HTML tags may be used</em>
+    <description><![CDATA[这是一个代码评审辅助工具
+    <p>1.可以在idea中直接提问题</p>
+    <p>2.右侧的CrQuestion菜单可以列表显示</p>
+    <p>3.可以导出为markdown文件</p>
         ]]></description>
 
     <depends>com.intellij.modules.platform</depends>

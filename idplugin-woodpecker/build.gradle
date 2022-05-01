@@ -42,6 +42,7 @@ dependencies {
 intellij {
     version = '2020.1'
     plugins = ['git4idea']
+    updateSinceUntilBuild = false
 }
 patchPluginXml {
     changeNotes = """
