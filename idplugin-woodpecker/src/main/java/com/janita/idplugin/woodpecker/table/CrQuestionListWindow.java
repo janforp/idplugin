@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.window;
+package com.janita.idplugin.woodpecker.table;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -8,7 +8,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
-import com.janita.idplugin.common.Pair;
+import com.janita.idplugin.common.domain.Pair;
 import com.janita.idplugin.common.entity.CrDeveloper;
 import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.common.enums.CrDataStorageEnum;
@@ -17,10 +17,10 @@ import com.janita.idplugin.common.request.CrQuestionQueryRequest;
 import com.janita.idplugin.common.util.DateUtils;
 import com.janita.idplugin.idea.base.enums.ButtonType;
 import com.janita.idplugin.idea.base.progress.AbstractProgressTask;
-import com.janita.idplugin.idea.base.progress.ProgressUtils;
 import com.janita.idplugin.idea.base.util.CommonUtils;
 import com.janita.idplugin.idea.base.util.CompatibleUtils;
 import com.janita.idplugin.idea.base.util.JSwingUtils;
+import com.janita.idplugin.idea.base.util.ProgressUtils;
 import com.janita.idplugin.service.crdeveloper.ICrDeveloperService;
 import com.janita.idplugin.service.crdeveloper.factory.CrDeveloperServiceFactory;
 import com.janita.idplugin.service.crquestion.ICrQuestionService;
@@ -31,7 +31,6 @@ import com.janita.idplugin.woodpecker.export.MDFreeMarkProcessor;
 import com.janita.idplugin.woodpecker.export.vo.CrQuestionExportVO;
 import com.janita.idplugin.woodpecker.renderer.CrQuestionTableRenderer;
 import com.janita.idplugin.woodpecker.setting.CrQuestionSettingUtils;
-import com.janita.idplugin.woodpecker.window.table.CrQuestionTable;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;

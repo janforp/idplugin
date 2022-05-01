@@ -1,6 +1,5 @@
-package com.janita.idplugin.common.entity;
+package com.janita.idplugin.common.domain;
 
-import com.janita.idplugin.common.domain.MsgColor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

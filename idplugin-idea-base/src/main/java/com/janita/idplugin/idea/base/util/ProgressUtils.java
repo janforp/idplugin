@@ -1,10 +1,11 @@
-package com.janita.idplugin.idea.base.progress;
+package com.janita.idplugin.idea.base.util;
 
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.janita.idplugin.idea.base.domain.CurrentProgress;
+import com.janita.idplugin.idea.base.progress.AbstractProgressTask;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;

@@ -2,9 +2,9 @@ package com.janita.idplugin.service.crdeveloper.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.janita.idplugin.common.Pair;
 import com.janita.idplugin.common.constant.PluginConstant;
 import com.janita.idplugin.common.domain.CrQuestionSetting;
+import com.janita.idplugin.common.domain.Pair;
 import com.janita.idplugin.common.entity.CrDeveloper;
 import com.janita.idplugin.common.request.CrDeveloperQueryRequest;
 import com.janita.idplugin.common.request.CrDeveloperSaveRequest;

@@ -4,7 +4,6 @@ import com.janita.idplugin.common.IDatabaseService;
 import com.janita.idplugin.common.IHealthService;
 import com.janita.idplugin.common.constant.PersistentKeys;
 import com.janita.idplugin.common.domain.CrQuestionSetting;
-import com.janita.idplugin.common.domain.DbConfig;
 import com.janita.idplugin.common.enums.CrDataStorageEnum;
 import com.janita.idplugin.idea.base.util.SingletonBeanFactory;
 import com.janita.idplugin.remote.db.factory.DatabaseServiceFactory;
@@ -19,11 +18,6 @@ import java.util.Set;
  * @since 20220324
  */
 public class CrQuestionSettingUtils {
-
-    public static DbConfig getDbConfig() {
-        CrQuestionSetting setting = getCrQuestionSettingFromCache();
-        return new DbConfig(setting.getDbUrl(), setting.getDbUsername(), setting.getDbPwd(), setting.getDbUsername());
-    }
 
     public static boolean saveFromInput(boolean fromSetting, CrQuestionDataStorageSettingComponent component) {
         CrQuestionSetting input = getCrQuestionSettingFromInput(component);

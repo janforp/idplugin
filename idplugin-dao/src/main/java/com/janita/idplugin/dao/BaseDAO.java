@@ -1,6 +1,6 @@
 package com.janita.idplugin.dao;
 
-import com.janita.idplugin.common.Pair;
+import com.janita.idplugin.common.domain.Pair;
 import org.apache.commons.dbutils.BasicRowProcessor;
 import org.apache.commons.dbutils.BeanProcessor;
 import org.apache.commons.dbutils.GenerousBeanProcessor;

@@ -1,4 +1,4 @@
-package com.janita.idplugin.common;
+package com.janita.idplugin.common.domain;
 
 /**
  * Pair
@@ -8,9 +8,9 @@ package com.janita.idplugin.common;
  */
 public class Pair<L, R> {
 
-    private L left;
+    private final L left;
 
-    private R right;
+    private final R right;
 
     private Pair(L left, R right) {
         this.left = left;

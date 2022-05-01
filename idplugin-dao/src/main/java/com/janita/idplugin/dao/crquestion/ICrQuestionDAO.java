@@ -1,7 +1,7 @@
 package com.janita.idplugin.dao.crquestion;
 
-import com.janita.idplugin.common.Pair;
 import com.janita.idplugin.common.domain.CrQuestionSetting;
+import com.janita.idplugin.common.domain.Pair;
 import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.common.request.CrQuestionQueryRequest;
 

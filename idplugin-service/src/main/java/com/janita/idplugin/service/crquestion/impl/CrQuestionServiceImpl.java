@@ -1,7 +1,7 @@
 package com.janita.idplugin.service.crquestion.impl;
 
-import com.janita.idplugin.common.Pair;
 import com.janita.idplugin.common.domain.CrQuestionSetting;
+import com.janita.idplugin.common.domain.Pair;
 import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.common.enums.OperationType;
 import com.janita.idplugin.common.request.CrQuestionQueryRequest;

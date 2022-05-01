@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.window.table;
+package com.janita.idplugin.woodpecker.table;
 
 import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.idea.base.util.CommonUtils;

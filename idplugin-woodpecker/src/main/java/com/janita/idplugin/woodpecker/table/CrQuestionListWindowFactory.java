@@ -1,4 +1,4 @@
-package com.janita.idplugin.woodpecker.window;
+package com.janita.idplugin.woodpecker.table;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;

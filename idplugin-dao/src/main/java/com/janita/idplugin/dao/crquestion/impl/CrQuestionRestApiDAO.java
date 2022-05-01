@@ -1,8 +1,8 @@
 package com.janita.idplugin.dao.crquestion.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.janita.idplugin.common.Pair;
 import com.janita.idplugin.common.domain.CrQuestionSetting;
+import com.janita.idplugin.common.domain.Pair;
 import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.common.enums.CrRestApiEnum;
 import com.janita.idplugin.common.request.CrQuestionQueryRequest;

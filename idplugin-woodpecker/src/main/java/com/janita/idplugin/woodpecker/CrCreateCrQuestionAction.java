@@ -6,7 +6,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.janita.idplugin.common.Pair;
+import com.janita.idplugin.common.domain.Pair;
 import com.janita.idplugin.common.entity.CrDeveloper;
 import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.common.enums.CrDataStorageEnum;

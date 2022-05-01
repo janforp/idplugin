@@ -30,7 +30,7 @@ import com.janita.idplugin.service.crquestion.domain.CrQuestionSaveRequest;
 import com.janita.idplugin.service.crquestion.factory.CrQuestionFactory;
 import com.janita.idplugin.woodpecker.export.CrQuestionUtils;
 import com.janita.idplugin.woodpecker.setting.CrQuestionSettingUtils;
-import com.janita.idplugin.woodpecker.window.table.CrQuestionTable;
+import com.janita.idplugin.woodpecker.table.CrQuestionTable;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

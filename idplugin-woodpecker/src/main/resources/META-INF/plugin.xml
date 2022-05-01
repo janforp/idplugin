@@ -22,7 +22,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- 添加右边的 CrQuestion 菜单 -->
-        <toolWindow factoryClass="com.janita.idplugin.woodpecker.window.CrQuestionListWindowFactory" id="CodeReviewList" anchor="right" icon="/img/mark.png"/>
+        <toolWindow factoryClass="com.janita.idplugin.woodpecker.table.CrQuestionListWindowFactory" id="CodeReviewList" anchor="right" icon="/img/mark.png"/>
         <applicationConfigurable parentId="tools"
                                  instance="com.janita.idplugin.woodpecker.setting.CrSettingConfigurable"
                                  id="com.janita.idplugin.woodpecker.setting.CrSettingConfigurable"/>
