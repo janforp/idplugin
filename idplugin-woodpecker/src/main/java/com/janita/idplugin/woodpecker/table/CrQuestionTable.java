@@ -2,6 +2,7 @@ package com.janita.idplugin.woodpecker.table;
 
 import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.idea.base.util.CommonUtils;
+import com.janita.idplugin.woodpecker.renderer.CrQuestionTableRenderer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,6 +17,9 @@ import java.util.List;
  */
 public class CrQuestionTable {
 
+    /**
+     * @see CrQuestionTableRenderer 添加项目的时候注意修改这个
+     */
     public static String[] HEAD = { "id", "项目", "文件", "类型", "级别", "迭代", "指派给", "提问者", "状态" };
 
     public static DefaultTableModel TABLE_MODEL = new DefaultTableModel(null, HEAD);

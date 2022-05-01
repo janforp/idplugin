@@ -34,7 +34,7 @@ public class CrQuestionTableRenderer extends DefaultTableCellRenderer {
         // 因为这个对象是复用的，所以每次都要初始化成默认都颜色，否则就会使用上一次设置都颜色
         stateLabel.setForeground(JBColor.BLACK);
 
-        if (column == 7) {
+        if (column == 8) {
             CrQuestionState state = CrQuestionState.getByDescOrReturnNull(text);
             if (CrQuestionState.UNSOLVED == state) {
                 stateLabel.setForeground(JBColor.RED);
@@ -54,13 +54,13 @@ public class CrQuestionTableRenderer extends DefaultTableCellRenderer {
             return stateLabel;
         }
 
-        if (column == 3) {
+        if (column == 4) {
             if ("阻断".equals(text) || "严重".equals(text)) {
                 stateLabel.setForeground(JBColor.RED);
             }
             return stateLabel;
         }
-        if (column == 2) {
+        if (column == 3) {
             if ("BUG".equals(text)) {
                 stateLabel.setForeground(JBColor.RED);
             }
