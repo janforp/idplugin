@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
  * @author zhucj
  * @since 20220324
  */
+@SuppressWarnings("all")
 public class CrDeveloperMysqlDAO extends BaseDAO<CrDeveloper> implements ICrDeveloperDAO {
 
     private static final ICrDeveloperDAO INSTANCE = new CrDeveloperMysqlDAO();

@@ -19,6 +19,7 @@ public interface ICrDeveloperDAO {
     /**
      * 保存
      *
+     * @param setting 配置
      * @param request 参数
      * @return 结果
      */
@@ -27,6 +28,7 @@ public interface ICrDeveloperDAO {
     /**
      * 查询
      *
+     * @param setting 配置
      * @param request 参数
      * @return 成功/失败
      */

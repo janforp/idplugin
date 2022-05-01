@@ -41,6 +41,7 @@ public class CrDeveloperSqliteDAO extends BaseDAO<CrDeveloper> implements ICrDev
     }
 
     @Override
+    @SuppressWarnings("all")
     public boolean save(CrQuestionSetting setting, CrDeveloperSaveRequest request) {
         IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(setting.getStorageWay());
         Connection connection = databaseService.getConnectionByConfig(setting);

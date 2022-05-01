@@ -18,6 +18,7 @@ public interface ICrQuestionDAO {
     /**
      * 健康检查
      *
+     * @param setting 配置
      * @return 是否健康
      */
     boolean checkHealth(CrQuestionSetting setting);
@@ -25,6 +26,7 @@ public interface ICrQuestionDAO {
     /**
      * 添加
      *
+     * @param setting 配置
      * @param question 问题
      * @return 成功/失败
      */
@@ -33,16 +35,18 @@ public interface ICrQuestionDAO {
     /**
      * 修改
      *
+     * @param setting 配置
      * @param question 问题
      * @return 成功/失败
      */
-    boolean update(CrQuestionSetting setting,CrQuestion question);
+    boolean update(CrQuestionSetting setting, CrQuestion question);
 
     /**
      * 查询
      *
+     * @param setting 配置
      * @param request 参数
      * @return 成功/失败
      */
-    Pair<Boolean, List<CrQuestion>> queryQuestion(CrQuestionSetting setting,CrQuestionQueryRequest request);
+    Pair<Boolean, List<CrQuestion>> queryQuestion(CrQuestionSetting setting, CrQuestionQueryRequest request);
 }

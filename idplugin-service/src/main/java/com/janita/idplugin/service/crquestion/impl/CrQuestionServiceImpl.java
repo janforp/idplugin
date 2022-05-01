@@ -32,8 +32,8 @@ public class CrQuestionServiceImpl implements ICrQuestionService {
     }
 
     @Override
-    public void save(CrQuestionSetting setting, CrQuestionSaveRequest create) {
-        CrQuestion question = create.getQuestion();
+    public void save(CrQuestionSetting setting, CrQuestionSaveRequest request) {
+        CrQuestion question = request.getQuestion();
         boolean isAdd = question.getId() == null;
         ICrQuestionDAO crQuestionDAO = CrQuestionDaoFactory.getCrQuestionDAO(setting.getStorageWay());
         boolean success;
@@ -45,11 +45,11 @@ public class CrQuestionServiceImpl implements ICrQuestionService {
         if (!success) {
             return;
         }
-        if (!create.isSendMsg()) {
+        if (!request.isSendMsg()) {
             return;
         }
         IWeChatService weChatService = WeChatServiceFactory.getWeChatService();
-        weChatService.sendByMarkDown(question, create.getPhoneList(), isAdd ? OperationType.add : OperationType.update);
+        weChatService.sendByMarkDown(question, request.getPhoneList(), isAdd ? OperationType.add : OperationType.update);
     }
 
     @Override

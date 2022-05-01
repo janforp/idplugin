@@ -38,6 +38,7 @@ public class CrDeveloperRestApiDAO implements ICrDeveloperDAO {
     }
 
     @Override
+    @SuppressWarnings("all")
     public Pair<Boolean, List<CrDeveloper>> queryDeveloper(CrQuestionSetting setting,CrDeveloperQueryRequest request) {
         List list = HttpUtils.post(setting, CrRestApiEnum.DEVELOPER_QUERY, request);
         if (CollectionUtils.isEmpty(list)) {

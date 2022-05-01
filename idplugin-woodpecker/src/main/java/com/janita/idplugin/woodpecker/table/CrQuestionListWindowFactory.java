@@ -7,8 +7,6 @@ import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.openapi.wm.ToolWindowType;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
-import com.intellij.ui.content.ContentManagerEvent;
-import com.intellij.ui.content.ContentManagerListener;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -26,27 +24,5 @@ public class CrQuestionListWindowFactory implements ToolWindowFactory {
         Content content = contentFactory.createContent((JComponent) window.getContentPane(), "", false);
         toolWindow.setDefaultState(ToolWindowAnchor.RIGHT, ToolWindowType.WINDOWED, null);
         toolWindow.getContentManager().addContent(content);
-
-        toolWindow.addContentManagerListener(new ContentManagerListener() {
-            @Override
-            public void contentAdded(@NotNull ContentManagerEvent event) {
-                ContentManagerListener.super.contentAdded(event);
-            }
-
-            @Override
-            public void contentRemoved(@NotNull ContentManagerEvent event) {
-                ContentManagerListener.super.contentRemoved(event);
-            }
-
-            @Override
-            public void contentRemoveQuery(@NotNull ContentManagerEvent event) {
-                ContentManagerListener.super.contentRemoveQuery(event);
-            }
-
-            @Override
-            public void selectionChanged(@NotNull ContentManagerEvent event) {
-                ContentManagerListener.super.selectionChanged(event);
-            }
-        });
     }
 }

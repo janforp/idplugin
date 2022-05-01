@@ -15,7 +15,20 @@ import java.util.List;
  */
 public interface ICrQuestionService {
 
-    void save(CrQuestionSetting setting, CrQuestionSaveRequest create);
+    /**
+     * 保存
+     *
+     * @param setting 配置
+     * @param request 请求参数
+     */
+    void save(CrQuestionSetting setting, CrQuestionSaveRequest request);
 
+    /**
+     * 查询
+     *
+     * @param setting 配置
+     * @param request 请求参数
+     * @return 列表
+     */
     List<CrQuestion> query(CrQuestionSetting setting, CrQuestionQueryRequest request);
 }
