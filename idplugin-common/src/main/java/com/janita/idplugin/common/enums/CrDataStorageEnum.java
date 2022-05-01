@@ -79,16 +79,6 @@ public enum CrDataStorageEnum {
      */
     public abstract boolean onChange(boolean fromSetting, CrQuestionSetting setting, IDatabaseService service, IHealthService healthService);
 
-    /**
-     * 检查这种方式当前是否可用
-     *
-     * @return 当前是否可用
-     */
-    public boolean checkValidNow() {
-        //return SingletonBeanFactory.getCrQuestionDAO().checkHealth();
-        return true;
-    }
-
     public static CrDataStorageEnum getDefault() {
         for (CrDataStorageEnum storageEnum : CrDataStorageEnum.values()) {
             if (storageEnum.defaultWay) {

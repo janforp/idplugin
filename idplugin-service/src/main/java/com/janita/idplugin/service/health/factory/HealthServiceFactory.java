@@ -11,7 +11,7 @@ import com.janita.idplugin.service.health.impl.HealthServiceImpl;
  */
 public class HealthServiceFactory {
 
-    public static IHealthService getIHealthService() {
+    public static IHealthService getHealthService() {
         return HealthServiceImpl.getINSTANCE();
     }
 }

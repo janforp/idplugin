@@ -36,8 +36,12 @@ public class CrQuestionSettingUtils {
             SingletonBeanFactory.getPropertiesComponent().setValue(PersistentKeys.CrDataStorageConfig.REST_API_DOMAIN, input.getRestApiDomain());
         }
 
-        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(input.getStorageWay());
-        IHealthService iHealthService = HealthServiceFactory.getIHealthService();
+        CrDataStorageEnum storageWay = input.getStorageWay();
+        IDatabaseService databaseService = null;
+        if (storageWay == CrDataStorageEnum.MYSQL_DB || storageWay == CrDataStorageEnum.SQLITE_DB) {
+            databaseService = DatabaseServiceFactory.getDatabaseService(input.getStorageWay());
+        }
+        IHealthService iHealthService = HealthServiceFactory.getHealthService();
         return input.getStorageWay().onChange(fromSetting, cache, databaseService, iHealthService);
     }
 
@@ -93,6 +97,8 @@ public class CrQuestionSettingUtils {
             // 如果之前设置的方式已经不支持了，则再次弹出
             return false;
         }
-        return storageEnum.checkValidNow();
+        IHealthService healthService = HealthServiceFactory.getHealthService();
+        CrQuestionSetting setting = CrQuestionSettingUtils.getCrQuestionSettingFromCache();
+        return healthService.checkHealth(setting);
     }
 }

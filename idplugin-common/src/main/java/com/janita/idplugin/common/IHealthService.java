@@ -13,8 +13,7 @@ public interface IHealthService {
     /**
      * 健康检查
      *
-     * @param storageEnum 方式
-     * @param config 配置
+     * @param setting 配置
      * @return 是否健康
      */
     boolean checkHealth(CrQuestionSetting setting);
