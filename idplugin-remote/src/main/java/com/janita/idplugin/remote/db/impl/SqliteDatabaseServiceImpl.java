@@ -93,7 +93,7 @@ public class SqliteDatabaseServiceImpl extends AbstractIDatabaseService {
      * 如果不存在目录和文件就创建
      */
     protected void createFileAndDir() {
-        //"C:\Users\Administrator\.ideaCRHelperFile"
+        //"C:\Users\Administrator\.ideaWoodpeckerFile"
         if (!Files.exists(PluginConstant.PROJECT_DB_DIRECTORY_PATH)) {
             try {
                 Files.createDirectories(PluginConstant.PROJECT_DB_DIRECTORY_PATH);
@@ -101,7 +101,7 @@ public class SqliteDatabaseServiceImpl extends AbstractIDatabaseService {
                 e.printStackTrace();
             }
         }
-        //"C:\Users\Administrator\.ideaCRHelperFileotebooks.db"
+        //"C:\Users\Administrator\.ideaWoodpeckerFileNotebooks.db"
         if (!Files.exists(PluginConstant.DB_FILE_PATH)) {
             try {
                 Files.createFile(PluginConstant.DB_FILE_PATH);

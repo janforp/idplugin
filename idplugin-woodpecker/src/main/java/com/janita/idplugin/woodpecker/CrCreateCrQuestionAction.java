@@ -43,7 +43,7 @@ public class CrCreateCrQuestionAction extends AnAction {
         ICrDeveloperService developerService = CrDeveloperServiceFactory.getICrDeveloperService(storageEnum);
         Pair<Boolean, List<CrDeveloper>> pair = developerService.queryAssignName(CrQuestionSettingUtils.getCrQuestionSettingFromCache(), question.getProjectName());
         if (!pair.getLeft()) {
-            CommonUtils.showNotification("CRHelper数据库配置不正确", MessageType.ERROR);
+            CommonUtils.showNotification("Woodpecker数据库配置不正确", MessageType.ERROR);
             return;
         }
         CrQuestionEditDialog crQuestionEditDialog = new CrQuestionEditDialog(project, question, pair.getRight(), true, null);

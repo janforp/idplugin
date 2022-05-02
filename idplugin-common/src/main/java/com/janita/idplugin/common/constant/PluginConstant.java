@@ -102,7 +102,7 @@ public class PluginConstant {
 
     /**
      * Data directory of this plugin:
-     * USER_HOME_PATH/.ideaCRHelperFile
+     * USER_HOME_PATH/.ideaWoodpeckerFile
      */
     public Path PROJECT_DB_DIRECTORY_PATH = Paths.get(USER_HOME_PATH, ".ideaCRHelperFile");
 
@@ -120,7 +120,7 @@ public class PluginConstant {
 
     /**
      * SQLite database file for this plugin:
-     * USER_HOME_PATH/.ideaCRHelperFile/CRHelper.db
+     * USER_HOME_PATH/.ideaWoodpeckerFile/Woodpecker.db
      */
     public Path DB_FILE_PATH = PROJECT_DB_DIRECTORY_PATH.resolve("CRHelper.db");
 

@@ -54,7 +54,7 @@ public class CrSettingDialogComponentBuilder {
             Box urlPanel = Box.createHorizontalBox();
             urlPanel.add(new JBLabel("数据库地址"));
             JBTextField dbUrlField = new JBTextField(50);
-            dbUrlField.setToolTipText("如 jdbc:mysql://127.0.0.1:3306/crhelper");
+            dbUrlField.setToolTipText("如 jdbc:mysql://127.0.0.1:3306/woodpecker");
             urlPanel.add(dbUrlField);
 
             Box usernamePanel = Box.createHorizontalBox();

@@ -21,7 +21,7 @@ public class CrSettingConfigurable implements Configurable {
     @Override
     public @Nls(capitalization = Nls.Capitalization.Title)
     String getDisplayName() {
-        return "CRHelper Setting";
+        return "Woodpecker Setting";
     }
 
     @Override
