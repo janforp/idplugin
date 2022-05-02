@@ -14,9 +14,11 @@ import com.janita.idplugin.dao.crquestion.ICrQuestionDAO;
 import com.janita.idplugin.dao.crquestion.factory.CrQuestionDaoFactory;
 import com.janita.idplugin.remote.constant.DmlConstants;
 import com.janita.idplugin.remote.db.factory.DatabaseServiceFactory;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -71,6 +73,22 @@ public class CrDeveloperMysqlDAO extends BaseDAO<CrDeveloper> implements ICrDeve
             return Pair.of(false, null);
         }
         List<CrQuestion> questionList = questionPair.getRight();
-        return Pair.of(true, questionList.stream().map(question -> new CrDeveloper(question.getAssignTo())).collect(Collectors.toList()));
+        if (CollectionUtils.isEmpty(questionList)) {
+            return Pair.of(true, new ArrayList<>(0));
+        }
+
+        IDatabaseService databaseService = DatabaseServiceFactory.getDatabaseService(setting.getStorageWay());
+        Connection connection = databaseService.getConnectionByConfig(setting);
+
+        Set<String> collect = questionList.stream().map(CrQuestion::getAssignTo).collect(Collectors.toSet());
+        String[] names = collect.toArray(new String[0]);
+        List<String> whList = new ArrayList<>(names.length);
+        for (String name : names) {
+            whList.add("?");
+        }
+        String param = StringUtils.join(whList, ",");
+        String sql = DmlConstants.QUERY_DEVELOPER_IN_NAME.replace("$", param);
+        List<CrDeveloper> developerList = queryListByArray(connection, sql, names);
+        return Pair.of(true, developerList);
     }
 }

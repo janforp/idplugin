@@ -338,9 +338,6 @@ public class CrQuestionEditDialog extends DialogWrapper {
         if (question.getState() != null) {
             stateBox.setSelectedItem(question.getState());
         }
-        if (question.getType() != null) {
-            typeBox.setSelectedItem(question.getType());
-        }
         if (question.getAssignTo() != null) {
             assignBox.setSelectedItem(question.getAssignTo());
         }
