@@ -7,6 +7,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * SqliteDatabaseServiceImpl
@@ -16,6 +17,9 @@ import java.nio.file.Files;
  */
 public class SqliteDatabaseServiceImpl extends AbstractIDatabaseService {
 
+    /**
+     * jdbc:sqlite:/Users/zhuchenjian/.ideaWoodpeckerFile/Woodpecker.db
+     */
     private static final String DATABASE_URL = "jdbc:sqlite:" + PluginConstant.DB_FILE_PATH;
 
     private static final IDatabaseService INSTANCE = new SqliteDatabaseServiceImpl();
@@ -94,17 +98,19 @@ public class SqliteDatabaseServiceImpl extends AbstractIDatabaseService {
      */
     protected void createFileAndDir() {
         //"C:\Users\Administrator\.ideaWoodpeckerFile"
-        if (!Files.exists(PluginConstant.PROJECT_DB_DIRECTORY_PATH)) {
+        Path projectDbDirectoryPath = PluginConstant.PROJECT_DB_DIRECTORY_PATH;
+        if (!Files.exists(projectDbDirectoryPath)) {
             try {
-                Files.createDirectories(PluginConstant.PROJECT_DB_DIRECTORY_PATH);
+                Files.createDirectories(projectDbDirectoryPath);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         //"C:\Users\Administrator\.ideaWoodpeckerFileNotebooks.db"
-        if (!Files.exists(PluginConstant.DB_FILE_PATH)) {
+        Path dbFilePath = PluginConstant.DB_FILE_PATH;
+        if (!Files.exists(dbFilePath)) {
             try {
-                Files.createFile(PluginConstant.DB_FILE_PATH);
+                Files.createFile(dbFilePath);
             } catch (IOException e) {
                 e.printStackTrace();
             }

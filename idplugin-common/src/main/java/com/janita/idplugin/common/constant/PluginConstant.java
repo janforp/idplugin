@@ -45,21 +45,17 @@ public class PluginConstant {
     public static final String COLON = "\"";
 
     /**
-     * User directory
-     * e.g. Windows OS :
-     * USER_HOME_PATH ==> C:\Users\Administrator(Your User Name)
+     * /Users/zhuchenjian/
      */
-    String USER_HOME_PATH = System.getProperty("user.home");
+    private final String USER_HOME_PATH = System.getProperty("user.home");
 
     /**
-     * Data directory of this plugin:
-     * USER_HOME_PATH/.ideaWoodpeckerFile
+     * /Users/zhuchenjian/.ideaWoodpeckerFile
      */
-    public Path PROJECT_DB_DIRECTORY_PATH = Paths.get(USER_HOME_PATH, ".ideaCRHelperFile");
+    public Path PROJECT_DB_DIRECTORY_PATH = Paths.get(USER_HOME_PATH, ".ideaWoodpeckerFile");
 
     /**
-     * SQLite database file for this plugin:
-     * USER_HOME_PATH/.ideaWoodpeckerFile/Woodpecker.db
+     * /Users/zhuchenjian/.ideaWoodpeckerFile/Woodpecker.db
      */
-    public Path DB_FILE_PATH = PROJECT_DB_DIRECTORY_PATH.resolve("CRHelper.db");
+    public Path DB_FILE_PATH = PROJECT_DB_DIRECTORY_PATH.resolve("Woodpecker.db");
 }
