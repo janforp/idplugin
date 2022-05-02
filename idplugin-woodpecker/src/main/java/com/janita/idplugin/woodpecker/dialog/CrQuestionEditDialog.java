@@ -15,7 +15,6 @@ import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBTabbedPane;
 import com.intellij.ui.components.JBTextField;
 import com.janita.idplugin.common.constant.DataToInit;
-import com.janita.idplugin.common.constant.PluginConstant;
 import com.janita.idplugin.common.entity.CrDeveloper;
 import com.janita.idplugin.common.entity.CrQuestion;
 import com.janita.idplugin.common.enums.CrDataStorageEnum;
@@ -37,11 +36,8 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.BeanUtils;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
 import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -60,13 +56,7 @@ public class CrQuestionEditDialog extends DialogWrapper {
 
     private static final int DEFAULT_HEIGHT = 630;
 
-    private final JButton manualBtn = new JButton("手动指派");
-
-    private final JPanel manualAssignPanel = new JPanel(new BorderLayout());
-
-    private final JBTextField manualNameField = new JBTextField(10);
-
-    private final JBTextField manualPhoneField = new JBTextField(10);
+    private final JBTextField manualPhoneField = new JBTextField(11);
 
     private final CrQuestion question;
 
@@ -105,8 +95,6 @@ public class CrQuestionEditDialog extends DialogWrapper {
 
     private final String rawQuestionCode;
 
-    private boolean manualAssign = false;
-
     public CrQuestionEditDialog(Project project, CrQuestion question, List<CrDeveloper> developerList, boolean add, Integer editIndex) {
         super(true);
         sendWeChatBox.setSelected(add);
@@ -117,6 +105,7 @@ public class CrQuestionEditDialog extends DialogWrapper {
         this.editIndex = editIndex;
         developerMap = developerList.stream().collect(Collectors.toMap(CrDeveloper::getName, Function.identity(), (f, s) -> f));
         assignBox = new ComboBox<>(developerMap.keySet().toArray(new String[0]), COMBO_BOX_WITH);
+
         // 可以编辑
         assignBox.setEditable(true);
         assignBox.setMaximumRowCount(7);
@@ -139,13 +128,20 @@ public class CrQuestionEditDialog extends DialogWrapper {
     }
 
     private void addListener() {
-        manualBtn.addActionListener(e -> {
-            if (manualAssign) {
+        assignBox.addItemListener(e -> {
+            int stateChange = e.getStateChange();
+            if (stateChange != ItemEvent.SELECTED) {
                 return;
             }
-            setToManualAssign();
+            String name = (String) e.getItem();
+            CrDeveloper crDeveloper = developerMap.get(name);
+            if (crDeveloper == null) {
+                manualPhoneField.setText("请输入手机号码");
+                return;
+            }
+            String phone = crDeveloper.getPhone();
+            manualPhoneField.setText(phone);
         });
-        manualNameField.getDocument().addDocumentListener(new ManualFieldInput());
     }
 
     private void setComponentSize() {
@@ -179,7 +175,6 @@ public class CrQuestionEditDialog extends DialogWrapper {
             questionService.save(CrQuestionSettingUtils.getCrQuestionSettingFromCache(), new CrQuestionSaveRequest(editIndex, sendWeChatMsg, phoneList, question));
             CrQuestionTable.add(question);
         } else {
-            // TODO 修改有BUG
             boolean changed = CrQuestionUtils.isChanged(rawQuestion, question);
             if (changed) {
                 questionService.save(CrQuestionSettingUtils.getCrQuestionSettingFromCache(), new CrQuestionSaveRequest(editIndex, sendWeChatMsg, phoneList, question));
@@ -207,27 +202,17 @@ public class CrQuestionEditDialog extends DialogWrapper {
     }
 
     private Pair<String, String> getAssignerToNameAndPhone() {
-        if (manualAssign) {
-            // 手动指派
-            String name = manualNameField.getText().trim();
-            String phone = manualPhoneField.getText().trim();
-            return Pair.create(name, phone);
-        }
-
         // 下拉选择
-        {
-            String name = (String) assignBox.getSelectedItem();
-            String phone = getPhoneByName(name);
-            return Pair.create(name, phone);
-        }
+        String name = (String) assignBox.getSelectedItem();
+        String phone = manualPhoneField.getText().trim();
+        return Pair.create(name, phone);
     }
 
     private void rebuildQuestionWhenSave() {
         question.setType((String) typeBox.getSelectedItem());
         question.setState((String) stateBox.getSelectedItem());
         question.setLevel((String) levelBox.getSelectedItem());
-        Pair<String, String> pair = getAssignerToNameAndPhone();
-        question.setAssignTo(pair.getFirst());
+        question.setAssignTo((String) assignBox.getSelectedItem());
         question.setSuggestCode(betterCodeEditor.getDocument().getText());
         question.setDescription(descCodeEditor.getDocument().getText());
     }
@@ -297,15 +282,9 @@ public class CrQuestionEditDialog extends DialogWrapper {
         if (question.getAssignTo().length() > 8) {
             return new ValidationInfo("指派人名称长度不能超过7个字符");
         }
-        if (manualAssign) {
-            String name = manualNameField.getText().trim();
-            if (StringUtils.isBlank(name)) {
-                return new ValidationInfo("请输入手动指派人员姓名");
-            }
-            String phone = manualPhoneField.getText().trim();
-            if (StringUtils.isBlank(phone)) {
-                return new ValidationInfo("请从企业微信拷贝该人员的手机，这样才能发送企业微信消息！");
-            }
+        String phone = manualPhoneField.getText().trim();
+        if (StringUtils.isBlank(phone)) {
+            return new ValidationInfo("请从企业微信拷贝该人员的手机，这样才能发送企业微信消息！");
         }
         return null;
     }
@@ -327,21 +306,13 @@ public class CrQuestionEditDialog extends DialogWrapper {
         selectWestPanel.add(levelBox);
         selectWestPanel.add(new JBLabel("指派"));
         selectWestPanel.add(assignBox);
+        selectWestPanel.add(new JBLabel("手机"));
+        selectWestPanel.add(manualPhoneField);
         selectWestPanel.add(sendWeChatBox);
-        selectWestPanel.add(manualBtn);
         selectPanel.add(selectWestPanel, BorderLayout.WEST);
-
-        JPanel manualAssignWestPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 0));
-        manualAssignWestPanel.add(new JBLabel("姓名"));
-        manualAssignWestPanel.add(manualNameField);
-        manualAssignWestPanel.add(new JBLabel("手机"));
-        manualAssignWestPanel.add(manualPhoneField);
-        manualAssignPanel.add(manualAssignWestPanel, BorderLayout.WEST);
-        manualAssignPanel.setVisible(false);
 
         Box box = Box.createVerticalBox();
         box.add(selectPanel);
-        box.add(manualAssignPanel);
 
         return box;
     }
@@ -373,51 +344,20 @@ public class CrQuestionEditDialog extends DialogWrapper {
         if (question.getAssignTo() != null) {
             assignBox.setSelectedItem(question.getAssignTo());
         }
+        CrDeveloper crDeveloper = developerMap.get(question.getAssignTo());
+        if (crDeveloper != null) {
+            manualPhoneField.setText(crDeveloper.getPhone());
+        }
         setTitle(question.getProjectName() + "-" + question.getCreateGitBranchName() + "-" + question.getFileName());
         if (add) {
             stateBox.setSelectedItem(CrQuestionState.UNSOLVED.getDesc());
             stateBox.setEnabled(false);
-        }
-        if (emptyAssign()) {
-            setToManualAssign();
-        }
-    }
 
-    private void setToManualAssign() {
-        manualAssign = true;
-        assignBox.setEnabled(false);
-        manualAssignPanel.setVisible(true);
-    }
-
-    private boolean emptyAssign() {
-        return developerMap == null || (developerMap.size() == 1 && developerMap.containsKey(PluginConstant.PLEASE_MANUAL_ASSIGN));
-    }
-
-    private class ManualFieldInput implements DocumentListener {
-
-        @Override
-        public void insertUpdate(DocumentEvent e) {
-            updatePhone(e);
-        }
-
-        @Override
-        public void removeUpdate(DocumentEvent e) {
-            updatePhone(e);
-        }
-
-        @Override
-        public void changedUpdate(DocumentEvent e) {
-            updatePhone(e);
-        }
-
-        private void updatePhone(DocumentEvent e) {
-            Document document = e.getDocument();
-            try {
-                String name = document.getText(0, document.getLength());
-                String phone = getPhoneByName(name);
-                manualPhoneField.setText(phone);
-            } catch (BadLocationException badLocationException) {
-                badLocationException.printStackTrace();
+            assignBox.setSelectedIndex(0);
+            String name = assignBox.getItemAt(0);
+            CrDeveloper developer = developerMap.get(name);
+            if (developer != null) {
+                manualPhoneField.setText(developer.getPhone());
             }
         }
     }
