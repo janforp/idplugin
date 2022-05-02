@@ -30,10 +30,10 @@ public abstract class AbstractIDatabaseService implements IDatabaseService {
     @Override
     public void reInitConnect(String url, String username, String pwd) {
         this.closeResource();
-        this.source = initDataSource(url, username, pwd);
-        this.connection = getConnection(url, username, pwd);
         // 如果不存在,创建DB文件
         createFileAndDir();
+        this.source = initDataSource(url, username, pwd);
+        this.connection = getConnection(url, username, pwd);
         if (this.connection == INVALID_CONNECT) {
             return;
         }
