@@ -119,6 +119,7 @@ public class CrQuestionEditDialog extends DialogWrapper {
         assignBox = new ComboBox<>(developerMap.keySet().toArray(new String[0]), COMBO_BOX_WITH);
         // 可以编辑
         assignBox.setEditable(true);
+        assignBox.setMaximumRowCount(7);
         this.project = project;
         questionCodeEditor = CodeEditorUtil.createCodeEditor(project);
         betterCodeEditor = CodeEditorUtil.createCodeEditor(project);
@@ -175,7 +176,7 @@ public class CrQuestionEditDialog extends DialogWrapper {
         }
 
         if (add) {
-            questionService.save( CrQuestionSettingUtils.getCrQuestionSettingFromCache(), new CrQuestionSaveRequest(editIndex, sendWeChatMsg, phoneList, question));
+            questionService.save(CrQuestionSettingUtils.getCrQuestionSettingFromCache(), new CrQuestionSaveRequest(editIndex, sendWeChatMsg, phoneList, question));
             CrQuestionTable.add(question);
         } else {
             // TODO 修改有BUG
