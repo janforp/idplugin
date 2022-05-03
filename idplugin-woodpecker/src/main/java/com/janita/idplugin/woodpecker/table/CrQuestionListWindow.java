@@ -105,7 +105,6 @@ public class CrQuestionListWindow extends JDialog {
     public CrQuestionListWindow(Project project, ToolWindow toolWindow) {
         this.project = project;
         this.projectNameList = Lists.newArrayList(CompatibleUtils.getAllProjectNameFromGitFirstThenLocal(project));
-        setTableType(questionTable);
         initCrQuestionList();
         setContentPane(contentPane);
         getRootPane().setDefaultButton(closeCancel);
@@ -121,15 +120,18 @@ public class CrQuestionListWindow extends JDialog {
 
     /**
      * 列表内容局中
-     *
-     * @param table 列表
      */
-    public void setTableType(JTable table) {
+    public void setTableType() {
         // 设置表格行宽
-        table.setRowHeight(30);
+        questionTable.setRowHeight(30);
         DefaultTableCellRenderer renderer = new CrQuestionTableRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
-        table.setDefaultRenderer(Object.class, renderer);
+        questionTable.setDefaultRenderer(Object.class, renderer);
+
+        // 设置列宽
+        questionTable.getColumn("文件").setMinWidth(150);
+        // TODO 选择模式
+        questionTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
     }
 
     private void addListener(ToolWindow toolWindow) {
@@ -231,6 +233,7 @@ public class CrQuestionListWindow extends JDialog {
         for (String projectName : projectNameList) {
             projectBox.addItem(projectName);
         }
+        setTableType();
     }
 
     private void showQuestionDetailDialog(int row) {
