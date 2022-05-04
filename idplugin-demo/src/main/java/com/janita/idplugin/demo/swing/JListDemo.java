@@ -47,7 +47,6 @@ public class JListDemo {
         bookList.setSelectionInterval(2, 4);
 
         Box bookListBox = Box.createVerticalBox();
-        bookListBox.add(bookListBox);
         bookListBox.add(layoutPanel);
         bookListBox.add(selectModePanel);
 
@@ -71,6 +70,7 @@ public class JListDemo {
         holeBox.add(bottomPanel);
 
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jf.setPreferredSize(new Dimension(600, 400));
         jf.pack();
         jf.setVisible(true);
     }
